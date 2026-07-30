@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="竹島さんぽ">
+  <rect width="64" height="64" rx="16" fill="#f3efe5"/>
+  <path d="M6 39c9-5 17-5 26 0 9 5 17 5 26 0v13H6Z" fill="#6fa9bf"/>
+  <path d="M18 35c2-10 8-16 17-17 7 1 11 5 13 12-7 0-12 2-17 6-4-2-8-2-13-1Z" fill="#315848"/>
+  <path d="M8 37 49 30" stroke="#b74632" stroke-width="3" stroke-linecap="round"/>
+  <path d="m45 24 7 5-5 7" fill="none" stroke="#b74632" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

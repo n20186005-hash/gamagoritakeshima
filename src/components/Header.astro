@@ -1,0 +1,326 @@
+---
+import { navigation, site } from "../data/site";
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => href !== "/" && currentPath.startsWith(href);
+---
+
+<header class="site-header" data-site-header>
+  <div class="container-site header-inner">
+    <a class="site-brand" href="/" aria-label={`${site.name} ホーム`}>
+      <svg class="brand-mark" viewBox="0 0 54 54" aria-hidden="true">
+        <circle cx="27" cy="27" r="26" fill="currentColor" opacity="0.08"></circle>
+        <path d="M9 34c7-4 13-4 20 0s13 4 20 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M16 30c2-8 7-12 14-13 6 1 10 4 12 10-6 0-10 2-14 5-4-2-7-2-12-2Z" fill="#315848"></path>
+        <path d="M11 32 42 27" stroke="#b74632" stroke-width="2.5" stroke-linecap="round"></path>
+      </svg>
+      <span class="brand-copy">
+        <span class="brand-name">竹島さんぽ</span>
+        <span class="brand-sub">GAMAGORI TAKESHIMA</span>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="メインナビゲーション">
+      {navigation.map((item) => (
+        <a class:list={["desktop-nav__link", { "is-active": isActive(item.href) }]} href={item.href}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a class="header-access" href="/access/">
+      <span>行き方</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </a>
+
+    <button class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-menu" data-menu-button>
+      <span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <nav class="container-site mobile-menu__inner" aria-label="モバイルナビゲーション">
+      <a class="mobile-menu__home" href="/">竹島さんぽ ホーム</a>
+      {navigation.map((item, index) => (
+        <a class:list={["mobile-menu__link", { "is-active": isActive(item.href) }]} href={item.href}>
+          <span class="mobile-menu__number">0{index + 1}</span>
+          <span>{item.label}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      ))}
+      <p class="mobile-menu__note">海と緑、祈りをめぐる<br />蒲郡の小さな旅。</p>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    z-index: 80;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--header-height);
+    border-bottom: 1px solid transparent;
+    color: white;
+    transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, color 220ms ease;
+  }
+
+  .site-header::before {
+    position: absolute;
+    inset: 0;
+    background: rgb(250 248 242 / 0.78);
+    backdrop-filter: blur(18px) saturate(1.2);
+    content: "";
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .site-header.is-scrolled::before,
+  .site-header.menu-open::before {
+    opacity: 1;
+  }
+
+  .site-header.is-scrolled,
+  .site-header.menu-open {
+    border-color: rgb(23 59 87 / 0.1);
+    color: #173b57;
+    box-shadow: 0 8px 30px rgb(23 59 87 / 0.06);
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .site-brand {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    color: currentColor;
+  }
+
+  .brand-copy {
+    display: grid;
+    gap: 0.05rem;
+    line-height: 1;
+  }
+
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-sub {
+    color: currentColor;
+    opacity: 0.58;
+    font-size: 0.52rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+  }
+
+  .desktop-nav {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  .desktop-nav__link {
+    position: relative;
+    padding-block: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .desktop-nav__link::after {
+    position: absolute;
+    right: 0;
+    bottom: 0.18rem;
+    left: 0;
+    height: 1px;
+    background: #b74632;
+    content: "";
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 180ms ease;
+  }
+
+  .desktop-nav__link:hover::after,
+  .desktop-nav__link.is-active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .header-access {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid rgb(255 255 255 / 0.38);
+    border-radius: 999px;
+    padding: 0.55rem 0.85rem 0.55rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+
+  .site-header.is-scrolled .header-access,
+  .site-header.menu-open .header-access {
+    border-color: rgb(23 59 87 / 0.2);
+  }
+
+  .header-access:hover {
+    border-color: #173b57;
+    background: #173b57;
+    color: white;
+  }
+
+  .header-access svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .menu-button {
+    display: none;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: currentColor;
+    cursor: pointer;
+  }
+
+  .menu-button span {
+    position: absolute;
+    width: 22px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 180ms ease;
+  }
+
+  .menu-button span:first-child {
+    transform: translateY(-4px);
+  }
+
+  .menu-button span:last-child {
+    transform: translateY(4px);
+  }
+
+  .menu-button[aria-expanded="true"] span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .menu-button[aria-expanded="true"] span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    z-index: 1;
+    top: var(--header-height);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    background: rgb(250 248 242 / 0.97);
+    color: #173b57;
+    backdrop-filter: blur(20px);
+  }
+
+  .mobile-menu__inner {
+    display: grid;
+    padding-block: 1.4rem 3rem;
+  }
+
+  .mobile-menu__home {
+    border-bottom: 1px solid rgb(23 59 87 / 0.12);
+    padding-block: 0.7rem 1.2rem;
+    color: #9d3627;
+    font-family: var(--serif);
+    font-size: 0.94rem;
+  }
+
+  .mobile-menu__link {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr 1.3rem;
+    align-items: center;
+    border-bottom: 1px solid rgb(23 59 87 / 0.12);
+    padding-block: 1rem;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+  }
+
+  .mobile-menu__link.is-active {
+    color: #b74632;
+  }
+
+  .mobile-menu__number {
+    color: rgb(23 59 87 / 0.38);
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .mobile-menu__link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .mobile-menu__note {
+    margin-top: 2.5rem;
+    color: rgb(23 59 87 / 0.56);
+    font-family: var(--serif);
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    line-height: 2;
+  }
+
+  @media (max-width: 1080px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .header-access {
+      margin-left: auto;
+    }
+
+    .menu-button {
+      position: relative;
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .header-access {
+      display: none;
+    }
+
+    .menu-button {
+      margin-left: auto;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+    }
+  }
+</style>

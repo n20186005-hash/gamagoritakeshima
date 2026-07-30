@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="プライバシーポリシー"
+  description={`${site.domain}のプライバシーポリシー。アクセス解析、Cookie、個人情報の取り扱いについて。`}
+>
+  <section class="legal-hero">
+    <div class="container-site legal-hero__inner">
+      <nav class="breadcrumbs" aria-label="パンくずリスト"><a href="/">ホーム</a><span>／</span><span aria-current="page">プライバシー</span></nav>
+      <p class="eyebrow">PRIVACY POLICY</p>
+      <h1>プライバシーポリシー</h1>
+      <p>このページでは、{site.domain} におけるアクセス情報と個人情報の取り扱いを説明します。</p>
+    </div>
+  </section>
+
+  <section class="section-space legal-section">
+    <article class="container-narrow prose-jp paper-card legal-card">
+      <p class="legal-date">制定・最終更新：2026年7月30日</p>
+
+      <h2>1. 本サイトについて</h2>
+      <p>
+        「竹島さんぽ」（以下「本サイト」）は、蒲郡・竹島エリアを訪れる旅行者向けの非公式観光ガイドです。蒲郡市、観光協会、八百富神社、竹島水族館、各店舗・施設の公式サイトではありません。
+      </p>
+
+      <h2>2. 収集する情報</h2>
+      <p>
+        本サイトには会員登録、ログイン、投稿フォーム、予約機能はありません。通常の閲覧において、氏名・住所・電話番号などを本サイトへ直接入力していただくことはありません。
+      </p>
+      <p>
+        サーバーおよびアクセス解析では、IPアドレス、端末・ブラウザの種類、参照元、閲覧ページ、閲覧時刻などの技術情報が自動的に記録される場合があります。
+      </p>
+
+      <h2>3. Google Analytics 4</h2>
+      <p>
+        本サイトは、利用状況を把握し内容を改善するため、Google Analytics 4（測定ID：G-HXM22WWPKP）を使用しています。Google AnalyticsはCookieなどを利用し、個人を直接特定しない形で閲覧データを収集します。
+      </p>
+      <p>
+        ブラウザの設定でCookieを無効にすることができます。ただし、設定内容によっては一部の計測や表示が正常に動作しない場合があります。
+      </p>
+
+      <h2>4. Cookie</h2>
+      <p>
+        Cookieは、ブラウザに保存される小さな情報です。本サイトでは主にアクセス解析のために利用されます。広告配信、会員認証、購入履歴の保存を目的とするCookieは本サイト独自には使用していません。
+      </p>
+
+      <h2>5. 外部サイトへのリンク</h2>
+      <p>
+        地図、写真ライセンス、情報源の確認など、必要な場合に限り外部サイトへのリンクを掲載しています。リンク先で行われる情報収集やサービス提供について、本サイトは責任を負いません。各リンク先の利用規約とプライバシーポリシーをご確認ください。
+      </p>
+
+      <h2>6. 情報の正確性と免責</h2>
+      <p>
+        本サイトは公開情報をもとに内容を確認していますが、営業時間、料金、交通、駐車場、行事、立入制限、天候などは予告なく変更されます。現地掲示と各運営主体の最新案内を優先してください。
+      </p>
+      <p>
+        本サイトの情報を利用したことにより生じた損害、事故、機会損失について、法令上免責が認められない場合を除き、本サイトは責任を負いません。
+      </p>
+
+      <h2>7. 内容の変更</h2>
+      <p>
+        法令、運用、サービス内容の変更に応じて、本ポリシーを改定する場合があります。重要な変更はこのページに掲載し、更新日を明記します。
+      </p>
+
+      <div class="legal-back"><a class="btn-primary" href="/">竹島さんぽへ戻る</a></div>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-hero { background: #173b57; color: white; padding-top: var(--header-height); }
+  .legal-hero__inner { padding-block: clamp(5rem, 10vw, 8rem); }
+  .legal-hero :global(.breadcrumbs) { margin-bottom: 2.5rem; }
+  .legal-hero :global(.eyebrow) { color: #e7b7a9; }
+  .legal-hero h1 { margin: 1rem 0 0; font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 500; }
+  .legal-hero__inner > p:last-child { max-width: 42rem; margin: 1.2rem 0 0; color: rgb(255 255 255 / .62); }
+  .legal-section { background: #f3efe5; }
+  .legal-card { padding: clamp(1.6rem, 5vw, 4rem); }
+  .legal-date { color: rgb(34 38 34 / .45); font-size: .7rem; }
+  .legal-back { margin-top: 3rem; border-top: 1px solid rgb(23 59 87 / .1); padding-top: 2rem; }
+</style>

@@ -1,0 +1,242 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+---
+
+<BaseLayout
+  title="竹島の写真スポット・撮影ガイド"
+  description="竹島園地、竹島橋、鳥居、夕景、ガマニ塩湖と呼ばれる反射写真など、竹島を気持ちよく撮るための時間帯・構図・マナーを紹介。"
+  image="/images/takeshima-distance.webp"
+>
+  <PageHero
+    title="光と風を待つ、竹島。"
+    lead="同じ橋も、朝・夕・夜でまったく違う風景に。撮影場所を探す前に、光の向き、足元、周囲を歩く人のことを確かめましょう。"
+    image="/images/takeshima-distance.webp"
+    imageAlt="三河湾の海と空に浮かぶ竹島"
+    current="写真を撮る"
+    position="center"
+  />
+
+  <section class="section-space-sm photo-intro">
+    <div class="container-site intro-grid">
+      <SectionHeading
+        eyebrow="PHOTO WALK"
+        title="きれいに撮るより、気持ちよく撮る。"
+        lead="竹島は観光地であると同時に、祈りの場であり、自然を守る場所です。通路を塞がず、立入表示を守り、短い時間で譲り合うことが、よい写真につながります。"
+      />
+      <div class="intro-rules" data-reveal>
+        <div><span>01</span><p>橋と参道では、歩く人を優先する</p></div>
+        <div><span>02</span><p>社殿や参拝者へレンズを向けすぎない</p></div>
+        <div><span>03</span><p>岩場・水際へ無理に近づかない</p></div>
+        <div><span>04</span><p>三脚は混雑を避け、現地表示に従う</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="time-section">
+    <div class="container-site time-grid">
+      <article class="time-card time-card--morning" data-reveal>
+        <div class="time-card__image"><img src="/images/bridge-seaside.webp" alt="静かな海辺から見た竹島橋" loading="lazy" /></div>
+        <div class="time-card__body">
+          <p>06:00—09:00</p>
+          <h2>朝の透明感</h2>
+          <span>人が少なく、空気が澄みやすい時間。園地の草地と橋の直線を、余白のある構図で。</span>
+          <dl><div><dt>向く写真</dt><dd>全景、散歩、静かな橋</dd></div><div><dt>注意</dt><dd>季節の冷え込み、逆光</dd></div></dl>
+        </div>
+      </article>
+      <article class="time-card time-card--sunset" data-reveal data-reveal-delay="1">
+        <div class="time-card__image"><img src="/images/hero-aerial.webp" alt="高台から見た竹島と三河湾" loading="lazy" /></div>
+        <div class="time-card__body">
+          <p>BEFORE SUNSET</p>
+          <h2>夕暮れの輪郭</h2>
+          <span>空の色と島の影が変化する時間。日没の30〜45分前に着き、撮る方向を決めておくと落ち着けます。</span>
+          <dl><div><dt>向く写真</dt><dd>シルエット、空、橋</dd></div><div><dt>注意</dt><dd>帰路、駐車場、足元</dd></div></dl>
+        </div>
+      </article>
+      <article class="time-card time-card--blue" data-reveal data-reveal-delay="2">
+        <div class="time-card__image"><img src="/images/torii-bridge.webp" alt="鳥居と竹島橋の風景" loading="lazy" /></div>
+        <div class="time-card__body">
+          <p>BLUE HOUR</p>
+          <h2>青の時間と灯り</h2>
+          <span>日没直後、空に青みが残る短い時間。手ぶれを抑え、暗くなる前に安全な立ち位置へ移動します。</span>
+          <dl><div><dt>向く写真</dt><dd>橋の灯り、鳥居、海面</dd></div><div><dt>注意</dt><dd>暗所、強風、長時間占有</dd></div></dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-space reflection-section">
+    <div class="container-site reflection-grid">
+      <div class="reflection-copy">
+        <p class="eyebrow" data-reveal>GAMANI SALT LAKE</p>
+        <h2 class="section-title" data-reveal>「ガマニ塩湖」を、<br />スマホで楽しむ。</h2>
+        <p class="section-lead" data-reveal>
+          竹島園地の橋詰付近では、光を反射する平らな面を利用し、竹島が上下に映るような写真が「ガマニ塩湖」と呼ばれ親しまれています。自然の水鏡ではなく、低い目線と反射を使う撮影です。
+        </p>
+        <ol class="reflection-steps">
+          <li data-reveal><span>01</span><div><h3>反射する面を探す</h3><p>橋詰周辺で、立入可能な場所にある滑らかな面を探します。現地の通行を妨げない位置を選びます。</p></div></li>
+          <li data-reveal><span>02</span><div><h3>レンズを低くする</h3><p>スマートフォンのレンズを反射面に近づけ、島と反射像が画面に入る角度を小さく動かして探します。</p></div></li>
+          <li data-reveal><span>03</span><div><h3>水平線を整える</h3><p>グリッド表示を使い、海面と橋が傾きすぎないよう調整。少し広めに撮り、あとで切り取ると安定します。</p></div></li>
+          <li data-reveal><span>04</span><div><h3>譲り合って短時間で</h3><p>通行する人が来たらすぐに移動。物を置いたり、長時間同じ場所を占有したりしないでください。</p></div></li>
+        </ol>
+      </div>
+      <div class="reflection-visual" data-reveal>
+        <div class="phone-frame">
+          <div class="phone-camera"></div>
+          <img src="/images/bridge-wide.webp" alt="竹島橋を低い目線で撮るイメージ" loading="lazy" />
+          <div class="phone-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <p>スマートフォンの広角側を使うと、レンズを反射面へ近づけやすくなります。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space spot-section">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="FOUR POSITIONS"
+        title="立つ場所で、竹島の表情が変わる。"
+        lead="代表的な四つの立ち位置。混雑や天候によって同じ場所にこだわらず、安全な範囲で少しずつ移動してみてください。"
+      />
+      <div class="spot-grid">
+        <article data-reveal><span>01</span><h3>園地の芝生側</h3><p>橋と島の全景。人物を小さく入れると、海辺の広さが伝わります。</p><b>全景・家族写真</b></article>
+        <article data-reveal data-reveal-delay="1"><span>02</span><h3>鳥居と橋の軸</h3><p>鳥居の中央と橋の線を合わせる定番。通路中央に長く立ち止まらないこと。</p><b>対称構図・旅の入口</b></article>
+        <article data-reveal data-reveal-delay="2"><span>03</span><h3>橋の斜め横</h3><p>橋の長さと海面を見せる位置。潮位や光で変わる余白を生かします。</p><b>橋・海・夕景</b></article>
+        <article data-reveal data-reveal-delay="3"><span>04</span><h3>高台から</h3><p>竹島全体と三河湾を俯瞰。景色を楽しむ施設や公道の範囲から撮影します。</p><b>俯瞰・地形・遠景</b></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <div class="gallery-copy container-site">
+      <p class="eyebrow" data-reveal>VIEWFINDER</p>
+      <h2 data-reveal>橋、鳥居、森。<br />一つの島に、三つのリズム。</h2>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gallery-a" data-reveal><img src="/images/bridge-walk.webp" alt="竹島橋を歩く人々" loading="lazy" /><figcaption>BRIDGE · LINE</figcaption></figure>
+      <figure class="gallery-b" data-reveal data-reveal-delay="1"><img src="/images/torii-bridge.webp" alt="鳥居から見た竹島橋" loading="lazy" /><figcaption>TORII · FRAME</figcaption></figure>
+      <figure class="gallery-c" data-reveal data-reveal-delay="2"><img src="/images/shrine-forest.webp" alt="八百富神社の社叢" loading="lazy" /><figcaption>FOREST · SHADOW</figcaption></figure>
+      <figure class="gallery-d" data-reveal data-reveal-delay="3"><img src="/images/yaotomi-shrine.webp" alt="八百富神社の社殿" loading="lazy" /><figcaption>PRAYER · QUIET</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section-space manners-section">
+    <div class="container-site manners-grid">
+      <div>
+        <p class="eyebrow" data-reveal>PHOTO MANNERS</p>
+        <h2 class="section-title" data-reveal>撮らない判断も、<br />旅のマナー。</h2>
+        <p class="section-lead" data-reveal>祭事、祈祷、混雑、荒天。カメラを下ろしたほうがよい瞬間があります。現地の人と自然に敬意を払い、次に来る人にも同じ風景を残しましょう。</p>
+      </div>
+      <div class="manners-list" data-reveal>
+        <div><strong>人物</strong><p>他の参拝者や子どもを大きく写すときは、本人の了承を得る。</p></div>
+        <div><strong>神社</strong><p>撮影禁止表示、神事、祈祷を最優先。フラッシュや大きな機材を控える。</p></div>
+        <div><strong>自然</strong><p>植物を動かさない。岩場へ機材を置きっぱなしにしない。ごみを残さない。</p></div>
+        <div><strong>ドローン</strong><p>無断飛行を前提にしない。法令、施設管理者、周辺環境の許可と安全を確認する。</p></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .photo-intro { background: #faf8f2; }
+  .intro-grid { display: grid; grid-template-columns: 1fr 0.82fr; gap: clamp(3rem, 9vw, 8rem); align-items: end; }
+  .intro-rules { display: grid; border-top: 1px solid rgb(23 59 87 / 0.14); }
+  .intro-rules div { display: grid; grid-template-columns: 2.5rem 1fr; border-bottom: 1px solid rgb(23 59 87 / 0.1); padding: 0.8rem 0; }
+  .intro-rules span { color: #b74632; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em; }
+  .intro-rules p { margin: 0; color: rgb(34 38 34 / 0.67); font-size: 0.8rem; }
+
+  .time-section { background: #102c40; padding-block: clamp(4rem, 8vw, 7rem); }
+  .time-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+  .time-card { overflow: hidden; border: 1px solid rgb(255 255 255 / 0.12); border-radius: 1.5rem; background: rgb(255 255 255 / 0.055); color: white; }
+  .time-card__image { height: 300px; overflow: hidden; }
+  .time-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms ease; }
+  .time-card:hover img { transform: scale(1.03); }
+  .time-card--morning img { filter: brightness(1.04) saturate(.86); }
+  .time-card--sunset img { filter: saturate(.8) sepia(.08); }
+  .time-card--blue img { filter: brightness(.72) saturate(.9) hue-rotate(4deg); }
+  .time-card__body { padding: 1.6rem; }
+  .time-card__body > p { margin-bottom: 0.5rem; color: #9fc5d3; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; }
+  .time-card__body h2 { margin-bottom: 0.6rem; font-family: var(--serif); font-size: 1.65rem; font-weight: 500; }
+  .time-card__body > span { display: block; min-height: 5.4rem; color: rgb(255 255 255 / 0.62); font-size: 0.77rem; line-height: 1.85; }
+  .time-card dl { display: grid; grid-template-columns: 1fr 1fr; margin: 1.4rem 0 0; border-top: 1px solid rgb(255 255 255 / 0.12); }
+  .time-card dl div { padding-top: 0.8rem; }
+  .time-card dt { color: rgb(255 255 255 / 0.38); font-size: 0.57rem; }
+  .time-card dd { margin: 0.15rem 0 0; color: rgb(255 255 255 / 0.78); font-size: 0.7rem; }
+
+  .reflection-section { background: #dfecef; }
+  .reflection-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .78fr); gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .reflection-steps { margin: 2.3rem 0 0; padding: 0; list-style: none; }
+  .reflection-steps li { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1rem; border-top: 1px solid rgb(23 59 87 / .13); padding: 1rem 0; }
+  .reflection-steps li:last-child { border-bottom: 1px solid rgb(23 59 87 / .13); }
+  .reflection-steps > li > span { color: #b74632; font-size: .62rem; font-weight: 800; letter-spacing: .14em; }
+  .reflection-steps h3 { margin-bottom: .3rem; color: #173b57; font-family: var(--serif); font-size: 1.05rem; font-weight: 600; }
+  .reflection-steps p { margin: 0; color: rgb(34 38 34 / .61); font-size: .75rem; line-height: 1.85; }
+  .reflection-visual { display: grid; justify-items: center; }
+  .phone-frame { position: relative; width: min(100%, 390px); aspect-ratio: 9 / 17.5; overflow: hidden; border: 10px solid #173b57; border-radius: 3.2rem; background: #173b57; box-shadow: 0 35px 90px rgb(16 44 64 / .24); }
+  .phone-frame > img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .phone-frame::after { position: absolute; inset: 50% 0 0; background: linear-gradient(0deg, rgb(16 44 64 / .35), transparent); content: ""; }
+  .phone-camera { position: absolute; z-index: 3; top: .65rem; left: 50%; width: 28%; height: 1.3rem; border-radius: 999px; background: #102c40; transform: translateX(-50%); }
+  .phone-grid { position: absolute; z-index: 2; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+  .phone-grid i { border-right: 1px solid rgb(255 255 255 / .32); border-bottom: 1px solid rgb(255 255 255 / .32); }
+  .phone-grid i:nth-child(3n) { border-right: 0; }
+  .reflection-visual > p { max-width: 390px; margin: 1.5rem 0 0; color: rgb(34 38 34 / .54); font-size: .7rem; text-align: center; }
+
+  .spot-section { background: #f3efe5; }
+  .spot-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid rgb(23 59 87 / .14); border-bottom: 1px solid rgb(23 59 87 / .14); }
+  .spot-grid article { display: flex; min-height: 330px; flex-direction: column; border-right: 1px solid rgb(23 59 87 / .1); padding: 1.8rem clamp(1rem, 2.5vw, 2rem); }
+  .spot-grid article:first-child { padding-left: 0; }
+  .spot-grid article:last-child { border-right: 0; }
+  .spot-grid > article > span { color: #b74632; font-size: .62rem; font-weight: 800; letter-spacing: .14em; }
+  .spot-grid h3 { margin: 1rem 0 .7rem; color: #173b57; font-family: var(--serif); font-size: 1.25rem; font-weight: 500; }
+  .spot-grid p { margin: 0; color: rgb(34 38 34 / .61); font-size: .76rem; line-height: 1.9; }
+  .spot-grid b { margin-top: auto; color: #29493d; font-size: .65rem; }
+
+  .gallery-section { overflow: hidden; background: #173b57; color: white; padding-block: clamp(5rem, 9vw, 8rem); }
+  .gallery-copy { margin-bottom: 3rem; }
+  .gallery-copy :global(.eyebrow) { color: #e7b7a9; }
+  .gallery-copy h2 { margin: 1rem 0 0; font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4.7rem); font-weight: 500; line-height: 1.35; }
+  .gallery-grid { display: grid; width: min(calc(100% - (var(--page-pad) * 2)), 1400px); margin-inline: auto; grid-template-columns: 1.15fr .75fr .8fr; grid-template-rows: 340px 300px; gap: .8rem; }
+  .gallery-grid figure { position: relative; overflow: hidden; margin: 0; border-radius: 1rem; }
+  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-a { grid-row: 1 / 3; }
+  .gallery-b { grid-column: 2 / 4; }
+  .gallery-grid figcaption { position: absolute; right: .8rem; bottom: .65rem; color: rgb(255 255 255 / .68); font-size: .55rem; font-weight: 800; letter-spacing: .16em; text-shadow: 0 2px 8px rgb(0 0 0 / .5); }
+
+  .manners-section { background: #faf8f2; }
+  .manners-grid { display: grid; grid-template-columns: .85fr 1fr; gap: clamp(3rem, 9vw, 8rem); }
+  .manners-list { border-top: 1px solid rgb(23 59 87 / .14); }
+  .manners-list div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; border-bottom: 1px solid rgb(23 59 87 / .1); padding: 1rem 0; }
+  .manners-list strong { color: #9d3627; font-family: var(--serif); font-size: 1rem; }
+  .manners-list p { margin: 0; color: rgb(34 38 34 / .62); font-size: .78rem; line-height: 1.85; }
+
+  @media (max-width: 900px) {
+    .intro-grid,
+    .reflection-grid,
+    .manners-grid { grid-template-columns: 1fr; }
+    .time-grid { grid-template-columns: 1fr; }
+    .time-card { display: grid; grid-template-columns: .8fr 1fr; }
+    .time-card__image { height: auto; min-height: 300px; }
+    .time-card__body > span { min-height: 0; }
+    .spot-grid { grid-template-columns: 1fr 1fr; }
+    .spot-grid article:nth-child(2) { border-right: 0; }
+    .spot-grid article:nth-child(n + 3) { border-top: 1px solid rgb(23 59 87 / .1); }
+    .spot-grid article:nth-child(3) { padding-left: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .time-card { grid-template-columns: 1fr; }
+    .time-card__image { height: 260px; min-height: 0; }
+    .phone-frame { width: 82%; }
+    .spot-grid { grid-template-columns: 1fr; }
+    .spot-grid article,
+    .spot-grid article:first-child,
+    .spot-grid article:nth-child(3) { min-height: 0; border-right: 0; border-bottom: 1px solid rgb(23 59 87 / .1); padding: 1.5rem 0; }
+    .spot-grid article:last-child { border-bottom: 0; }
+    .spot-grid b { margin-top: 1.4rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 330px 230px 230px; }
+    .gallery-a { grid-column: 1 / -1; grid-row: auto; }
+    .gallery-b { grid-column: 1 / -1; }
+    .manners-list div { grid-template-columns: 1fr; gap: .2rem; }
+  }
+</style>

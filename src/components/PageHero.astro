@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+  lead: string;
+  image: string;
+  imageAlt: string;
+  eyebrow?: string;
+  current: string;
+  position?: string;
+}
+
+const {
+  title,
+  lead,
+  image,
+  imageAlt,
+  eyebrow = "GAMAGORI TAKESHIMA",
+  current,
+  position = "center"
+} = Astro.props;
+---
+
+<section class="page-hero">
+  <img class="page-hero__image" src={image} alt={imageAlt} style={`object-position: ${position};`} fetchpriority="high" />
+  <div class="container-site page-hero__content">
+    <div>
+      <nav class="breadcrumbs" aria-label="パンくずリスト">
+        <a href="/">ホーム</a>
+        <span class="breadcrumbs__separator" aria-hidden="true">／</span>
+        <span aria-current="page">{current}</span>
+      </nav>
+      <p class="eyebrow" style="color: #e7b7a9;">{eyebrow}</p>
+      <h1 class="page-hero__title">{title}</h1>
+      <p class="page-hero__lead">{lead}</p>
+    </div>
+  </div>
+</section>

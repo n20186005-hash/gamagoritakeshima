@@ -1,0 +1,211 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = site.description,
+  image = "/images/og-image.jpg",
+  imageAlt = "蒲郡の海辺から望む竹島",
+  noindex = false,
+  jsonLd,
+  bodyClass = ""
+} = Astro.props;
+
+const pageTitle = title ? `${title}｜${site.name}` : `${site.legalName}｜蒲郡・三河湾`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
+const socialImage = new URL(image, Astro.site ?? site.url).toString();
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173b57" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/images/icon-512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <title>{pageTitle}</title>
+
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+    </script>
+
+    {jsonLd && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+    )}
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      (() => {
+        const header = document.querySelector('[data-site-header]');
+        const menuButton = document.querySelector('[data-menu-button]');
+        const mobileMenu = document.querySelector('[data-mobile-menu]');
+
+        const updateHeader = () => {
+          header?.classList.toggle('is-scrolled', window.scrollY > 12);
+        };
+        updateHeader();
+        window.addEventListener('scroll', updateHeader, { passive: true });
+
+        const closeMenu = () => {
+          if (!(menuButton instanceof HTMLButtonElement) || !(mobileMenu instanceof HTMLElement)) return;
+          menuButton.setAttribute('aria-expanded', 'false');
+          menuButton.setAttribute('aria-label', 'メニューを開く');
+          mobileMenu.hidden = true;
+          header?.classList.remove('menu-open');
+          document.documentElement.style.overflow = '';
+        };
+
+        menuButton?.addEventListener('click', () => {
+          if (!(menuButton instanceof HTMLButtonElement) || !(mobileMenu instanceof HTMLElement)) return;
+          const willOpen = menuButton.getAttribute('aria-expanded') !== 'true';
+          menuButton.setAttribute('aria-expanded', String(willOpen));
+          menuButton.setAttribute('aria-label', willOpen ? 'メニューを閉じる' : 'メニューを開く');
+          mobileMenu.hidden = !willOpen;
+          header?.classList.toggle('menu-open', willOpen);
+          document.documentElement.style.overflow = willOpen ? 'hidden' : '';
+        });
+
+        mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeMenu();
+        });
+
+        document.querySelectorAll('[data-current-year]').forEach((element) => {
+          element.textContent = String(new Date().getFullYear());
+        });
+
+        const revealElements = document.querySelectorAll('[data-reveal]');
+        if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+          revealElements.forEach((element) => observer.observe(element));
+        } else {
+          revealElements.forEach((element) => element.classList.add('is-visible'));
+        }
+
+        const now = new Date();
+        const japanParts = new Intl.DateTimeFormat('ja-JP', {
+          timeZone: 'Asia/Tokyo',
+          month: 'numeric',
+          day: 'numeric',
+          weekday: 'short',
+          hour: 'numeric',
+          hour12: false
+        }).formatToParts(now);
+        const getPart = (type) => japanParts.find((part) => part.type === type)?.value ?? '';
+        const hour = Number(getPart('hour'));
+        const month = Number(getPart('month'));
+        const day = getPart('day');
+        const weekday = getPart('weekday');
+
+        let timeLabel = '海辺の散歩日和';
+        let timeCopy = '風と足元を確かめながら、園地からゆっくり歩き始めましょう。';
+        if (hour < 9) {
+          timeLabel = '朝の静けさを楽しむ時間';
+          timeCopy = 'やわらかな光と澄んだ空気。橋の上は冷えやすいので一枚多めに。';
+        } else if (hour >= 16 && hour < 19) {
+          timeLabel = '夕景へ向かう時間';
+          timeCopy = '日没前後は空と海が大きく変化します。帰り道の明るさも忘れずに。';
+        } else if (hour >= 19 || hour < 5) {
+          timeLabel = '夜の海辺は足元に注意';
+          timeCopy = '暗い場所と海風があります。灯りのある道を選び、無理な渡島は避けましょう。';
+        }
+        if ([12, 1, 2].includes(month)) {
+          timeCopy += ' 冬の橋上は体感温度が下がります。';
+        } else if ([6, 7, 8, 9].includes(month)) {
+          timeCopy += ' 日差しと水分補給にもご注意ください。';
+        }
+
+        document.querySelectorAll('[data-today-date]').forEach((element) => {
+          element.textContent = `${month}月${day}日（${weekday}）`;
+        });
+        document.querySelectorAll('[data-today-label]').forEach((element) => {
+          element.textContent = timeLabel;
+        });
+        document.querySelectorAll('[data-today-copy]').forEach((element) => {
+          element.textContent = timeCopy;
+        });
+
+        document.querySelectorAll('[data-copy-value]').forEach((button) => {
+          button.addEventListener('click', async () => {
+            if (!(button instanceof HTMLElement)) return;
+            const value = button.dataset.copyValue ?? '';
+            const original = button.textContent ?? '';
+            try {
+              await navigator.clipboard.writeText(value);
+              button.textContent = 'コピーしました';
+            } catch {
+              button.textContent = value;
+            }
+            window.setTimeout(() => { button.textContent = original; }, 1800);
+          });
+        });
+
+        const filterButtons = document.querySelectorAll('[data-course-filter]');
+        const courseCards = document.querySelectorAll('[data-course-card]');
+        filterButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            if (!(button instanceof HTMLElement)) return;
+            const filter = button.dataset.courseFilter ?? 'all';
+            filterButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+            courseCards.forEach((card) => {
+              if (!(card instanceof HTMLElement)) return;
+              card.hidden = filter !== 'all' && card.dataset.courseCard !== filter;
+            });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

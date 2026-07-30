@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { photoCredits, site } from "../data/site";
+
+const licenseUrls: Record<string, string> = {
+  "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/",
+  "CC0 1.0": "https://creativecommons.org/publicdomain/zero/1.0/"
+};
+---
+
+<BaseLayout
+  title="写真クレジット・情報について"
+  description="竹島さんぽで使用する写真の作者、ライセンス、加工内容と、観光情報の確認方針。"
+>
+  <section class="legal-hero">
+    <div class="container-site legal-hero__inner">
+      <nav class="breadcrumbs" aria-label="パンくずリスト"><a href="/">ホーム</a><span>／</span><span aria-current="page">写真・情報について</span></nav>
+      <p class="eyebrow">CREDITS & SOURCES</p>
+      <h1>写真・情報について</h1>
+      <p>実景写真の作者とライセンス、編集内容、観光情報の確認方法をまとめています。</p>
+    </div>
+  </section>
+
+  <section class="section-space credit-section">
+    <div class="container-site credit-intro">
+      <div>
+        <p class="eyebrow" data-reveal>REAL PHOTOGRAPHS</p>
+        <h2 class="section-title" data-reveal>竹島の実景を、<br />許諾条件に沿って掲載。</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          本サイトの写真はWikimedia Commonsで公開された実在の竹島、竹島橋、八百富神社、竹島水族館、蒲郡クラシックホテルの写真を使用しています。
+        </p>
+        <p>
+          表示速度とレイアウトに合わせてWebP化、縮小、トリミング、明るさ・色調の軽微な調整を行っています。人物・建物・展示物の追加や削除は行っていません。
+        </p>
+      </div>
+    </div>
+
+    <div class="container-site credit-list">
+      {photoCredits.map((credit, index) => (
+        <article data-reveal>
+          <span class="credit-number">{String(index + 1).padStart(2, "0")}</span>
+          <div><p>{credit.file}</p><h3>{credit.subject}</h3></div>
+          <div><small>撮影・作成者</small><strong>{credit.author}</strong></div>
+          <div><small>ライセンス</small><a href={licenseUrls[credit.license]} target="_blank" rel="license noopener noreferrer">{credit.license}</a></div>
+          <a class="source-link" href={credit.source} target="_blank" rel="noopener noreferrer">原典を見る <span>↗</span></a>
+        </article>
+      ))}
+    </div>
+
+    <div class="container-site share-note notice">
+      <div>
+        <strong>CC BY-SA素材の再利用について</strong>
+        <p>本サイトから画像を取り出して再利用する場合も、各原典の作者表示、ライセンスリンク、変更表示、継承条件を確認してください。本サイト全体のデザインや文章が同じライセンスになることを意味しません。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space source-section">
+    <div class="container-site source-grid">
+      <div>
+        <p class="eyebrow" data-reveal>INFORMATION POLICY</p>
+        <h2 class="section-title" data-reveal>変わる情報には、<br />確認日を添える。</h2>
+      </div>
+      <div class="source-copy" data-reveal>
+        <p>
+          観光情報は、蒲郡市観光協会、愛知県の観光情報、八百富神社、竹島水族館、各飲食店・宿泊施設などの公開情報を照合し、旅行者向けに要約しています。
+        </p>
+        <p>
+          営業時間、料金、交通、駐車場、イベントは変わりやすいため、掲載時点を明記し、断定しすぎない表現を採用しています。現地表示と運営主体の最新案内が常に優先されます。
+        </p>
+        <dl>
+          <div><dt>サイト内の確認日</dt><dd>{site.updatedAt}</dd></div>
+          <div><dt>サイトの立場</dt><dd>非公式の観光ガイド</dd></div>
+          <div><dt>外部リンク</dt><dd>地図・原典・ライセンス確認に限定</dd></div>
+          <div><dt>投稿・予約</dt><dd>機能なし</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="source-links-section">
+    <div class="container-site">
+      <h2>主な情報確認先</h2>
+      <div class="source-links">
+        <a href="https://www.gamagori.jp/" target="_blank" rel="noopener noreferrer"><span>蒲郡市観光協会</span><b>観光・施設・飲食・行事</b></a>
+        <a href="https://www.aichi-now.jp/" target="_blank" rel="noopener noreferrer"><span>Aichi Now</span><b>竹島園地・駐車場・県内観光</b></a>
+        <a href="https://yaotomi.net/" target="_blank" rel="noopener noreferrer"><span>八百富神社</span><b>由緒・参拝・社務所</b></a>
+        <a href="https://www.takesuideepsea.com/" target="_blank" rel="noopener noreferrer"><span>竹島水族館</span><b>営業・料金・館内案内</b></a>
+      </div>
+      <p>外部サイトへ移動します。リンク先の内容と運用は各運営者に帰属します。</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-hero { background: #173b57; color: white; padding-top: var(--header-height); }
+  .legal-hero__inner { padding-block: clamp(5rem, 10vw, 8rem); }
+  .legal-hero :global(.breadcrumbs) { margin-bottom: 2.5rem; }
+  .legal-hero :global(.eyebrow) { color: #e7b7a9; }
+  .legal-hero h1 { margin: 1rem 0 0; font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 500; }
+  .legal-hero__inner > p:last-child { max-width: 42rem; margin: 1.2rem 0 0; color: rgb(255 255 255 / .62); }
+
+  .credit-section { background: #f3efe5; }
+  .credit-intro { display: grid; grid-template-columns: .92fr 1fr; gap: clamp(3rem, 9vw, 8rem); align-items: end; }
+  .credit-intro > div:last-child { color: rgb(34 38 34 / .66); line-height: 2; }
+  .credit-intro > div:last-child p:last-child { margin-bottom: 0; }
+  .credit-list { margin-top: clamp(3rem, 7vw, 6rem); border-top: 1px solid rgb(23 59 87 / .14); }
+  .credit-list article { display: grid; grid-template-columns: 3rem minmax(210px, 1.2fr) minmax(140px, .7fr) minmax(120px, .6fr) auto; gap: 1.2rem; align-items: center; border-bottom: 1px solid rgb(23 59 87 / .1); padding: 1.2rem 0; }
+  .credit-number { color: #b74632; font-size: .62rem; font-weight: 800; letter-spacing: .12em; }
+  .credit-list p { margin: 0; color: rgb(34 38 34 / .42); font-size: .58rem; }
+  .credit-list h3 { margin: .2rem 0 0; color: #173b57; font-family: var(--serif); font-size: 1rem; font-weight: 600; }
+  .credit-list small { display: block; color: rgb(34 38 34 / .42); font-size: .56rem; }
+  .credit-list strong,
+  .credit-list div > a { color: rgb(34 38 34 / .72); font-size: .68rem; font-weight: 700; }
+  .credit-list div > a { color: #9d3627; text-decoration: underline; text-underline-offset: .2em; }
+  .source-link { color: #173b57; font-size: .65rem; font-weight: 800; white-space: nowrap; }
+  .source-link span { color: #b74632; }
+  .share-note { margin-top: 2rem; }
+  .share-note p { margin: .35rem 0 0; font-size: .72rem; line-height: 1.85; }
+
+  .source-section { background: #e4ebe4; }
+  .source-grid { display: grid; grid-template-columns: .9fr 1fr; gap: clamp(3rem, 9vw, 8rem); }
+  .source-copy > p { color: rgb(34 38 34 / .66); line-height: 2; }
+  .source-copy dl { margin: 2rem 0 0; border-top: 1px solid rgb(23 59 87 / .13); }
+  .source-copy dl div { display: grid; grid-template-columns: 9rem 1fr; border-bottom: 1px solid rgb(23 59 87 / .1); padding: .75rem 0; }
+  .source-copy dt { color: #9d3627; font-size: .7rem; font-weight: 800; }
+  .source-copy dd { margin: 0; color: rgb(34 38 34 / .66); font-size: .72rem; }
+
+  .source-links-section { background: #102c40; color: white; padding-block: clamp(4rem, 7vw, 6rem); }
+  .source-links-section h2 { margin-bottom: 2rem; font-family: var(--serif); font-size: 1.7rem; font-weight: 500; }
+  .source-links { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgb(255 255 255 / .14); border-bottom: 1px solid rgb(255 255 255 / .14); }
+  .source-links a { display: grid; gap: .45rem; border-right: 1px solid rgb(255 255 255 / .12); padding: 1.4rem; }
+  .source-links a:first-child { padding-left: 0; }
+  .source-links a:last-child { border-right: 0; }
+  .source-links span { font-family: var(--serif); font-size: 1rem; }
+  .source-links b { color: rgb(255 255 255 / .46); font-size: .62rem; font-weight: 500; }
+  .source-links-section > div > p { margin: 1rem 0 0; color: rgb(255 255 255 / .38); font-size: .62rem; }
+
+  @media (max-width: 900px) {
+    .credit-intro,
+    .source-grid { grid-template-columns: 1fr; }
+    .credit-list article { grid-template-columns: 2.5rem 1fr auto; }
+    .credit-list article > div:nth-of-type(2),
+    .credit-list article > div:nth-of-type(3) { grid-column: 2; }
+    .source-link { grid-column: 3; grid-row: 1; }
+    .source-links { grid-template-columns: 1fr 1fr; }
+    .source-links a:nth-child(2) { border-right: 0; }
+    .source-links a:nth-child(n + 3) { border-top: 1px solid rgb(255 255 255 / .12); }
+    .source-links a:nth-child(3) { padding-left: 0; }
+  }
+
+  @media (max-width: 620px) {
+    .credit-list article { grid-template-columns: 2rem 1fr; }
+    .credit-list article > div:nth-of-type(2),
+    .credit-list article > div:nth-of-type(3) { grid-column: 2; }
+    .source-link { grid-column: 2; grid-row: auto; }
+    .source-copy dl div { grid-template-columns: 1fr; gap: .2rem; }
+    .source-links { grid-template-columns: 1fr; }
+    .source-links a,
+    .source-links a:first-child,
+    .source-links a:nth-child(3) { border-right: 0; border-bottom: 1px solid rgb(255 255 255 / .12); padding: 1.2rem 0; }
+    .source-links a:last-child { border-bottom: 0; }
+  }
+</style>

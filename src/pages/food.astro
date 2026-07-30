@@ -1,0 +1,241 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { restaurants, site } from "../data/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "竹島周辺のランチ・グルメ",
+  itemListElement: restaurants.map((restaurant, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Restaurant",
+      name: restaurant.name,
+      address: restaurant.address,
+      priceRange: restaurant.budget
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title="竹島周辺のランチ・グルメ"
+  description="竹島園地周辺で食べたい、ガマゴリうどん、海鮮、ホテルランチ、眺望のよい喫茶などを旅行者向けに紹介。"
+  image="/images/classic-hotel.webp"
+  jsonLd={jsonLd}
+>
+  <PageHero
+    title="海辺のあとに、蒲郡の味。"
+    lead="あさりのうどん、三河湾の魚、景色を望むホテルの食事。竹島散歩の前後に選びやすい五つの候補をまとめました。"
+    image="/images/classic-hotel.webp"
+    imageAlt="緑に囲まれた蒲郡クラシックホテル"
+    current="周辺グルメ"
+    position="center 42%"
+  />
+
+  <section class="section-space-sm food-intro">
+    <div class="container-site intro-grid">
+      <SectionHeading
+        eyebrow="EAT AROUND TAKESHIMA"
+        title="食べる時間も、旅程の一部に。"
+        lead="昼どきは混みやすく、麺や魚が売り切れる店もあります。先に食べるか、竹島を歩いてから食べるかを決め、営業時間に余裕を持ってください。"
+      />
+      <div class="choice-grid" data-reveal>
+        <div><span>LOCAL</span><strong>蒲郡らしさ</strong><p>あさり、地魚、深海魚</p></div>
+        <div><span>VIEW</span><strong>景色を楽しむ</strong><p>ホテルランチ、喫茶</p></div>
+        <div><span>CASUAL</span><strong>気軽に入る</strong><p>うどん、魚料理</p></div>
+        <div><span>SPECIAL</span><strong>記念日に</strong><p>会席、フレンチ、鉄板焼</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="restaurant-section">
+    <div class="container-site restaurant-list">
+      {restaurants.map((restaurant, index) => (
+        <article class="restaurant-card" data-reveal>
+          <div class="restaurant-card__number"><span>0{index + 1}</span><small>{restaurant.category}</small></div>
+          <div class="restaurant-card__main">
+            <p class="restaurant-card__lead">{restaurant.lead}</p>
+            <h2>{restaurant.name}</h2>
+            <p class="restaurant-card__description">{restaurant.description}</p>
+            <div class="restaurant-card__tags">{restaurant.tags.map((tag) => <span>{tag}</span>)}</div>
+          </div>
+          <dl class="restaurant-card__details">
+            <div><dt>営業時間目安</dt><dd>{restaurant.hours}</dd></div>
+            <div><dt>休み</dt><dd>{restaurant.closed}</dd></div>
+            <div><dt>予算</dt><dd>{restaurant.budget}</dd></div>
+            <div><dt>住所</dt><dd>{restaurant.address}</dd></div>
+          </dl>
+          <button class="address-copy" type="button" data-copy-value={restaurant.address}>
+            住所をコピー
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+          </button>
+        </article>
+      ))}
+    </div>
+    <p class="container-site restaurant-note">掲載内容は{site.updatedAt}時点の確認情報をもとにした目安です。臨時休業、貸切、売り切れ、季節営業、料金変更があります。現地の最新案内を優先してください。</p>
+  </section>
+
+  <section class="section-space signature-section">
+    <div class="container-site signature-grid">
+      <div class="signature-copy">
+        <p class="eyebrow" data-reveal>LOCAL SPECIALTY</p>
+        <h2 class="section-title" data-reveal>まず一杯なら、<br />ガマゴリうどん。</h2>
+        <p class="section-lead" data-reveal>
+          蒲郡のご当地うどんは、あさりの旨みを生かした一杯。店ごとにだしや具材の個性があり、竹島周辺では「やをよし」の竹島うどんが旅程に入れやすい定番です。
+        </p>
+        <div class="signature-points" data-reveal>
+          <span>あさり</span><i>＋</i><span>だし</span><i>＋</i><span>手打ち麺</span>
+        </div>
+        <p class="signature-note">麺やあさりがなくなり次第、早めに受付を終える場合があります。昼のピークを少し外すと動きやすくなります。</p>
+      </div>
+      <div class="signature-art" data-reveal aria-label="ガマゴリうどんを表現したイラスト">
+        <svg viewBox="0 0 640 640" aria-hidden="true">
+          <circle cx="320" cy="320" r="280" fill="#e7ded0"></circle>
+          <ellipse cx="320" cy="395" rx="225" ry="110" fill="#173b57" opacity=".14"></ellipse>
+          <path d="M116 283h408l-44 214c-8 39-43 67-83 67H243c-40 0-75-28-83-67Z" fill="#faf8f2" stroke="#173b57" stroke-width="8"></path>
+          <ellipse cx="320" cy="285" rx="204" ry="86" fill="#d9b36c" stroke="#173b57" stroke-width="8"></ellipse>
+          <path d="M175 280c50-36 95 35 145 0s95 35 145 0" fill="none" stroke="#f3efe5" stroke-width="18" stroke-linecap="round"></path>
+          <path d="M190 305c42-31 82 30 125 0s83 30 125 0" fill="none" stroke="#f3efe5" stroke-width="16" stroke-linecap="round"></path>
+          <path d="M230 238c-30 12-43 45-25 69 21 28 63 13 69-22 4-25-19-57-44-47Z" fill="#d6c7ae" stroke="#9d3627" stroke-width="6"></path>
+          <path d="M400 240c29 13 40 47 21 70-23 26-64 9-67-26-2-25 22-56 46-44Z" fill="#d6c7ae" stroke="#9d3627" stroke-width="6"></path>
+          <path d="M300 230c-10-46 33-76 54-32 11 24-13 54-54 32Z" fill="#315848"></path>
+          <path d="M268 225c-4-35 29-51 43-20 7 17-13 37-43 20Z" fill="#315848" opacity=".85"></path>
+          <path d="M220 455h200" stroke="#b74632" stroke-width="8" stroke-linecap="round"></path>
+          <path d="M265 480h110" stroke="#b74632" stroke-width="8" stroke-linecap="round"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space view-section">
+    <div class="container-site view-grid">
+      <div class="view-photo image-frame" data-reveal><img src="/images/classic-hotel.webp" alt="蒲郡クラシックホテルの外観" loading="lazy" /></div>
+      <div class="view-copy">
+        <p class="eyebrow" data-reveal>A MEAL WITH A VIEW</p>
+        <h2 class="section-title" data-reveal>景色を味わうなら、<br />高台と海辺のホテルへ。</h2>
+        <p class="section-lead" data-reveal>
+          蒲郡クラシックホテルは高台から竹島を望み、ホテル竹島は海辺に近い眺めを楽しめます。食事だけでなく、喫茶や休憩を組み合わせると夕景までの時間を心地よく過ごせます。
+        </p>
+        <div class="view-comparison" data-reveal>
+          <article><h3>高台のクラシックホテル</h3><p>歴史ある建物、俯瞰の景色、フレンチ・鉄板焼・ティーラウンジ。</p></article>
+          <article><h3>海辺のホテル竹島</h3><p>園地から移動しやすく、洋食と日本料理を選びやすい。</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space meal-plan-section">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="MEAL PLANNING"
+        title="食事を入れる三つのタイミング。"
+        lead="混雑と空腹で旅の印象を崩さないよう、到着時刻から食べるタイミングを先に決めておきましょう。"
+      />
+      <div class="meal-plan-grid">
+        <article data-reveal><span>11:00</span><h3>先に昼食</h3><p>昼前に到着したら先に食べ、午後を園地・神社・水族館に。売り切れを避けたい日に。</p></article>
+        <article data-reveal data-reveal-delay="1"><span>12:30</span><h3>散歩のあと</h3><p>朝に竹島を歩き、混雑が落ち着き始めた頃に食事。体力と天候を見て調整しやすい。</p></article>
+        <article data-reveal data-reveal-delay="2"><span>15:00</span><h3>喫茶で夕景待ち</h3><p>遅めの喫茶や軽食を入れ、日没前に園地へ戻る。写真コースとの相性がよい。</p></article>
+      </div>
+      <div class="meal-plan-cta" data-reveal><p>食事と一緒に回る順番を確認</p><a class="btn-primary" href="/courses/">モデルコースを見る</a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .food-intro { background: #faf8f2; }
+  .intro-grid { display: grid; grid-template-columns: 1fr .85fr; gap: clamp(3rem, 9vw, 8rem); align-items: end; }
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgb(23 59 87 / .1); border-radius: 1.3rem; background: #f3efe5; }
+  .choice-grid div { padding: 1.2rem; border-right: 1px solid rgb(23 59 87 / .1); border-bottom: 1px solid rgb(23 59 87 / .1); }
+  .choice-grid div:nth-child(2n) { border-right: 0; }
+  .choice-grid div:nth-child(n + 3) { border-bottom: 0; }
+  .choice-grid span { color: #b74632; font-size: .56rem; font-weight: 800; letter-spacing: .16em; }
+  .choice-grid strong { display: block; margin-top: .35rem; color: #173b57; font-family: var(--serif); font-size: 1rem; }
+  .choice-grid p { margin: .15rem 0 0; color: rgb(34 38 34 / .5); font-size: .68rem; }
+
+  .restaurant-section { background: #f3efe5; padding-bottom: clamp(5rem, 10vw, 9rem); }
+  .restaurant-list { display: grid; }
+  .restaurant-card { position: relative; display: grid; grid-template-columns: 160px minmax(260px, 1fr) minmax(280px, .9fr) auto; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; border-top: 1px solid rgb(23 59 87 / .14); padding-block: clamp(2.2rem, 5vw, 4rem); }
+  .restaurant-card:last-child { border-bottom: 1px solid rgb(23 59 87 / .14); }
+  .restaurant-card__number { display: grid; }
+  .restaurant-card__number > span { color: rgb(23 59 87 / .18); font-family: var(--serif); font-size: clamp(3.5rem, 6vw, 5.5rem); line-height: 1; }
+  .restaurant-card__number small { margin-top: .5rem; color: #9d3627; font-size: .63rem; font-weight: 800; line-height: 1.6; }
+  .restaurant-card__lead { margin-bottom: .35rem; color: #315848; font-size: .7rem; font-weight: 800; }
+  .restaurant-card__main h2 { margin-bottom: .7rem; color: #173b57; font-family: var(--serif); font-size: clamp(1.55rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.4; }
+  .restaurant-card__description { color: rgb(34 38 34 / .63); font-size: .77rem; line-height: 1.9; }
+  .restaurant-card__tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+  .restaurant-card__tags span { border: 1px solid rgb(23 59 87 / .13); border-radius: 999px; padding: .3rem .6rem; color: rgb(23 59 87 / .62); font-size: .6rem; }
+  .restaurant-card__details { display: grid; margin: 0; }
+  .restaurant-card__details div { display: grid; grid-template-columns: 6.2rem 1fr; gap: .7rem; border-bottom: 1px solid rgb(23 59 87 / .09); padding: .55rem 0; }
+  .restaurant-card__details div:first-child { border-top: 1px solid rgb(23 59 87 / .09); }
+  .restaurant-card__details dt { color: rgb(34 38 34 / .45); font-size: .62rem; font-weight: 800; }
+  .restaurant-card__details dd { margin: 0; color: rgb(34 38 34 / .7); font-size: .68rem; line-height: 1.65; }
+  .address-copy { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid rgb(23 59 87 / .16); border-radius: 999px; background: transparent; padding: .55rem .75rem; color: #173b57; font-size: .62rem; font-weight: 800; cursor: pointer; }
+  .address-copy:hover { background: #173b57; color: white; }
+  .address-copy svg { width: .9rem; height: .9rem; }
+  .restaurant-note { margin-top: 1.2rem; color: rgb(34 38 34 / .45); font-size: .64rem; line-height: 1.8; }
+
+  .signature-section { background: #dfe9e0; }
+  .signature-grid { display: grid; grid-template-columns: .95fr 1fr; gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .signature-points { display: flex; align-items: center; gap: .8rem; margin-top: 2rem; color: #173b57; font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.45rem); }
+  .signature-points i { color: #b74632; font-family: var(--sans); font-size: .9rem; font-style: normal; }
+  .signature-note { margin-top: 1.5rem; border-left: 2px solid #b74632; padding-left: 1rem; color: rgb(34 38 34 / .56); font-size: .72rem; line-height: 1.8; }
+  .signature-art { display: grid; place-items: center; }
+  .signature-art svg { width: min(100%, 580px); filter: drop-shadow(0 35px 60px rgb(23 59 87 / .14)); }
+
+  .view-section { background: #faf8f2; }
+  .view-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .view-photo { height: clamp(480px, 60vw, 720px); border-radius: 10rem 1.5rem 1.5rem 1.5rem; }
+  .view-comparison { margin-top: 2rem; border-top: 1px solid rgb(23 59 87 / .14); }
+  .view-comparison article { border-bottom: 1px solid rgb(23 59 87 / .1); padding: .9rem 0; }
+  .view-comparison h3 { margin-bottom: .25rem; color: #173b57; font-family: var(--serif); font-size: 1rem; }
+  .view-comparison p { margin: 0; color: rgb(34 38 34 / .58); font-size: .73rem; line-height: 1.8; }
+
+  .meal-plan-section { background: #173b57; color: white; }
+  .meal-plan-section :global(.eyebrow) { color: #e7b7a9; }
+  .meal-plan-section :global(.section-title) { color: white; }
+  .meal-plan-section :global(.section-lead) { color: rgb(255 255 255 / .62); }
+  .meal-plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid rgb(255 255 255 / .14); border-bottom: 1px solid rgb(255 255 255 / .14); }
+  .meal-plan-grid article { border-right: 1px solid rgb(255 255 255 / .12); padding: 2rem clamp(1rem, 3vw, 2.5rem); }
+  .meal-plan-grid article:first-child { padding-left: 0; }
+  .meal-plan-grid article:last-child { border-right: 0; }
+  .meal-plan-grid span { color: #e7b7a9; font-family: var(--serif); font-size: 1rem; }
+  .meal-plan-grid h3 { margin: .7rem 0 .5rem; font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+  .meal-plan-grid p { margin: 0; color: rgb(255 255 255 / .58); font-size: .75rem; line-height: 1.9; }
+  .meal-plan-cta { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 2.2rem; }
+  .meal-plan-cta p { margin: 0; color: rgb(255 255 255 / .6); font-size: .75rem; }
+  .meal-plan-cta a { border-color: white; background: white; color: #173b57; }
+
+  @media (max-width: 980px) {
+    .intro-grid,
+    .signature-grid,
+    .view-grid { grid-template-columns: 1fr; }
+    .restaurant-card { grid-template-columns: 110px 1fr; }
+    .restaurant-card__details { grid-column: 2; }
+    .address-copy { grid-column: 2; justify-self: start; }
+    .signature-copy,
+    .view-copy { max-width: 720px; }
+  }
+
+  @media (max-width: 680px) {
+    .choice-grid { grid-template-columns: 1fr; }
+    .choice-grid div,
+    .choice-grid div:nth-child(2n),
+    .choice-grid div:nth-child(n + 3) { border-right: 0; border-bottom: 1px solid rgb(23 59 87 / .1); }
+    .choice-grid div:last-child { border-bottom: 0; }
+    .restaurant-card { grid-template-columns: 1fr; gap: 1.3rem; }
+    .restaurant-card__number { grid-template-columns: auto 1fr; align-items: end; gap: 1rem; }
+    .restaurant-card__number > span { font-size: 3.5rem; }
+    .restaurant-card__details,
+    .address-copy { grid-column: auto; }
+    .meal-plan-grid { grid-template-columns: 1fr; }
+    .meal-plan-grid article,
+    .meal-plan-grid article:first-child { border-right: 0; border-bottom: 1px solid rgb(255 255 255 / .12); padding: 1.5rem 0; }
+    .meal-plan-grid article:last-child { border-bottom: 0; }
+    .meal-plan-cta { align-items: stretch; flex-direction: column; }
+    .meal-plan-cta a { width: 100%; }
+  }
+</style>

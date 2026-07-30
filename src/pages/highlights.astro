@@ -1,0 +1,591 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { site } from "../data/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "竹島園地・竹島の見どころ",
+  itemListElement: [
+    "竹島園地",
+    "竹島橋",
+    "八百富神社",
+    "八百富神社社叢",
+    "島の外周",
+    "俊成苑"
+  ].map((name, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name
+  }))
+};
+---
+
+<BaseLayout
+  title="竹島園地・竹島の見どころ"
+  description="竹島園地、全長387mの竹島橋、八百富神社、社叢、島の外周、俊成苑を歩くための見どころガイド。"
+  image="/images/bridge-wide.webp"
+  jsonLd={jsonLd}
+>
+  <PageHero
+    title="海辺から、緑の島へ。"
+    lead="竹島園地の芝生から竹島橋を渡り、八百富神社の静かな社叢へ。短い散歩のなかで移り変わる六つの風景をご案内します。"
+    image="/images/bridge-wide.webp"
+    imageAlt="三河湾に架かる竹島橋と緑の竹島"
+    current="見どころ"
+    position="center 56%"
+  />
+
+  <section class="section-space intro-section">
+    <div class="container-site intro-grid">
+      <div>
+        <p class="eyebrow" data-reveal>WALK THE ISLAND</p>
+        <h2 class="section-title" data-reveal>近いからこそ、<br />急がず歩きたい。</h2>
+      </div>
+      <div class="intro-copy" data-reveal data-reveal-delay="1">
+        <p>
+          竹島は海岸からおよそ400メートル。数字だけならすぐそこですが、園地から橋へ、橋から鳥居へ、鳥居から社叢へと進むたび、音と光と空気が変わります。
+        </p>
+        <p>
+          このページでは「何があるか」だけでなく、どこで立ち止まり、どの順番で感じると竹島らしさが伝わるかをまとめました。
+        </p>
+      </div>
+    </div>
+    <div class="container-site scene-index" data-reveal>
+      <a href="#enchi"><span>01</span>竹島園地</a>
+      <a href="#bridge"><span>02</span>竹島橋</a>
+      <a href="#shrine"><span>03</span>八百富神社</a>
+      <a href="#nature"><span>04</span>社叢と自然</a>
+      <a href="#shore"><span>05</span>島の外周</a>
+      <a href="#shunzei"><span>06</span>俊成苑</a>
+    </div>
+  </section>
+
+  <section class="scene scene--light" id="enchi">
+    <div class="container-site scene-grid">
+      <div class="scene-image image-frame" data-reveal>
+        <img src="/images/bridge-seaside.webp" alt="竹島園地の海辺と竹島橋" loading="lazy" />
+      </div>
+      <div class="scene-copy" data-reveal data-reveal-delay="1">
+        <p class="scene-number">SCENE 01</p>
+        <p class="scene-kana">たけしまえんち</p>
+        <h2>竹島園地</h2>
+        <h3>旅の前後に、海を眺める余白。</h3>
+        <p>
+          芝生と海辺の遊歩道が広がる、竹島散歩の起点。橋や島を正面から見渡せるため、まず全景をつかむ場所としても、歩き終えたあとに休む場所としても向いています。
+        </p>
+        <dl class="scene-points">
+          <div><dt>過ごし方</dt><dd>散歩、休憩、全景撮影</dd></div>
+          <div><dt>目安</dt><dd>15〜30分</dd></div>
+          <div><dt>歩きやすさ</dt><dd>比較的平坦</dd></div>
+        </dl>
+        <div class="scene-tip"><strong>立ち止まりたい瞬間</strong><span>芝生の端から、橋・鳥居・島が一つに重なる構図を探してみてください。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene scene--blue" id="bridge">
+    <div class="container-site scene-grid scene-grid--reverse">
+      <div class="scene-image image-frame" data-reveal>
+        <img src="/images/torii-bridge.webp" alt="鳥居の先にまっすぐ伸びる竹島橋" loading="lazy" />
+      </div>
+      <div class="scene-copy" data-reveal data-reveal-delay="1">
+        <p class="scene-number">SCENE 02</p>
+        <p class="scene-kana">たけしまばし</p>
+        <h2>竹島橋</h2>
+        <h3>海の上を歩く、387メートル。</h3>
+        <p>
+          竹島と本土を結ぶ一本の橋。視界を遮るものが少なく、歩くほど陸の音が遠ざかります。橋上は園地より風を強く感じるため、帽子や傘、冬の防寒には注意が必要です。
+        </p>
+        <dl class="scene-points">
+          <div><dt>距離</dt><dd>全長387m</dd></div>
+          <div><dt>片道</dt><dd>徒歩約5〜8分</dd></div>
+          <div><dt>おすすめ</dt><dd>朝・日没前後</dd></div>
+        </dl>
+        <div class="scene-tip"><strong>橋の歩き方</strong><span>中央で急に立ち止まらず、後ろから来る人を確かめて端に寄って景色を楽しみましょう。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene scene--washi" id="shrine">
+    <div class="container-site scene-grid">
+      <div class="scene-image image-frame" data-reveal>
+        <img src="/images/yaotomi-shrine.webp" alt="竹島に鎮座する八百富神社" loading="lazy" />
+      </div>
+      <div class="scene-copy" data-reveal data-reveal-delay="1">
+        <p class="scene-number">SCENE 03</p>
+        <p class="scene-kana">やおとみじんじゃ</p>
+        <h2>八百富神社</h2>
+        <h3>海を渡った先の、祈りの場所。</h3>
+        <p>
+          竹島の中央に鎮座し、開運・安産・縁結びなどの信仰を集める神社。島内には複数の社があり、石段を上がりながら順に参拝できます。境内では大声や通路を塞ぐ撮影を控え、静かに過ごしてください。
+        </p>
+        <dl class="scene-points">
+          <div><dt>社務所</dt><dd>9:00〜17:00目安</dd></div>
+          <div><dt>御朱印</dt><dd>16:30頃まで目安</dd></div>
+          <div><dt>足元</dt><dd>石段あり</dd></div>
+        </dl>
+        <div class="scene-tip"><strong>時間に余裕を</strong><span>授与品や御朱印が目的なら、祭事や受付変更に備えて早めの参拝がおすすめです。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene scene--green" id="nature">
+    <div class="container-site scene-grid scene-grid--reverse">
+      <div class="scene-image image-frame" data-reveal>
+        <img src="/images/shrine-forest.webp" alt="八百富神社の濃い緑に包まれた参道" loading="lazy" />
+      </div>
+      <div class="scene-copy" data-reveal data-reveal-delay="1">
+        <p class="scene-number">SCENE 04</p>
+        <p class="scene-kana">しゃそう</p>
+        <h2>八百富神社社叢</h2>
+        <h3>海辺とは別世界の、濃い緑。</h3>
+        <p>
+          島を覆う暖地性植物の社叢は、国の天然記念物に指定されています。橋の開放的な景色から一転し、木々の影、葉の重なり、鳥の声が近くなる場所です。植物を採ったり、立入禁止区域へ入ったりしないでください。
+        </p>
+        <dl class="scene-points">
+          <div><dt>文化財名</dt><dd>八百富神社社叢</dd></div>
+          <div><dt>楽しみ</dt><dd>木漏れ日、植生、静けさ</dd></div>
+          <div><dt>守ること</dt><dd>採取・踏み荒らし禁止</dd></div>
+        </dl>
+        <div class="scene-tip"><strong>耳でも歩く</strong><span>写真だけでなく、風で葉が動く音や海の音が遠くなる変化も感じてみてください。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene scene--sand" id="shore">
+    <div class="container-site scene-grid">
+      <div class="scene-image image-frame" data-reveal>
+        <img src="/images/takeshima-distance.webp" alt="三河湾の海に浮かぶ竹島の遠景" loading="lazy" />
+      </div>
+      <div class="scene-copy" data-reveal data-reveal-delay="1">
+        <p class="scene-number">SCENE 05</p>
+        <p class="scene-kana">しまのそとまわり</p>
+        <h2>島の外周</h2>
+        <h3>岩礁のそばで、三河湾を近くに。</h3>
+        <p>
+          参拝後に海側へ下りると、岩場や海岸沿いの道を通って島を巡れます。舗装された公園とは違い、濡れた岩、段差、波しぶきがあります。満潮や強風、荒天時は無理に進まない判断が大切です。
+        </p>
+        <dl class="scene-points">
+          <div><dt>一周目安</dt><dd>約30分</dd></div>
+          <div><dt>靴</dt><dd>滑りにくいもの</dd></div>
+          <div><dt>避けたい日</dt><dd>強風・高波・雷</dd></div>
+        </dl>
+        <div class="scene-tip"><strong>戻る選択も正解</strong><span>足元や海の様子に不安があるときは、来た道を戻り、橋と園地の景色を楽しんでください。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene scene--light" id="shunzei">
+    <div class="container-site shunzei-grid">
+      <div class="shunzei-copy" data-reveal>
+        <p class="scene-number">SCENE 06</p>
+        <p class="scene-kana">しゅんぜいえん</p>
+        <h2>俊成苑</h2>
+        <h3>歌人の記憶と、海辺の散歩。</h3>
+        <p>
+          園地周辺には、平安時代末期の歌人・藤原俊成にまつわる苑地と像があります。竹島と八百富神社の由緒に触れながら、海を眺めた人々の時間を重ねられる小さな文化スポットです。
+        </p>
+        <p>
+          華やかな施設ではありませんが、竹島の旅を「景色」から「物語」へ広げてくれます。橋へ急ぐ前、または帰り道に立ち寄るのがおすすめです。
+        </p>
+      </div>
+      <blockquote data-reveal data-reveal-delay="1">
+        <span aria-hidden="true">和</span>
+        <p>海の景色に、歌と祈りの記憶を重ねる。</p>
+        <small>SHUNZEI GARDEN · GAMAGORI</small>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section-space practical-section">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="BEFORE YOU WALK"
+        title="歩ける範囲は、天候と体力で決める。"
+        lead="園地と橋は比較的歩きやすい一方、神社の石段と島の外周は自然の地形です。全員が同じ場所まで行く必要はありません。"
+      />
+      <div class="practical-grid">
+        <article data-reveal>
+          <span>01</span>
+          <h3>車いす・ベビーカー</h3>
+          <p>園地と橋前を中心に。島内の神社へは石段があり、外周は段差と岩場を含みます。</p>
+        </article>
+        <article data-reveal data-reveal-delay="1">
+          <span>02</span>
+          <h3>子どもと歩く</h3>
+          <p>橋上と海辺では手を離さず、走らないように。疲れたら園地へ戻り、水族館と組み合わせて。</p>
+        </article>
+        <article data-reveal data-reveal-delay="2">
+          <span>03</span>
+          <h3>風・雨・潮</h3>
+          <p>橋上は風を受けやすく、島の外周は濡れると滑ります。荒天時は渡島しない判断を。</p>
+        </article>
+        <article data-reveal data-reveal-delay="3">
+          <span>04</span>
+          <h3>参拝と撮影</h3>
+          <p>境内では祈りの場を優先し、通路を塞がないこと。立入表示と現地の案内に従ってください。</p>
+        </article>
+      </div>
+      <div class="practical-cta" data-reveal>
+        <div><p>所要時間に合わせて歩きたい方へ</p><h3>60分・半日・夕景の三つのコース</h3></div>
+        <a class="btn-primary" href="/courses/">モデルコースを見る</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section" aria-label="竹島の写真">
+    <div class="gallery-grid">
+      <figure><img src="/images/bridge-wide.webp" alt="海に伸びる竹島橋" loading="lazy" /></figure>
+      <figure><img src="/images/yaotomi-shrine.webp" alt="八百富神社の社殿" loading="lazy" /></figure>
+      <figure><img src="/images/shrine-forest.webp" alt="竹島の社叢" loading="lazy" /></figure>
+    </div>
+    <div class="container-site gallery-caption">
+      <span>SEA</span><i></i><span>BRIDGE</span><i></i><span>FOREST</span><i></i><span>PRAYER</span>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro-section {
+    background: #faf8f2;
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1fr;
+    gap: clamp(3rem, 9vw, 8rem);
+    align-items: start;
+  }
+
+  .intro-copy {
+    padding-top: 2.8rem;
+    color: rgb(34 38 34 / 0.68);
+    font-size: 1rem;
+    line-height: 2.15;
+  }
+
+  .intro-copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  .scene-index {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    border-top: 1px solid rgb(23 59 87 / 0.12);
+    border-bottom: 1px solid rgb(23 59 87 / 0.12);
+  }
+
+  .scene-index a {
+    display: grid;
+    gap: 0.2rem;
+    border-right: 1px solid rgb(23 59 87 / 0.1);
+    padding: 1rem 0.8rem;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .scene-index a:last-child {
+    border-right: 0;
+  }
+
+  .scene-index a:hover {
+    background: #173b57;
+    color: white;
+  }
+
+  .scene-index span {
+    color: #b74632;
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+
+  .scene {
+    padding-block: clamp(5rem, 11vw, 10rem);
+  }
+
+  .scene--light { background: #f3efe5; }
+  .scene--washi { background: #faf8f2; }
+  .scene--sand { background: #ece5d8; }
+  .scene--blue { background: #dfecef; }
+  .scene--green { background: #dfe7df; }
+
+  .scene-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.82fr);
+    gap: clamp(3rem, 9vw, 8rem);
+    align-items: center;
+  }
+
+  .scene-grid--reverse .scene-image {
+    order: 2;
+  }
+
+  .scene-image {
+    height: clamp(480px, 61vw, 740px);
+  }
+
+  .scene--blue .scene-image,
+  .scene--green .scene-image {
+    border-radius: 10rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .scene-number {
+    margin-bottom: 0.3rem;
+    color: #b74632;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+  }
+
+  .scene-kana {
+    margin-bottom: 0.4rem;
+    color: rgb(23 59 87 / 0.45);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .scene-copy h2,
+  .shunzei-copy h2 {
+    margin-bottom: 0.5rem;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .scene-copy h3,
+  .shunzei-copy h3 {
+    margin-bottom: 1.5rem;
+    color: #29493d;
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 2vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.7;
+  }
+
+  .scene-copy > p:not(.scene-number):not(.scene-kana),
+  .shunzei-copy > p:not(.scene-number):not(.scene-kana) {
+    color: rgb(34 38 34 / 0.68);
+    line-height: 2.1;
+  }
+
+  .scene-points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 2rem 0;
+    border-top: 1px solid rgb(23 59 87 / 0.14);
+    border-bottom: 1px solid rgb(23 59 87 / 0.14);
+  }
+
+  .scene-points div {
+    border-right: 1px solid rgb(23 59 87 / 0.1);
+    padding: 0.9rem 0.7rem;
+  }
+
+  .scene-points div:first-child { padding-left: 0; }
+  .scene-points div:last-child { border-right: 0; }
+  .scene-points dt { color: rgb(34 38 34 / 0.45); font-size: 0.6rem; font-weight: 800; }
+  .scene-points dd { margin: 0.25rem 0 0; color: #173b57; font-family: var(--serif); font-size: 0.88rem; }
+
+  .scene-tip {
+    border-left: 2px solid #b74632;
+    padding: 0.3rem 0 0.3rem 1rem;
+  }
+
+  .scene-tip strong,
+  .scene-tip span {
+    display: block;
+  }
+
+  .scene-tip strong {
+    color: #9d3627;
+    font-size: 0.72rem;
+  }
+
+  .scene-tip span {
+    margin-top: 0.2rem;
+    color: rgb(34 38 34 / 0.58);
+    font-size: 0.74rem;
+    line-height: 1.8;
+  }
+
+  .shunzei-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: clamp(3rem, 10vw, 9rem);
+    align-items: center;
+  }
+
+  .shunzei-copy {
+    max-width: 650px;
+  }
+
+  .shunzei-grid blockquote {
+    position: relative;
+    min-height: 430px;
+    margin: 0;
+    display: grid;
+    align-content: center;
+    border: 1px solid rgb(183 70 50 / 0.26);
+    border-radius: 50% 50% 2rem 2rem;
+    padding: clamp(2rem, 6vw, 5rem);
+    color: #173b57;
+    text-align: center;
+  }
+
+  .shunzei-grid blockquote > span {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    color: rgb(183 70 50 / 0.1);
+    font-family: var(--serif);
+    font-size: 10rem;
+    transform: translateX(-50%);
+  }
+
+  .shunzei-grid blockquote p {
+    position: relative;
+    margin-bottom: 1.5rem;
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    line-height: 1.8;
+  }
+
+  .shunzei-grid blockquote small {
+    color: rgb(23 59 87 / 0.45);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+  }
+
+  .practical-section {
+    background: #173b57;
+    color: white;
+  }
+
+  .practical-section :global(.eyebrow) { color: #e7b7a9; }
+  .practical-section :global(.section-title) { color: white; }
+  .practical-section :global(.section-lead) { color: rgb(255 255 255 / 0.63); }
+
+  .practical-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+    border-bottom: 1px solid rgb(255 255 255 / 0.14);
+  }
+
+  .practical-grid article {
+    border-right: 1px solid rgb(255 255 255 / 0.12);
+    padding: 2rem clamp(1rem, 2.5vw, 2rem);
+  }
+
+  .practical-grid article:first-child { padding-left: 0; }
+  .practical-grid article:last-child { border-right: 0; }
+  .practical-grid span { color: #e7b7a9; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em; }
+  .practical-grid h3 { margin: 0.8rem 0 0.7rem; font-family: var(--serif); font-size: 1.2rem; font-weight: 500; }
+  .practical-grid p { margin: 0; color: rgb(255 255 255 / 0.58); font-size: 0.76rem; line-height: 1.9; }
+
+  .practical-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 3rem;
+    border-radius: 1.4rem;
+    background: rgb(255 255 255 / 0.07);
+    padding: 1.5rem 1.7rem;
+  }
+
+  .practical-cta p { margin: 0; color: rgb(255 255 255 / 0.48); font-size: 0.7rem; }
+  .practical-cta h3 { margin: 0.2rem 0 0; font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+  .practical-cta a { flex: 0 0 auto; border-color: white; background: white; color: #173b57; }
+
+  .gallery-section {
+    background: #102c40;
+    color: white;
+    padding-bottom: 2rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.8fr 0.95fr;
+    height: clamp(320px, 48vw, 680px);
+  }
+
+  .gallery-grid figure {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .gallery-grid figure:nth-child(2) { border-right: 2px solid #102c40; border-left: 2px solid #102c40; }
+  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-grid figure:nth-child(2) img { object-position: center 42%; }
+
+  .gallery-caption {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.6rem;
+    color: rgb(255 255 255 / 0.48);
+    font-size: 0.57rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .gallery-caption i { height: 1px; flex: 1; background: rgb(255 255 255 / 0.15); }
+
+  @media (max-width: 900px) {
+    .intro-grid,
+    .scene-grid,
+    .shunzei-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .scene-grid--reverse .scene-image { order: 0; }
+    .scene-copy { max-width: 720px; }
+    .scene-index { grid-template-columns: repeat(3, 1fr); }
+    .scene-index a:nth-child(3) { border-right: 0; }
+    .scene-index a:nth-child(n + 4) { border-top: 1px solid rgb(23 59 87 / 0.1); }
+    .practical-grid { grid-template-columns: 1fr 1fr; }
+    .practical-grid article:nth-child(2) { border-right: 0; }
+    .practical-grid article:nth-child(n + 3) { border-top: 1px solid rgb(255 255 255 / 0.12); }
+    .practical-grid article:nth-child(3) { padding-left: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .scene-index { grid-template-columns: 1fr 1fr; }
+    .scene-index a:nth-child(2n) { border-right: 0; }
+    .scene-index a:nth-child(3) { border-right: 1px solid rgb(23 59 87 / 0.1); }
+    .scene-index a:nth-child(n + 3) { border-top: 1px solid rgb(23 59 87 / 0.1); }
+    .scene-image { height: 460px; }
+    .scene-points { grid-template-columns: 1fr; }
+    .scene-points div,
+    .scene-points div:first-child { border-right: 0; border-bottom: 1px solid rgb(23 59 87 / 0.1); padding: 0.7rem 0; }
+    .scene-points div:last-child { border-bottom: 0; }
+    .shunzei-grid blockquote { min-height: 360px; }
+    .practical-grid { grid-template-columns: 1fr; }
+    .practical-grid article,
+    .practical-grid article:first-child,
+    .practical-grid article:nth-child(3) { border-right: 0; border-bottom: 1px solid rgb(255 255 255 / 0.12); padding: 1.5rem 0; }
+    .practical-grid article:last-child { border-bottom: 0; }
+    .practical-cta { align-items: stretch; flex-direction: column; }
+    .practical-cta a { width: 100%; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; height: 520px; }
+    .gallery-grid figure:first-child { grid-column: 1 / -1; }
+    .gallery-grid figure:nth-child(2) { border-top: 2px solid #102c40; border-right: 1px solid #102c40; border-left: 0; }
+    .gallery-grid figure:nth-child(3) { border-top: 2px solid #102c40; border-left: 1px solid #102c40; }
+    .gallery-caption span { display: none; }
+  }
+</style>

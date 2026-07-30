@@ -1,0 +1,343 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import LocalMap from "../components/LocalMap.astro";
+import { site } from "../data/site";
+
+const mapUrl = "https://www.google.com/maps/dir/?api=1&destination=34.8151165%2C137.2335325&destination_place_id=ChIJcWqk7SHHBGAQ69vhWpAZGrI";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Place",
+  name: "竹島園地",
+  address: {
+    "@type": "PostalAddress",
+    postalCode: "443-0031",
+    addressRegion: "愛知県",
+    addressLocality: "蒲郡市",
+    streetAddress: "竹島町31",
+    addressCountry: "JP"
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.coordinates.latitude,
+    longitude: site.coordinates.longitude
+  },
+  publicAccess: true
+};
+---
+
+<BaseLayout
+  title="竹島園地へのアクセス・駐車場"
+  description="JR蒲郡駅から竹島園地までの徒歩ルート、名古屋・豊橋からの電車、自動車、竹島園地駐車場の料金目安、バリアフリー情報。"
+  image="/images/bridge-seaside.webp"
+  jsonLd={jsonLd}
+>
+  <PageHero
+    title="駅から海へ、約十五分。"
+    lead="JR蒲郡駅南口から竹島園地へ。電車、徒歩、車の行き方と、到着後に迷わないための位置関係をまとめました。"
+    image="/images/bridge-seaside.webp"
+    imageAlt="竹島園地から竹島橋と海を望む風景"
+    current="アクセス"
+    position="center 60%"
+  />
+
+  <section class="section-space-sm access-summary">
+    <div class="container-site summary-grid">
+      <SectionHeading
+        eyebrow="ACCESS SUMMARY"
+        title="蒲郡駅、園地、橋、島。"
+        lead="主要スポットは徒歩圏にまとまっています。駅から海へ向かい、水族館を過ぎると竹島園地と橋が見えてきます。"
+      />
+      <div class="summary-cards" data-reveal>
+        <article><span>STATION</span><strong>JR蒲郡駅</strong><p>南口から徒歩約15分</p></article>
+        <article><span>BUS</span><strong>竹島遊園</strong><p>路線バス約5分目安</p></article>
+        <article><span>TAXI</span><strong>駅から約3分</strong><p>荷物や雨の日に便利</p></article>
+        <article><span>PARKING</span><strong>普通車 約200台</strong><p>時期により有料</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="map-section">
+    <div class="container-site">
+      <div data-reveal><LocalMap /></div>
+      <div class="map-actions" data-reveal>
+        <div><strong>{site.address}</strong><span>緯度 {site.coordinates.latitude}／経度 {site.coordinates.longitude}</span></div>
+        <div>
+          <button class="btn-secondary" type="button" data-copy-value={site.address}>住所をコピー</button>
+          <a class="btn-primary" href={mapUrl} target="_blank" rel="noopener noreferrer">地図アプリで経路を開く</a>
+        </div>
+      </div>
+      <div class="google-map" data-reveal>
+        <div class="google-map__heading">
+          <p class="eyebrow">LOCATION MAP</p>
+          <h2>Googleマップで竹島園地を確認。</h2>
+          <p>蒲郡駅、竹島水族館、駐車場との位置関係を確認してから、利用する交通手段と経路を選べます。</p>
+        </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.6352858056334!2d137.2335325!3d34.815116499999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004c721eda46a71%3A0xb21a19905ae1dbeb!2z56u55bO25ZyS5Zyw!5e0!3m2!1sja!2sjp!4v1785403485939!5m2!1sja!2sjp"
+          width="600"
+          height="450"
+          style="border:0;"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="竹島園地のGoogleマップ"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space train-section" id="train">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="BY TRAIN"
+        title="電車なら、JR蒲郡駅へ。"
+        lead="名古屋方面と豊橋方面のどちらからも東海道本線でアクセスできます。乗換や所要時間は列車種別と時間帯で変わります。"
+      />
+      <div class="train-routes">
+        <article data-reveal>
+          <div class="train-route__head"><span>FROM NAGOYA</span><strong>約45分目安</strong></div>
+          <div class="train-route__line"><b>JR 名古屋駅</b><i></i><em>東海道本線<br />新快速・快速など</em><i></i><b>JR 蒲郡駅</b></div>
+          <p>直通列車を選べる時間帯があります。運行状況と停車駅を当日に確認してください。</p>
+        </article>
+        <article data-reveal data-reveal-delay="1">
+          <div class="train-route__head"><span>FROM TOYOHASHI</span><strong>約15分目安</strong></div>
+          <div class="train-route__line"><b>JR 豊橋駅</b><i></i><em>東海道本線<br />快速・普通など</em><i></i><b>JR 蒲郡駅</b></div>
+          <p>豊橋を拠点に東三河を巡る旅とも組み合わせやすい距離です。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space walk-section" id="walk">
+    <div class="container-site walk-grid">
+      <div class="walk-copy">
+        <p class="eyebrow" data-reveal>FROM THE STATION</p>
+        <h2 class="section-title" data-reveal>蒲郡駅から、海へまっすぐ。</h2>
+        <p class="section-lead" data-reveal>
+          南口を出て竹島方面へ進みます。大きな高低差は少なく、約15分。途中から海の気配が近づき、水族館の先に園地と橋が見えます。
+        </p>
+        <ol class="walk-steps">
+          <li data-reveal><span>01</span><div><h3>蒲郡駅 南口</h3><p>北口と間違えないよう、南口・竹島方面へ。</p></div></li>
+          <li data-reveal><span>02</span><div><h3>竹島入口方面</h3><p>歩道を進み、交差点では案内表示と車に注意。</p></div></li>
+          <li data-reveal><span>03</span><div><h3>竹島水族館</h3><p>水族館が見えたら、園地はすぐ近くです。</p></div></li>
+          <li data-reveal><span>04</span><div><h3>竹島園地・竹島橋</h3><p>芝生側から全景を確認して散歩を始めます。</p></div></li>
+        </ol>
+      </div>
+      <div class="walk-image image-frame" data-reveal><img src="/images/bridge-walk.webp" alt="竹島橋へ向かって歩く人々" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <section class="section-space car-section" id="car">
+    <div class="container-site car-grid">
+      <div>
+        <p class="eyebrow" data-reveal>BY CAR</p>
+        <h2 class="section-title" data-reveal>車は、混雑する時間を避けて。</h2>
+        <p class="section-lead" data-reveal>
+          東名高速道路・音羽蒲郡IC方面から約15〜20分が目安です。行楽期、潮干狩り、祭礼、花火などの日は周辺道路と駐車場が混み合います。
+        </p>
+      </div>
+      <div class="car-routes" data-reveal>
+        <article><span>01</span><h3>音羽蒲郡IC方面</h3><p>三河湾オレンジロード方面を経由して竹島へ。ナビの到着地は「竹島園地駐車場」周辺に。</p></article>
+        <article><span>02</span><h3>国道23号方面</h3><p>蒲郡市街・竹島方面へ。休日は市街地の交差点と駐車場入口で余裕を持って。</p></article>
+        <article><span>03</span><h3>イベント開催日</h3><p>満車、入庫制限、夜間閉鎖が起きることがあります。現地の誘導を優先してください。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space parking-section" id="parking">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="PARKING"
+        title="竹島園地駐車場の目安。"
+        lead="普通車約200台、大型車用区画があります。平日は原則無料ですが、春季や土日祝などは時期により有料です。"
+      />
+      <div class="parking-layout">
+        <div class="parking-table-wrap" data-reveal>
+          <table class="parking-table">
+            <thead><tr><th>時期・曜日</th><th>普通車料金目安</th><th>備考</th></tr></thead>
+            <tbody>
+              <tr><th>平日</th><td>原則無料</td><td>特定期間・行事日は例外あり</td></tr>
+              <tr><th>4月・5月の土日祝</th><td>500円</td><td>春の繁忙期</td></tr>
+              <tr><th>4月27日〜5月8日頃の平日</th><td>500円</td><td>年度により運用確認</td></tr>
+              <tr><th>その他の月の土日祝</th><td>300円</td><td>料金時間 9:00〜17:00目安</td></tr>
+              <tr><th>大型バス</th><td>無料目安</td><td>約14台・事前確認推奨</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="parking-notes" data-reveal data-reveal-delay="1">
+          <h3>駐車前に確認したいこと</h3>
+          <ul>
+            <li>祭礼・花火・イベントによる利用制限</li>
+            <li>料金徴収日と徴収時間</li>
+            <li>満車時の誘導と代替駐車場</li>
+            <li>大型車・電気自動車の利用条件</li>
+            <li>夜間の出庫可否と周辺の安全</li>
+          </ul>
+          <p>料金・台数・運用は変更される場合があります。掲示と係員の案内を優先してください。</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space barrier-section" id="barrier-free">
+    <div class="container-site barrier-grid">
+      <div class="barrier-image image-frame" data-reveal><img src="/images/torii-bridge.webp" alt="鳥居から竹島橋へ続く平坦な道" loading="lazy" /></div>
+      <div class="barrier-copy">
+        <p class="eyebrow" data-reveal>BARRIER-FREE NOTES</p>
+        <h2 class="section-title" data-reveal>行けるところまでで、<br />竹島は楽しめる。</h2>
+        <p class="section-lead" data-reveal>
+          園地と橋は比較的平坦ですが、島内の神社へは石段があり、外周は自然の岩場や段差を含みます。全員が島を一周しなくても、園地、橋前、水族館で海辺の時間を楽しめます。
+        </p>
+        <dl class="barrier-list" data-reveal>
+          <div><dt>車いす・ベビーカー</dt><dd>園地、橋詰、橋の状況を見て無理のない範囲へ。</dd></div>
+          <div><dt>竹島水族館</dt><dd>館内は単層でバリアフリー案内があります。</dd></div>
+          <div><dt>休憩</dt><dd>園地のベンチや芝生、周辺施設を活用。</dd></div>
+          <div><dt>介助</dt><dd>強風時は橋上の移動負担が増すため、予定を変更。</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space before-section" id="before-you-go">
+    <div class="container-site before-card">
+      <div>
+        <p class="eyebrow" data-reveal>BEFORE YOU GO</p>
+        <h2 class="section-title" data-reveal>出発前の五分で、<br />旅を軽くする。</h2>
+      </div>
+      <div class="before-checks">
+        <label data-reveal><input type="checkbox" /><span><strong>天気と風</strong>橋上と海辺は市街地より風を感じます。</span></label>
+        <label data-reveal><input type="checkbox" /><span><strong>歩きやすい靴</strong>石段と岩場へ行くなら滑りにくい靴を。</span></label>
+        <label data-reveal><input type="checkbox" /><span><strong>営業時間</strong>水族館、食事、社務所の受付を確認。</span></label>
+        <label data-reveal><input type="checkbox" /><span><strong>駐車場・行事</strong>祭礼やイベントの日程と規制を確認。</span></label>
+        <label data-reveal><input type="checkbox" /><span><strong>帰りの交通</strong>夕景を見る日は時刻表と明るさを先に確認。</span></label>
+      </div>
+    </div>
+    <p class="container-site updated-note">情報確認日：{site.updatedAt}。運行、料金、道路、施設の状況は当日変更されることがあります。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .access-summary { background: #faf8f2; }
+  .summary-grid { display: grid; grid-template-columns: 1fr .88fr; gap: clamp(3rem, 9vw, 8rem); align-items: end; }
+  .summary-cards { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgb(23 59 87 / .1); border-radius: 1.3rem; background: #f3efe5; }
+  .summary-cards article { padding: 1.2rem; border-right: 1px solid rgb(23 59 87 / .1); border-bottom: 1px solid rgb(23 59 87 / .1); }
+  .summary-cards article:nth-child(2n) { border-right: 0; }
+  .summary-cards article:nth-child(n + 3) { border-bottom: 0; }
+  .summary-cards span { color: #b74632; font-size: .56rem; font-weight: 800; letter-spacing: .16em; }
+  .summary-cards strong { display: block; margin-top: .3rem; color: #173b57; font-family: var(--serif); font-size: 1rem; }
+  .summary-cards p { margin: .15rem 0 0; color: rgb(34 38 34 / .5); font-size: .68rem; }
+
+  .map-section { background: #eef0e8; padding-block: clamp(4rem, 8vw, 7rem); }
+  .map-actions { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 1rem; border: 1px solid rgb(23 59 87 / .1); border-radius: 1.2rem; background: rgb(250 248 242 / .75); padding: 1.2rem 1.4rem; }
+  .map-actions > div:first-child { display: grid; }
+  .map-actions strong { color: #173b57; font-family: var(--serif); font-size: .95rem; }
+  .map-actions span { color: rgb(34 38 34 / .45); font-size: .62rem; }
+  .map-actions > div:last-child { display: flex; flex: 0 0 auto; gap: .6rem; }
+  .google-map { overflow: hidden; margin-top: clamp(2.5rem, 6vw, 5rem); border: 1px solid rgb(23 59 87 / .1); border-radius: 1.5rem; background: #faf8f2; }
+  .google-map__heading { max-width: 760px; padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .google-map__heading h2 { margin: .65rem 0 0; color: #173b57; font-family: var(--serif); font-size: clamp(1.55rem, 3vw, 2.35rem); font-weight: 500; }
+  .google-map__heading > p:last-child { margin: .8rem 0 0; color: rgb(34 38 34 / .58); font-size: .78rem; line-height: 1.9; }
+  .google-map iframe { display: block; width: 100%; height: clamp(360px, 52vw, 600px); }
+
+  .train-section { background: #faf8f2; }
+  .train-routes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: clamp(3rem, 6vw, 5rem); }
+  .train-routes article { border: 1px solid rgb(23 59 87 / .1); border-radius: 1.4rem; background: #f3efe5; padding: clamp(1.5rem, 3vw, 2.5rem); }
+  .train-route__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .train-route__head span { color: #b74632; font-size: .58rem; font-weight: 800; letter-spacing: .17em; }
+  .train-route__head strong { color: #173b57; font-family: var(--serif); font-size: .9rem; }
+  .train-route__line { display: grid; grid-template-columns: auto 1fr auto 1fr auto; gap: .7rem; align-items: center; margin: 2rem 0; }
+  .train-route__line b { color: #173b57; font-family: var(--serif); font-size: .88rem; white-space: nowrap; }
+  .train-route__line i { height: 2px; background: #6fa9bf; position: relative; }
+  .train-route__line i::after { position: absolute; right: -1px; top: 50%; width: 7px; height: 7px; border-top: 2px solid #6fa9bf; border-right: 2px solid #6fa9bf; content: ""; transform: translateY(-50%) rotate(45deg); }
+  .train-route__line em { color: rgb(34 38 34 / .48); font-size: .6rem; font-style: normal; line-height: 1.5; text-align: center; }
+  .train-routes article > p { margin: 0; color: rgb(34 38 34 / .58); font-size: .72rem; line-height: 1.8; }
+
+  .walk-section { background: #dfecef; }
+  .walk-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .walk-steps { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .walk-steps li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; border-top: 1px solid rgb(23 59 87 / .13); padding: .9rem 0; }
+  .walk-steps li:last-child { border-bottom: 1px solid rgb(23 59 87 / .13); }
+  .walk-steps > li > span { color: #b74632; font-size: .62rem; font-weight: 800; letter-spacing: .14em; }
+  .walk-steps h3 { margin-bottom: .2rem; color: #173b57; font-family: var(--serif); font-size: 1rem; }
+  .walk-steps p { margin: 0; color: rgb(34 38 34 / .58); font-size: .72rem; }
+  .walk-image { height: clamp(520px, 62vw, 740px); border-radius: 10rem 1.5rem 1.5rem 1.5rem; }
+
+  .car-section { background: #173b57; color: white; }
+  .car-grid { display: grid; grid-template-columns: .85fr 1fr; gap: clamp(3rem, 9vw, 8rem); }
+  .car-section :global(.eyebrow) { color: #e7b7a9; }
+  .car-section :global(.section-title) { color: white; }
+  .car-section :global(.section-lead) { color: rgb(255 255 255 / .62); }
+  .car-routes { border-top: 1px solid rgb(255 255 255 / .14); }
+  .car-routes article { display: grid; grid-template-columns: 2.5rem 1fr; border-bottom: 1px solid rgb(255 255 255 / .12); padding: 1rem 0; }
+  .car-routes span { color: #e7b7a9; font-size: .6rem; font-weight: 800; letter-spacing: .14em; }
+  .car-routes h3 { margin-bottom: .3rem; font-family: var(--serif); font-size: 1.05rem; font-weight: 500; }
+  .car-routes p { grid-column: 2; margin: 0; color: rgb(255 255 255 / .57); font-size: .73rem; line-height: 1.8; }
+
+  .parking-section { background: #f3efe5; }
+  .parking-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: 1.2rem; margin-top: clamp(3rem, 6vw, 5rem); align-items: start; }
+  .parking-table-wrap { overflow-x: auto; border: 1px solid rgb(23 59 87 / .1); border-radius: 1.3rem; background: #faf8f2; }
+  .parking-table { width: 100%; min-width: 650px; border-collapse: collapse; font-size: .75rem; }
+  .parking-table th,
+  .parking-table td { padding: .95rem 1rem; border-right: 1px solid rgb(23 59 87 / .08); border-bottom: 1px solid rgb(23 59 87 / .08); text-align: left; }
+  .parking-table thead th { background: #173b57; color: white; font-size: .62rem; letter-spacing: .08em; }
+  .parking-table tbody th { color: #173b57; font-family: var(--serif); font-size: .82rem; }
+  .parking-table tr:last-child > * { border-bottom: 0; }
+  .parking-table tr > *:last-child { border-right: 0; }
+  .parking-notes { border: 1px solid rgb(23 59 87 / .1); border-radius: 1.3rem; background: #faf8f2; padding: 1.5rem; }
+  .parking-notes h3 { margin-bottom: 1rem; color: #173b57; font-family: var(--serif); font-size: 1.15rem; }
+  .parking-notes ul { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+  .parking-notes li { position: relative; padding-left: 1.2rem; color: rgb(34 38 34 / .64); font-size: .73rem; }
+  .parking-notes li::before { position: absolute; top: .7em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: #b74632; content: ""; }
+  .parking-notes p { margin: 1.2rem 0 0; border-top: 1px solid rgb(23 59 87 / .1); padding-top: 1rem; color: rgb(34 38 34 / .45); font-size: .64rem; line-height: 1.8; }
+
+  .barrier-section { background: #e4ebe4; }
+  .barrier-grid { display: grid; grid-template-columns: 1.06fr .94fr; gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .barrier-image { height: clamp(500px, 61vw, 720px); }
+  .barrier-list { margin: 2rem 0 0; border-top: 1px solid rgb(23 59 87 / .13); }
+  .barrier-list div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; border-bottom: 1px solid rgb(23 59 87 / .1); padding: .85rem 0; }
+  .barrier-list dt { color: #9d3627; font-size: .72rem; font-weight: 800; }
+  .barrier-list dd { margin: 0; color: rgb(34 38 34 / .62); font-size: .73rem; line-height: 1.8; }
+
+  .before-section { background: #faf8f2; }
+  .before-card { display: grid; grid-template-columns: .85fr 1fr; gap: clamp(3rem, 9vw, 8rem); border: 1px solid rgb(23 59 87 / .1); border-radius: 1.7rem; background: #f3efe5; padding: clamp(1.8rem, 5vw, 4rem); }
+  .before-checks { display: grid; }
+  .before-checks label { display: grid; grid-template-columns: 1.3rem 1fr; gap: .8rem; align-items: start; border-bottom: 1px solid rgb(23 59 87 / .1); padding: .85rem 0; cursor: pointer; }
+  .before-checks label:first-child { border-top: 1px solid rgb(23 59 87 / .1); }
+  .before-checks input { width: 1.05rem; height: 1.05rem; margin-top: .25rem; accent-color: #315848; }
+  .before-checks span { color: rgb(34 38 34 / .62); font-size: .73rem; line-height: 1.7; }
+  .before-checks strong { display: block; color: #173b57; font-family: var(--serif); font-size: .9rem; }
+  .updated-note { margin-top: .8rem; color: rgb(34 38 34 / .42); font-size: .63rem; text-align: right; }
+
+  @media (max-width: 920px) {
+    .summary-grid,
+    .walk-grid,
+    .car-grid,
+    .barrier-grid,
+    .before-card { grid-template-columns: 1fr; }
+    .map-actions { align-items: flex-start; flex-direction: column; }
+    .train-routes { grid-template-columns: 1fr; }
+    .parking-layout { grid-template-columns: 1fr; }
+    .walk-copy,
+    .barrier-copy { max-width: 720px; }
+  }
+
+  @media (max-width: 640px) {
+    .summary-cards { grid-template-columns: 1fr; }
+    .summary-cards article,
+    .summary-cards article:nth-child(2n),
+    .summary-cards article:nth-child(n + 3) { border-right: 0; border-bottom: 1px solid rgb(23 59 87 / .1); }
+    .summary-cards article:last-child { border-bottom: 0; }
+    .map-actions > div:last-child { width: 100%; flex-direction: column; }
+    .map-actions a,
+    .map-actions button { width: 100%; }
+    .train-route__line { grid-template-columns: 1fr; text-align: center; }
+    .train-route__line i { width: 2px; height: 35px; margin-inline: auto; }
+    .train-route__line i::after { right: 50%; top: auto; bottom: 0; transform: translateX(50%) rotate(135deg); }
+    .walk-image,
+    .barrier-image { height: 460px; }
+    .barrier-list div { grid-template-columns: 1fr; gap: .2rem; }
+    .updated-note { text-align: left; }
+  }
+</style>

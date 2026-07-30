@@ -1,0 +1,1529 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import LocalMap from "../components/LocalMap.astro";
+import { courses, highlights, quickFacts, restaurants, site } from "../data/site";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name,
+    alternateName: site.legalName,
+    url: site.url,
+    inLanguage: "ja-JP",
+    description: site.description
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": ["TouristAttraction", "Park"],
+    name: "竹島園地",
+    alternateName: "Takeshima Garden",
+    description: "愛知県蒲郡市、竹島と竹島橋を望む海辺の園地。",
+    image: `${site.url}/images/og-image.jpg`,
+    url: site.url,
+    isAccessibleForFree: true,
+    publicAccess: true,
+    address: {
+      "@type": "PostalAddress",
+      postalCode: "443-0031",
+      addressRegion: "愛知県",
+      addressLocality: "蒲郡市",
+      streetAddress: "竹島町31",
+      addressCountry: "JP"
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: site.coordinates.latitude,
+      longitude: site.coordinates.longitude
+    }
+  }
+];
+---
+
+<BaseLayout jsonLd={jsonLd}>
+  <section class="home-hero" aria-labelledby="hero-title">
+    <img class="home-hero__image" src="/images/hero-aerial.webp" alt="高台から見た竹島と竹島橋、三河湾" fetchpriority="high" />
+    <div class="home-hero__shade"></div>
+    <div class="container-site home-hero__inner">
+      <div class="home-hero__copy">
+        <p class="hero-kicker">GAMAGORI · MIKAWA BAY</p>
+        <h1 id="hero-title">海を渡って、<br /><span>島の時間へ。</span></h1>
+        <p class="hero-lead">竹島園地から始まる、<br class="hidden sm:block" />海と緑と祈りの小さな旅。</p>
+        <div class="hero-actions">
+          <a class="btn-primary hero-primary" href="/highlights/">
+            見どころを歩く
+            <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </a>
+          <a class="btn-secondary hero-secondary" href="/courses/">旅の時間から選ぶ</a>
+        </div>
+      </div>
+      <div class="home-hero__side" aria-hidden="true">
+        <p class="vertical-label">三河湾の海風と、島を包む緑。</p>
+        <span class="hero-coordinate">34.8151° N<br />137.2335° E</span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="container-site hero-bottom__inner">
+        <span>TAKESHIMA ENCHI</span>
+        <a href="#today" aria-label="今日の竹島へスクロール">
+          <span>SCROLL</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M7 14l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts-bar" aria-label="竹島園地の基本情報">
+    <div class="container-site facts-grid">
+      {quickFacts.map((fact, index) => (
+        <article class="fact-item" data-reveal data-reveal-delay={String(index % 4)}>
+          <p>{fact.label}</p>
+          <strong>{fact.value}</strong>
+          <span>{fact.note}</span>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-space-sm today-section" id="today">
+    <div class="container-site today-card paper-card" data-reveal>
+      <div class="today-card__intro">
+        <p class="eyebrow">TODAY'S TAKESHIMA</p>
+        <h2>今日の竹島を、<br />気持ちよく歩くために。</h2>
+      </div>
+      <div class="today-card__status">
+        <div class="today-date">
+          <span class="today-date__dot" aria-hidden="true"></span>
+          <span data-today-date>本日</span>
+        </div>
+        <p class="today-label" data-today-label>海辺の散歩日和</p>
+        <p class="today-copy" data-today-copy>風と足元を確かめながら、園地からゆっくり歩き始めましょう。</p>
+      </div>
+      <div class="today-card__checks">
+        <a href="/access/#before-you-go"><span>01</span>風・雨・足元</a>
+        <a href="/access/#parking"><span>02</span>駐車場と行事</a>
+        <a href="/courses/"><span>03</span>滞在時間</a>
+      </div>
+    </div>
+    <p class="container-site today-note">※天候や営業状況の自動取得ではありません。現地の案内と当日の気象情報を必ずご確認ください。</p>
+  </section>
+
+  <section class="section-space story-section">
+    <div class="container-site story-grid">
+      <div class="story-image-wrap" data-reveal>
+        <div class="image-frame story-image-main">
+          <img src="/images/bridge-walk.webp" alt="海の上に伸びる竹島橋を歩く人々" loading="lazy" />
+        </div>
+        <div class="story-stamp" aria-hidden="true">
+          <span>竹島</span>
+          <small>海と祈り</small>
+        </div>
+      </div>
+      <div class="story-copy">
+        <p class="eyebrow" data-reveal>ABOUT TAKESHIMA</p>
+        <h2 class="section-title" data-reveal data-reveal-delay="1">景色を見るだけでなく、<br />海を渡って会いにいく。</h2>
+        <p class="section-lead" data-reveal data-reveal-delay="2">
+          竹島園地から見えるのは、三河湾に浮かぶ緑の小島。387メートルの橋を歩くと、潮の匂いと風の音が近づき、やがて八百富神社の社叢へ入ります。
+        </p>
+        <p class="story-body" data-reveal data-reveal-delay="3">
+          芝生で海を眺める時間、橋の上の開放感、石段の先の静けさ、島の外周で出会う岩礁。短い距離のなかで風景が何度も切り替わることが、竹島散歩の魅力です。
+        </p>
+        <a class="btn-ghost" href="/highlights/" data-reveal>
+          竹島の物語と見どころ
+          <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space highlights-section">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="FOUR SCENES"
+        title="四つの風景を、ゆっくりつなぐ。"
+        lead="園地から島の自然まで、それぞれの場所に立ち止まる理由があります。はじめての竹島は、この四景から。"
+      />
+      <div class="highlight-grid">
+        {highlights.map((item, index) => (
+          <a class="highlight-card" href={item.href} data-reveal data-reveal-delay={String(index % 2)}>
+            <div class="image-frame highlight-card__image">
+              <img src={item.image} alt={item.alt} loading="lazy" />
+              <span class="highlight-card__number">{item.number}</span>
+            </div>
+            <div class="highlight-card__copy">
+              <p>{item.subtitle}</p>
+              <h3>{item.title}</h3>
+              <span>{item.description}</span>
+              <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20" fill="none" stroke="currentColor" stroke-opacity=".25"></circle><path d="M13 21h16M24 16l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space route-section">
+    <div class="container-site route-layout">
+      <div class="route-heading">
+        <SectionHeading
+          eyebrow="MODEL COURSES"
+          title="旅の時間から、歩き方を選ぶ。"
+          lead="一時間の散歩、親子の半日、夕景を待つ午後。予定と天候に合わせて、無理のないコースを選べます。"
+        />
+        <a class="btn-primary" href="/courses/">
+          すべてのコースを見る
+          <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+      <div class="route-cards">
+        {courses.map((course, index) => (
+          <a class="route-card" href={`/courses/#${course.id}`} data-reveal data-reveal-delay={String(index)}>
+            <div class="route-card__image">
+              <img src={course.image} alt={`${course.title}のイメージ`} loading="lazy" />
+            </div>
+            <div class="route-card__body">
+              <div class="route-card__meta"><span>{course.label}</span><strong>{course.duration}</strong></div>
+              <h3>{course.title}</h3>
+              <p>{course.summary}</p>
+              <span class="route-card__link">コースを見る <b>→</b></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space photo-section">
+    <div class="container-site photo-layout">
+      <div class="photo-copy">
+        <p class="eyebrow" data-reveal>PHOTOGRAPHY</p>
+        <h2 class="section-title" data-reveal>空と海のあいだに、<br />今日だけの竹島。</h2>
+        <p class="section-lead" data-reveal>
+          朝の澄んだ光、夕暮れの輪郭、橋の灯りが浮かぶ青い時間。三河湾の天気と潮の表情が、同じ構図を少しずつ変えてくれます。
+        </p>
+        <ul class="photo-tips" data-reveal>
+          <li><span>朝</span>人の少ない静かな園地と、やわらかな光</li>
+          <li><span>夕</span>橋と島の輪郭、変化する空の色</li>
+          <li><span>夜</span>足元と帰路を確かめて、灯りを短時間で</li>
+        </ul>
+        <a class="btn-secondary" href="/photography/">撮影スポットとマナー</a>
+      </div>
+      <div class="photo-collage" data-reveal>
+        <figure class="photo-collage__main image-frame">
+          <img src="/images/takeshima-distance.webp" alt="海と空の間に浮かぶ竹島の遠景" loading="lazy" />
+        </figure>
+        <figure class="photo-collage__sub image-frame">
+          <img src="/images/torii-bridge.webp" alt="鳥居の先に伸びる竹島橋" loading="lazy" />
+        </figure>
+        <span class="photo-collage__caption">LIGHT · WIND · TIDE</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space aquarium-section">
+    <div class="container-site aquarium-card">
+      <div class="aquarium-images" data-reveal>
+        <div class="image-frame aquarium-images__main">
+          <img src="/images/aquarium-crab.webp" alt="竹島水族館のカニの展示" loading="lazy" />
+        </div>
+        <div class="image-frame aquarium-images__sub">
+          <img src="/images/aquarium-goldfish.webp" alt="竹島水族館の金魚" loading="lazy" />
+        </div>
+      </div>
+      <div class="aquarium-copy">
+        <p class="eyebrow" data-reveal>WITH THE AQUARIUM</p>
+        <h2 class="section-title" data-reveal>海のそばで、<br />海の生きものに会う。</h2>
+        <p data-reveal>
+          竹島水族館は園地のすぐ近く。深海生物や個性豊かな手書き解説で知られ、天候が変わりやすい日や親子旅にも組み込みやすい場所です。
+        </p>
+        <dl class="aquarium-facts" data-reveal>
+          <div><dt>開館</dt><dd>9:00〜17:00</dd></div>
+          <div><dt>最終入館</dt><dd>16:30</dd></div>
+          <div><dt>目安</dt><dd>60〜90分</dd></div>
+        </dl>
+        <p class="aquarium-note">※臨時休館・料金改定・混雑時の運用は現地の最新案内をご確認ください。</p>
+        <a class="btn-primary" href="/courses/#family">水族館と巡る半日コース</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space food-section">
+    <div class="container-site">
+      <div class="food-heading-row">
+        <SectionHeading
+          eyebrow="TASTE OF GAMAGORI"
+          title="海辺のあとに、蒲郡の味。"
+          lead="あさりのうどん、三河湾の魚、景色を眺めるホテルランチ。旅の気分と予算で選べる周辺の食事処です。"
+        />
+        <a class="btn-secondary" href="/food/">周辺グルメをすべて見る</a>
+      </div>
+      <div class="food-grid">
+        {restaurants.slice(0, 3).map((restaurant, index) => (
+          <article class="food-card" data-reveal data-reveal-delay={String(index)}>
+            <span class="food-card__number">0{index + 1}</span>
+            <p class="food-card__category">{restaurant.category}</p>
+            <h3>{restaurant.name}</h3>
+            <strong>{restaurant.lead}</strong>
+            <p>{restaurant.description}</p>
+            <div class="food-card__tags">
+              {restaurant.tags.map((tag) => <span>{tag}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space access-section">
+    <div class="container-site">
+      <div class="access-heading-row">
+        <SectionHeading
+          eyebrow="ACCESS"
+          title="駅から海へ、約十五分。"
+          lead="JR蒲郡駅南口から歩いて竹島園地へ。水族館、園地、橋、島が近い距離にまとまり、徒歩で巡りやすいエリアです。"
+        />
+        <div class="access-actions">
+          <a class="btn-primary" href="/access/">交通・駐車場の詳細</a>
+          <button class="btn-secondary" type="button" data-copy-value={site.address}>住所をコピー</button>
+        </div>
+      </div>
+      <div data-reveal><LocalMap /></div>
+      <div class="access-quick-grid">
+        <article data-reveal><span>TRAIN</span><h3>名古屋から</h3><p>JR東海道本線で蒲郡駅へ。快速利用で約45分が目安。</p></article>
+        <article data-reveal data-reveal-delay="1"><span>WALK</span><h3>蒲郡駅から</h3><p>南口から徒歩約15分。バス約5分、タクシー約3分。</p></article>
+        <article data-reveal data-reveal-delay="2"><span>CAR</span><h3>車で</h3><p>音羽蒲郡IC方面から約15〜20分。繁忙日は時間に余裕を。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <img src="/images/bridge-wide.webp" alt="海にまっすぐ伸びる竹島橋" loading="lazy" />
+    <div class="final-cta__overlay"></div>
+    <div class="container-site final-cta__content" data-reveal>
+      <p>TAKESHIMA, GAMAGORI</p>
+      <h2>海風の向こうへ、<br />一歩ずつ。</h2>
+      <div>
+        <a class="btn-primary final-cta__primary" href="/courses/">歩き方を決める</a>
+        <a class="btn-secondary final-cta__secondary" href="/faq/">出発前のよくある質問</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .home-hero {
+    position: relative;
+    min-height: max(720px, 100svh);
+    overflow: hidden;
+    background: #102c40;
+    color: white;
+  }
+
+  .home-hero__image,
+  .home-hero__shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-hero__image {
+    object-fit: cover;
+    object-position: 50% 48%;
+    animation: hero-breathe 18s ease-out both;
+  }
+
+  .home-hero__shade {
+    background:
+      linear-gradient(90deg, rgb(7 25 38 / 0.78) 0%, rgb(7 25 38 / 0.52) 37%, rgb(7 25 38 / 0.12) 72%),
+      linear-gradient(0deg, rgb(7 25 38 / 0.72) 0%, transparent 42%),
+      linear-gradient(180deg, rgb(7 25 38 / 0.25), transparent 28%);
+  }
+
+  .home-hero__inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    min-height: max(720px, 100svh);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding-top: var(--header-height);
+    padding-bottom: 7rem;
+  }
+
+  .home-hero__copy {
+    max-width: 760px;
+    padding-top: 3.5rem;
+  }
+
+  .hero-kicker {
+    margin-bottom: 1.4rem;
+    color: rgb(255 255 255 / 0.62);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+  }
+
+  .home-hero h1 {
+    margin-bottom: 0;
+    font-family: var(--serif);
+    font-size: clamp(3.4rem, 8.4vw, 8.5rem);
+    font-weight: 500;
+    letter-spacing: 0.035em;
+    line-height: 1.13;
+    text-shadow: 0 5px 35px rgb(0 0 0 / 0.18);
+  }
+
+  .home-hero h1 span {
+    display: inline-block;
+    padding-left: clamp(1rem, 6vw, 5.5rem);
+  }
+
+  .hero-lead {
+    margin-top: 2rem;
+    margin-bottom: 0;
+    color: rgb(255 255 255 / 0.76);
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    letter-spacing: 0.08em;
+    line-height: 2;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2.6rem;
+  }
+
+  .hero-primary {
+    border-color: #faf8f2;
+    background: #faf8f2;
+    color: #173b57;
+    box-shadow: 0 18px 45px rgb(0 0 0 / 0.18);
+  }
+
+  .hero-primary:hover {
+    border-color: white;
+    background: white;
+  }
+
+  .hero-secondary {
+    border-color: rgb(255 255 255 / 0.34);
+    background: rgb(16 44 64 / 0.16);
+    color: white;
+  }
+
+  .hero-secondary:hover {
+    border-color: white;
+    background: rgb(16 44 64 / 0.44);
+  }
+
+  .home-hero__side {
+    display: flex;
+    height: 54%;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-left: 1px solid rgb(255 255 255 / 0.25);
+    padding-left: 1.4rem;
+  }
+
+  .hero-coordinate {
+    color: rgb(255 255 255 / 0.5);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.7;
+    text-align: right;
+  }
+
+  .hero-bottom {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid rgb(255 255 255 / 0.2);
+  }
+
+  .hero-bottom__inner {
+    display: flex;
+    min-height: 74px;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(255 255 255 / 0.48);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+  }
+
+  .hero-bottom__inner a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-bottom__inner svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  @keyframes hero-breathe {
+    from { transform: scale(1.04); }
+    to { transform: scale(1); }
+  }
+
+  .facts-bar {
+    position: relative;
+    z-index: 4;
+    margin-top: -1px;
+    background: #faf8f2;
+    box-shadow: 0 18px 70px rgb(16 44 64 / 0.06);
+  }
+
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fact-item {
+    position: relative;
+    display: grid;
+    min-height: 150px;
+    align-content: center;
+    border-right: 1px solid rgb(23 59 87 / 0.1);
+    padding: 1.5rem clamp(1rem, 2.6vw, 2.5rem);
+  }
+
+  .fact-item:first-child {
+    border-left: 1px solid rgb(23 59 87 / 0.1);
+  }
+
+  .fact-item p {
+    margin-bottom: 0.3rem;
+    color: #9d3627;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+
+  .fact-item strong {
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    font-weight: 600;
+  }
+
+  .fact-item span {
+    margin-top: 0.18rem;
+    color: rgb(34 38 34 / 0.5);
+    font-size: 0.68rem;
+  }
+
+  .today-section {
+    padding-bottom: 0;
+  }
+
+  .today-card {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 0.9fr;
+    gap: clamp(1.8rem, 5vw, 4.5rem);
+    align-items: center;
+    padding: clamp(1.6rem, 4vw, 3.4rem);
+  }
+
+  .today-card__intro h2 {
+    margin-top: 0.85rem;
+    margin-bottom: 0;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1.55rem, 3vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .today-card__status {
+    border-left: 1px solid rgb(23 59 87 / 0.13);
+    padding-left: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .today-date {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgb(34 38 34 / 0.52);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .today-date__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #315848;
+    box-shadow: 0 0 0 5px rgb(49 88 72 / 0.1);
+  }
+
+  .today-label {
+    margin-top: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: #29493d;
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    font-weight: 600;
+  }
+
+  .today-copy {
+    margin-bottom: 0;
+    color: rgb(34 38 34 / 0.64);
+    font-size: 0.78rem;
+    line-height: 1.9;
+  }
+
+  .today-card__checks {
+    display: grid;
+  }
+
+  .today-card__checks a {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    align-items: center;
+    border-bottom: 1px solid rgb(23 59 87 / 0.1);
+    padding: 0.7rem 0;
+    color: #173b57;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .today-card__checks a:last-child {
+    border-bottom: 0;
+  }
+
+  .today-card__checks span {
+    color: #b74632;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .today-note {
+    margin-top: 0.7rem;
+    margin-bottom: 0;
+    color: rgb(34 38 34 / 0.45);
+    font-size: 0.65rem;
+    text-align: right;
+  }
+
+  .story-section {
+    overflow: hidden;
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.85fr);
+    gap: clamp(3rem, 9vw, 8rem);
+    align-items: center;
+  }
+
+  .story-image-wrap {
+    position: relative;
+    padding-right: clamp(0rem, 5vw, 4.5rem);
+    padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .story-image-main {
+    height: clamp(430px, 62vw, 720px);
+    border-radius: 12rem 12rem 1.5rem 1.5rem;
+  }
+
+  .story-image-main img {
+    object-position: 48% center;
+  }
+
+  .story-stamp {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    width: clamp(120px, 15vw, 180px);
+    aspect-ratio: 1;
+    place-content: center;
+    border: 1px solid rgb(183 70 50 / 0.42);
+    border-radius: 50%;
+    background: #f3efe5;
+    color: #9d3627;
+    text-align: center;
+    transform: rotate(-6deg);
+  }
+
+  .story-stamp::before,
+  .story-stamp::after {
+    position: absolute;
+    inset: 8px;
+    border: 1px dashed rgb(183 70 50 / 0.34);
+    border-radius: inherit;
+    content: "";
+  }
+
+  .story-stamp::after {
+    inset: 15px;
+    border-style: solid;
+  }
+
+  .story-stamp span {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    letter-spacing: 0.15em;
+  }
+
+  .story-stamp small {
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .story-body {
+    margin-top: 1.4rem;
+    margin-bottom: 1.9rem;
+    color: rgb(34 38 34 / 0.68);
+    line-height: 2.1;
+  }
+
+  .highlights-section {
+    background: #e9eee9;
+  }
+
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+    margin-top: clamp(3rem, 7vw, 6rem);
+  }
+
+  .highlight-card:nth-child(even) {
+    margin-top: clamp(2rem, 7vw, 6rem);
+  }
+
+  .highlight-card__image {
+    height: clamp(300px, 45vw, 560px);
+  }
+
+  .highlight-card__number {
+    position: absolute;
+    z-index: 2;
+    top: 1.1rem;
+    left: 1.1rem;
+    display: grid;
+    width: 2.9rem;
+    height: 2.9rem;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(250 248 242 / 0.9);
+    color: #173b57;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(8px);
+  }
+
+  .highlight-card__copy {
+    position: relative;
+    padding: 1.5rem 4rem 0 0.2rem;
+  }
+
+  .highlight-card__copy > p {
+    margin-bottom: 0.4rem;
+    color: #9d3627;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .highlight-card__copy h3 {
+    margin-bottom: 0.7rem;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1.65rem, 3vw, 2.6rem);
+    font-weight: 500;
+  }
+
+  .highlight-card__copy > span {
+    display: block;
+    max-width: 38rem;
+    color: rgb(34 38 34 / 0.62);
+    font-size: 0.84rem;
+    line-height: 1.95;
+  }
+
+  .highlight-card__copy svg {
+    position: absolute;
+    right: 0;
+    bottom: 0.25rem;
+    width: 2.8rem;
+    color: #173b57;
+    transition: transform 180ms ease, color 180ms ease;
+  }
+
+  .highlight-card:hover .highlight-card__copy svg {
+    color: #b74632;
+    transform: translateX(4px);
+  }
+
+  .route-section {
+    background: #173b57;
+    color: white;
+  }
+
+  .route-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.35fr);
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+
+  .route-heading {
+    position: sticky;
+    top: calc(var(--header-height) + 3rem);
+  }
+
+  .route-heading :global(.eyebrow) {
+    color: #e7b7a9;
+  }
+
+  .route-heading :global(.section-title) {
+    color: white;
+  }
+
+  .route-heading :global(.section-lead) {
+    color: rgb(255 255 255 / 0.65);
+  }
+
+  .route-heading > a {
+    margin-top: 2rem;
+    border-color: white;
+    background: white;
+    color: #173b57;
+  }
+
+  .route-heading > a:hover {
+    background: #f3efe5;
+  }
+
+  .route-cards {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .route-card {
+    display: grid;
+    grid-template-columns: minmax(170px, 0.75fr) minmax(0, 1.25fr);
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255 / 0.06);
+    transition: transform 200ms ease, background-color 200ms ease;
+  }
+
+  .route-card:hover {
+    transform: translateX(5px);
+    background: rgb(255 255 255 / 0.1);
+  }
+
+  .route-card__image {
+    min-height: 250px;
+    overflow: hidden;
+  }
+
+  .route-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 700ms ease;
+  }
+
+  .route-card:hover img {
+    transform: scale(1.035);
+  }
+
+  .route-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.4rem, 3.2vw, 2.7rem);
+  }
+
+  .route-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(255 255 255 / 0.55);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .route-card__meta strong {
+    color: #b9d7e1;
+  }
+
+  .route-card h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    font-family: var(--serif);
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    font-weight: 500;
+  }
+
+  .route-card p {
+    margin-bottom: 1.4rem;
+    color: rgb(255 255 255 / 0.6);
+    font-size: 0.82rem;
+    line-height: 1.9;
+  }
+
+  .route-card__link {
+    margin-top: auto;
+    color: white;
+    font-size: 0.76rem;
+    font-weight: 800;
+  }
+
+  .route-card__link b {
+    margin-left: 0.5rem;
+    color: #e7b7a9;
+  }
+
+  .photo-section {
+    overflow: hidden;
+  }
+
+  .photo-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(3.5rem, 9vw, 8rem);
+    align-items: center;
+  }
+
+  .photo-tips {
+    display: grid;
+    gap: 0;
+    margin: 2rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .photo-tips li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    border-top: 1px solid rgb(23 59 87 / 0.12);
+    padding: 0.75rem 0;
+    color: rgb(34 38 34 / 0.66);
+    font-size: 0.82rem;
+  }
+
+  .photo-tips li:last-child {
+    border-bottom: 1px solid rgb(23 59 87 / 0.12);
+  }
+
+  .photo-tips span {
+    color: #b74632;
+    font-family: var(--serif);
+    font-size: 1rem;
+  }
+
+  .photo-collage {
+    position: relative;
+    min-height: clamp(520px, 63vw, 760px);
+  }
+
+  .photo-collage__main {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 82%;
+    height: 68%;
+    border-radius: 1.5rem 12rem 1.5rem 1.5rem;
+  }
+
+  .photo-collage__sub {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 53%;
+    height: 48%;
+    border: 8px solid #f3efe5;
+  }
+
+  .photo-collage__caption {
+    position: absolute;
+    right: -0.2rem;
+    bottom: 4%;
+    color: rgb(23 59 87 / 0.46);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    writing-mode: vertical-rl;
+  }
+
+  .aquarium-section {
+    background: #e4eff2;
+  }
+
+  .aquarium-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: center;
+  }
+
+  .aquarium-images {
+    position: relative;
+    min-height: clamp(490px, 55vw, 680px);
+    padding-bottom: 4rem;
+  }
+
+  .aquarium-images__main {
+    position: absolute;
+    top: 0;
+    right: 8%;
+    left: 0;
+    height: 82%;
+    border-radius: 10rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .aquarium-images__sub {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 43%;
+    height: 40%;
+    border: 8px solid #e4eff2;
+  }
+
+  .aquarium-copy > p:not(.eyebrow):not(.aquarium-note) {
+    margin-top: 1.6rem;
+    color: rgb(34 38 34 / 0.68);
+    line-height: 2;
+  }
+
+  .aquarium-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 1.8rem 0 1rem;
+    border-top: 1px solid rgb(23 59 87 / 0.15);
+    border-bottom: 1px solid rgb(23 59 87 / 0.15);
+  }
+
+  .aquarium-facts div {
+    padding: 1rem 0.8rem;
+    border-right: 1px solid rgb(23 59 87 / 0.12);
+  }
+
+  .aquarium-facts div:first-child {
+    padding-left: 0;
+  }
+
+  .aquarium-facts div:last-child {
+    border-right: 0;
+  }
+
+  .aquarium-facts dt {
+    color: rgb(34 38 34 / 0.48);
+    font-size: 0.64rem;
+    font-weight: 800;
+  }
+
+  .aquarium-facts dd {
+    margin: 0.25rem 0 0;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: 1.02rem;
+  }
+
+  .aquarium-note {
+    margin-bottom: 1.7rem;
+    color: rgb(34 38 34 / 0.48);
+    font-size: 0.65rem;
+    line-height: 1.8;
+  }
+
+  .food-section {
+    background: #f8f4eb;
+  }
+
+  .food-heading-row,
+  .access-heading-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .food-heading-row :global(.section-heading),
+  .access-heading-row :global(.section-heading) {
+    max-width: 750px;
+  }
+
+  .food-heading-row > a,
+  .access-actions {
+    flex: 0 0 auto;
+    margin-bottom: 0.3rem;
+  }
+
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .food-card {
+    position: relative;
+    display: flex;
+    min-height: 420px;
+    flex-direction: column;
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.5rem;
+    background: #faf8f2;
+    padding: clamp(1.6rem, 3vw, 2.5rem);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+
+  .food-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-paper);
+  }
+
+  .food-card__number {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    color: rgb(23 59 87 / 0.14);
+    font-family: var(--serif);
+    font-size: 3.4rem;
+    line-height: 1;
+  }
+
+  .food-card__category {
+    margin-bottom: 1.6rem;
+    color: #b74632;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .food-card h3 {
+    max-width: 12ch;
+    margin-bottom: 0.7rem;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .food-card strong {
+    color: #29493d;
+    font-size: 0.82rem;
+  }
+
+  .food-card > p:not(.food-card__category) {
+    margin-top: 1rem;
+    margin-bottom: 1.4rem;
+    color: rgb(34 38 34 / 0.62);
+    font-size: 0.78rem;
+    line-height: 1.9;
+  }
+
+  .food-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: auto;
+  }
+
+  .food-card__tags span {
+    border: 1px solid rgb(23 59 87 / 0.12);
+    border-radius: 999px;
+    padding: 0.35rem 0.65rem;
+    color: rgb(23 59 87 / 0.62);
+    font-size: 0.62rem;
+  }
+
+  .access-section {
+    background: #eef0e8;
+  }
+
+  .access-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .access-section :global(.local-map) {
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .access-quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 1.2rem;
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.25rem;
+    background: rgb(250 248 242 / 0.68);
+  }
+
+  .access-quick-grid article {
+    border-right: 1px solid rgb(23 59 87 / 0.1);
+    padding: 1.4rem 1.6rem;
+  }
+
+  .access-quick-grid article:last-child {
+    border-right: 0;
+  }
+
+  .access-quick-grid span {
+    color: #b74632;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .access-quick-grid h3 {
+    margin: 0.4rem 0 0.3rem;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+  }
+
+  .access-quick-grid p {
+    margin: 0;
+    color: rgb(34 38 34 / 0.58);
+    font-size: 0.75rem;
+    line-height: 1.8;
+  }
+
+  .final-cta {
+    position: relative;
+    min-height: clamp(520px, 74vw, 760px);
+    overflow: hidden;
+    background: #102c40;
+    color: white;
+  }
+
+  .final-cta > img,
+  .final-cta__overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .final-cta > img {
+    object-fit: cover;
+  }
+
+  .final-cta__overlay {
+    background: linear-gradient(90deg, rgb(7 25 38 / 0.82), rgb(7 25 38 / 0.22)), linear-gradient(0deg, rgb(7 25 38 / 0.5), transparent);
+  }
+
+  .final-cta__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: clamp(520px, 74vw, 760px);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .final-cta__content > p {
+    margin-bottom: 1.2rem;
+    color: rgb(255 255 255 / 0.58);
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+  }
+
+  .final-cta__content h2 {
+    margin-bottom: 2rem;
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 7vw, 6.5rem);
+    font-weight: 500;
+    line-height: 1.28;
+  }
+
+  .final-cta__content > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .final-cta__primary {
+    border-color: white;
+    background: white;
+    color: #173b57;
+  }
+
+  .final-cta__secondary {
+    border-color: rgb(255 255 255 / 0.38);
+    background: rgb(16 44 64 / 0.18);
+    color: white;
+  }
+
+  @media (max-width: 980px) {
+    .facts-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fact-item:nth-child(2) {
+      border-right: 1px solid rgb(23 59 87 / 0.1);
+    }
+
+    .fact-item:nth-child(n + 3) {
+      border-top: 1px solid rgb(23 59 87 / 0.1);
+    }
+
+    .today-card {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .today-card__checks {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgb(23 59 87 / 0.1);
+      padding-top: 1rem;
+    }
+
+    .today-card__checks a {
+      border-right: 1px solid rgb(23 59 87 / 0.1);
+      border-bottom: 0;
+      padding-inline: 1rem;
+    }
+
+    .today-card__checks a:first-child { padding-left: 0; }
+    .today-card__checks a:last-child { border-right: 0; }
+
+    .story-grid,
+    .photo-layout,
+    .aquarium-card {
+      grid-template-columns: 1fr;
+    }
+
+    .story-image-wrap {
+      max-width: 720px;
+    }
+
+    .story-copy,
+    .photo-copy,
+    .aquarium-copy {
+      max-width: 720px;
+    }
+
+    .route-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .route-heading {
+      position: static;
+      max-width: 720px;
+    }
+
+    .food-heading-row,
+    .access-heading-row {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .food-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .food-card:last-child {
+      grid-column: 1 / -1;
+      min-height: 330px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .home-hero {
+      min-height: 760px;
+    }
+
+    .home-hero__image {
+      object-position: 61% center;
+    }
+
+    .home-hero__shade {
+      background: linear-gradient(0deg, rgb(7 25 38 / 0.87) 0%, rgb(7 25 38 / 0.42) 70%, rgb(7 25 38 / 0.25));
+    }
+
+    .home-hero__inner {
+      min-height: 760px;
+      grid-template-columns: 1fr;
+      align-items: flex-end;
+      padding-bottom: 8.8rem;
+    }
+
+    .home-hero__copy {
+      padding-top: 7rem;
+    }
+
+    .home-hero h1 {
+      font-size: clamp(3.1rem, 15vw, 5.3rem);
+    }
+
+    .home-hero h1 span {
+      padding-left: 0.55rem;
+    }
+
+    .home-hero__side {
+      display: none;
+    }
+
+    .hero-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .hero-actions a {
+      width: 100%;
+    }
+
+    .facts-grid {
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+
+    .fact-item {
+      min-height: 130px;
+      padding-inline: 1.1rem;
+    }
+
+    .fact-item:first-child,
+    .fact-item:nth-child(3) {
+      border-left: 0;
+    }
+
+    .today-card {
+      grid-template-columns: 1fr;
+      border-radius: 1.2rem;
+    }
+
+    .today-card__status {
+      border-top: 1px solid rgb(23 59 87 / 0.1);
+      border-left: 0;
+      padding-top: 1.3rem;
+      padding-left: 0;
+    }
+
+    .today-card__checks {
+      grid-column: auto;
+      grid-template-columns: 1fr;
+    }
+
+    .today-card__checks a,
+    .today-card__checks a:first-child {
+      border-right: 0;
+      border-bottom: 1px solid rgb(23 59 87 / 0.1);
+      padding-inline: 0;
+    }
+
+    .today-note {
+      text-align: left;
+    }
+
+    .story-image-wrap {
+      padding-right: 2rem;
+      padding-bottom: 3rem;
+    }
+
+    .story-image-main {
+      height: 500px;
+      border-radius: 7rem 7rem 1.25rem 1.25rem;
+    }
+
+    .highlight-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .highlight-card:nth-child(even) {
+      margin-top: 0;
+    }
+
+    .highlight-card__image {
+      height: 390px;
+    }
+
+    .route-card {
+      grid-template-columns: 1fr;
+    }
+
+    .route-card__image {
+      min-height: 220px;
+      max-height: 250px;
+    }
+
+    .photo-collage,
+    .aquarium-images {
+      min-height: 500px;
+    }
+
+    .aquarium-facts {
+      grid-template-columns: 1fr;
+    }
+
+    .aquarium-facts div,
+    .aquarium-facts div:first-child {
+      border-right: 0;
+      border-bottom: 1px solid rgb(23 59 87 / 0.1);
+      padding: 0.7rem 0;
+    }
+
+    .aquarium-facts div:last-child {
+      border-bottom: 0;
+    }
+
+    .food-grid,
+    .access-quick-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .food-card,
+    .food-card:last-child {
+      min-height: 0;
+      grid-column: auto;
+    }
+
+    .access-quick-grid article {
+      border-right: 0;
+      border-bottom: 1px solid rgb(23 59 87 / 0.1);
+    }
+
+    .access-quick-grid article:last-child {
+      border-bottom: 0;
+    }
+
+    .access-actions {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .access-actions > * {
+      width: 100%;
+    }
+
+    .final-cta > img {
+      object-position: 58% center;
+    }
+
+    .final-cta__content > div {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .final-cta__content a {
+      width: 100%;
+    }
+  }
+</style>

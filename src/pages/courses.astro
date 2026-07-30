@@ -1,0 +1,234 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { courses } from "../data/site";
+---
+
+<BaseLayout
+  title="竹島のモデルコース"
+  description="竹島園地と竹島を60〜90分、親子で半日、夕景まで楽しむ3つのモデルコース。水族館、食事、写真スポットも組み合わせて紹介します。"
+  image="/images/torii-bridge.webp"
+>
+  <PageHero
+    title="時間に合わせて、竹島を歩く。"
+    lead="短い旅でも、半日でも。誰と行くか、何を見たいか、空と海の様子に合わせて、三つの歩き方から選べます。"
+    image="/images/torii-bridge.webp"
+    imageAlt="鳥居から竹島橋を望む風景"
+    current="モデルコース"
+    position="center 55%"
+  />
+
+  <section class="section-space-sm course-intro">
+    <div class="container-site intro-row">
+      <SectionHeading
+        eyebrow="CHOOSE YOUR PACE"
+        title="全部を回るより、心地よく回る。"
+        lead="島の外周や石段は、風や潮、体力によって負担が変わります。予定を詰め込みすぎず、園地へ戻る余白も旅程に入れてください。"
+      />
+      <div class="course-filters" aria-label="モデルコースを絞り込む">
+        <button class="is-active" type="button" data-course-filter="all">すべて</button>
+        <button type="button" data-course-filter="classic">はじめて</button>
+        <button type="button" data-course-filter="family">親子・雨の日</button>
+        <button type="button" data-course-filter="sunset">写真・ふたり旅</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="course-list-section">
+    <div class="container-site course-list">
+      {courses.map((course, courseIndex) => {
+        const copyText = `${course.title}（${course.duration}）\n${course.steps.map((step) => `${step.time} ${step.place}：${step.detail}`).join("\n")}`;
+        return (
+          <article class="course-detail" id={course.id} data-course-card={course.id}>
+            <div class="course-detail__visual" data-reveal>
+              <img src={course.image} alt={`${course.title}の風景`} loading="lazy" />
+              <div class="course-detail__badge"><span>0{courseIndex + 1}</span><strong>{course.duration}</strong></div>
+            </div>
+            <div class="course-detail__content">
+              <div class="course-detail__head" data-reveal>
+                <div>
+                  <p>{course.label}</p>
+                  <h2>{course.title}</h2>
+                  <span>{course.summary}</span>
+                </div>
+                <button class="copy-course" type="button" data-copy-value={copyText}>
+                  行程をコピー
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+                </button>
+              </div>
+              <ol class="timeline">
+                {course.steps.map((step, stepIndex) => (
+                  <li data-reveal data-reveal-delay={String(stepIndex % 3)}>
+                    <div class="timeline__time">{step.time}</div>
+                    <div class="timeline__line"><span></span></div>
+                    <div class="timeline__copy"><h3>{step.place}</h3><p>{step.detail}</p></div>
+                  </li>
+                ))}
+              </ol>
+              {course.id === "classic" && (
+                <div class="course-advice" data-reveal>
+                  <strong>このコースに向く人</strong>
+                  <p>初訪問、電車旅、参拝と景色をバランスよく楽しみたい人。外周を省けば約60分に調整できます。</p>
+                </div>
+              )}
+              {course.id === "family" && (
+                <div class="course-advice" data-reveal>
+                  <strong>雨が強いとき</strong>
+                  <p>水族館と食事を中心にし、園地は雨が弱まった時間だけ。橋上の風が強い日は橋詰から眺めるだけでも十分です。</p>
+                </div>
+              )}
+              {course.id === "sunset" && (
+                <div class="course-advice" data-reveal>
+                  <strong>帰り道を先に確認</strong>
+                  <p>日没後は海辺が暗くなります。最終交通、駐車場の利用時間、手元の灯りを日没前に確認してください。</p>
+                </div>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section-space compare-section">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="AT A GLANCE"
+        title="三つのコースを比べる。"
+        lead="滞在時間だけでなく、歩く量、屋内の割合、食事の組み込みやすさで選ぶと失敗が少なくなります。"
+      />
+      <div class="compare-table-wrap" data-reveal>
+        <table class="compare-table">
+          <thead><tr><th>コース</th><th>滞在</th><th>歩く量</th><th>屋内</th><th>食事</th><th>おすすめ</th></tr></thead>
+          <tbody>
+            <tr><th>竹島をまっすぐ味わう</th><td>60〜90分</td><td>中</td><td>なし</td><td>前後に追加</td><td>初訪問・参拝</td></tr>
+            <tr><th>水族館と海辺を楽しむ</th><td>約4時間</td><td>少〜中</td><td>多い</td><td>組み込み済み</td><td>親子・雨の日</td></tr>
+            <tr><th>夕景から灯りの時間へ</th><td>約4〜5時間</td><td>中</td><td>少ない</td><td>喫茶を追加</td><td>写真・ふたり旅</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space change-section">
+    <div class="container-site change-grid">
+      <div class="change-image image-frame" data-reveal>
+        <img src="/images/bridge-seaside.webp" alt="竹島橋と海辺の園地" loading="lazy" />
+      </div>
+      <div class="change-copy">
+        <p class="eyebrow" data-reveal>CHANGE THE PLAN</p>
+        <h2 class="section-title" data-reveal>海の様子が違えば、<br />予定を変えていい。</h2>
+        <div class="change-list">
+          <article data-reveal><span>風が強い</span><p>橋詰と園地を中心にし、水族館や食事へ切り替える。</p></article>
+          <article data-reveal><span>足元が不安</span><p>島の外周を省き、神社まで往復する。または橋前で折り返す。</p></article>
+          <article data-reveal><span>混雑している</span><p>先に食事や水族館へ行き、園地と橋を時間差で訪れる。</p></article>
+          <article data-reveal><span>時間が余った</span><p>俊成苑、海辺の文学記念館、高台の眺望を追加する。</p></article>
+        </div>
+        <a class="btn-primary" href="/access/#before-you-go">出発前の確認事項</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="route-footer">
+    <div class="container-site route-footer__inner">
+      <div><p>NEXT</p><h2>どこで食べるか、先に決めておく。</h2></div>
+      <a class="btn-secondary" href="/food/">周辺グルメを見る</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .course-intro { background: #faf8f2; }
+  .intro-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 3rem; }
+  .intro-row :global(.section-heading) { max-width: 760px; }
+
+  .course-filters { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: 0.45rem; justify-content: flex-end; }
+  .course-filters button { border: 1px solid rgb(23 59 87 / 0.15); border-radius: 999px; background: transparent; padding: 0.6rem 0.9rem; color: rgb(23 59 87 / 0.7); font-size: 0.7rem; font-weight: 800; cursor: pointer; }
+  .course-filters button:hover,
+  .course-filters button.is-active { border-color: #173b57; background: #173b57; color: white; }
+
+  .course-list-section { padding-bottom: clamp(5rem, 10vw, 10rem); background: #faf8f2; }
+  .course-list { display: grid; gap: clamp(4rem, 10vw, 9rem); }
+  .course-detail { display: grid; grid-template-columns: minmax(300px, 0.86fr) minmax(0, 1.14fr); gap: clamp(3rem, 8vw, 7rem); align-items: start; scroll-margin-top: calc(var(--header-height) + 2rem); }
+  .course-detail[hidden] { display: none; }
+  .course-detail:nth-child(even) .course-detail__visual { order: 2; }
+  .course-detail__visual { position: sticky; top: calc(var(--header-height) + 2rem); min-height: 600px; overflow: hidden; border-radius: 1.5rem 10rem 1.5rem 1.5rem; }
+  .course-detail:nth-child(even) .course-detail__visual { border-radius: 10rem 1.5rem 1.5rem 1.5rem; }
+  .course-detail__visual::after { position: absolute; inset: 0; background: linear-gradient(0deg, rgb(16 44 64 / 0.42), transparent 45%); content: ""; }
+  .course-detail__visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .course-detail__badge { position: absolute; z-index: 1; right: 1.4rem; bottom: 1.4rem; display: grid; min-width: 110px; border-radius: 1rem; background: rgb(250 248 242 / 0.9); padding: 0.8rem 1rem; color: #173b57; backdrop-filter: blur(8px); }
+  .course-detail__badge span { color: #b74632; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.14em; }
+  .course-detail__badge strong { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; }
+
+  .course-detail__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; border-bottom: 1px solid rgb(23 59 87 / 0.14); padding-bottom: 1.8rem; }
+  .course-detail__head > div > p { margin-bottom: 0.4rem; color: #b74632; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; }
+  .course-detail__head h2 { margin-bottom: 0.6rem; color: #173b57; font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 500; line-height: 1.35; }
+  .course-detail__head > div > span { color: rgb(34 38 34 / 0.6); font-size: 0.82rem; line-height: 1.8; }
+  .copy-course { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 0.45rem; border: 1px solid rgb(23 59 87 / 0.16); border-radius: 999px; background: transparent; padding: 0.6rem 0.8rem; color: #173b57; font-size: 0.65rem; font-weight: 800; cursor: pointer; }
+  .copy-course:hover { background: #173b57; color: white; }
+  .copy-course svg { width: 1rem; height: 1rem; }
+
+  .timeline { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .timeline li { display: grid; grid-template-columns: 4.5rem 1.5rem 1fr; gap: 1rem; min-height: 105px; }
+  .timeline__time { padding-top: 0.15rem; color: #9d3627; font-family: var(--serif); font-size: 0.9rem; }
+  .timeline__line { position: relative; display: flex; justify-content: center; }
+  .timeline__line::before { position: absolute; top: 0.55rem; bottom: 0; width: 1px; background: rgb(23 59 87 / 0.16); content: ""; }
+  .timeline li:last-child .timeline__line::before { bottom: 50%; }
+  .timeline__line span { position: relative; z-index: 1; width: 11px; height: 11px; margin-top: 0.35rem; border: 3px solid #faf8f2; border-radius: 50%; background: #315848; box-shadow: 0 0 0 1px #315848; }
+  .timeline__copy { padding-bottom: 1.8rem; }
+  .timeline__copy h3 { margin-bottom: 0.25rem; color: #173b57; font-family: var(--serif); font-size: 1.1rem; font-weight: 600; }
+  .timeline__copy p { margin: 0; color: rgb(34 38 34 / 0.58); font-size: 0.76rem; line-height: 1.8; }
+
+  .course-advice { border-left: 3px solid #b74632; background: rgb(183 70 50 / 0.055); padding: 1.1rem 1.3rem; }
+  .course-advice strong { color: #9d3627; font-size: 0.72rem; }
+  .course-advice p { margin: 0.3rem 0 0; color: rgb(34 38 34 / 0.64); font-size: 0.76rem; line-height: 1.85; }
+
+  .compare-section { background: #e6ece6; }
+  .compare-table-wrap { margin-top: clamp(3rem, 6vw, 5rem); overflow-x: auto; border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.25rem; background: #faf8f2; }
+  .compare-table { width: 100%; min-width: 840px; border-collapse: collapse; font-size: 0.78rem; }
+  .compare-table th,
+  .compare-table td { border-right: 1px solid rgb(23 59 87 / 0.08); border-bottom: 1px solid rgb(23 59 87 / 0.08); padding: 1rem 1.1rem; text-align: left; }
+  .compare-table thead th { background: #173b57; color: white; font-size: 0.65rem; letter-spacing: 0.08em; }
+  .compare-table tbody th { color: #173b57; font-family: var(--serif); font-size: 0.86rem; }
+  .compare-table tbody tr:last-child th,
+  .compare-table tbody tr:last-child td { border-bottom: 0; }
+  .compare-table th:last-child,
+  .compare-table td:last-child { border-right: 0; }
+
+  .change-section { background: #f3efe5; }
+  .change-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr); gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .change-image { height: clamp(480px, 60vw, 720px); border-radius: 1.5rem 1.5rem 10rem 1.5rem; }
+  .change-list { margin: 2rem 0; border-top: 1px solid rgb(23 59 87 / 0.13); }
+  .change-list article { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; border-bottom: 1px solid rgb(23 59 87 / 0.1); padding: 0.9rem 0; }
+  .change-list span { color: #9d3627; font-size: 0.75rem; font-weight: 800; }
+  .change-list p { margin: 0; color: rgb(34 38 34 / 0.62); font-size: 0.76rem; line-height: 1.8; }
+
+  .route-footer { background: #102c40; color: white; padding-block: 3rem; }
+  .route-footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .route-footer p { margin: 0; color: #9fc5d3; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.2em; }
+  .route-footer h2 { margin: 0.4rem 0 0; font-family: var(--serif); font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 500; }
+  .route-footer a { border-color: rgb(255 255 255 / 0.35); background: transparent; color: white; }
+
+  @media (max-width: 900px) {
+    .intro-row { align-items: flex-start; flex-direction: column; }
+    .course-filters { justify-content: flex-start; }
+    .course-detail { grid-template-columns: 1fr; }
+    .course-detail:nth-child(even) .course-detail__visual { order: 0; }
+    .course-detail__visual { position: relative; top: auto; min-height: 500px; }
+    .change-grid { grid-template-columns: 1fr; }
+    .change-copy { max-width: 720px; }
+  }
+
+  @media (max-width: 640px) {
+    .course-filters { display: grid; width: 100%; grid-template-columns: 1fr 1fr; }
+    .course-filters button { width: 100%; }
+    .course-detail__visual { min-height: 440px; }
+    .course-detail__head { flex-direction: column; }
+    .copy-course { align-self: flex-start; }
+    .timeline li { grid-template-columns: 3.8rem 1.2rem 1fr; gap: 0.7rem; }
+    .change-list article { grid-template-columns: 1fr; gap: 0.2rem; }
+    .route-footer__inner { align-items: stretch; flex-direction: column; }
+    .route-footer a { width: 100%; }
+  }
+</style>

@@ -1,0 +1,17 @@
+{
+  "name": "竹島さんぽ",
+  "short_name": "竹島さんぽ",
+  "description": "蒲郡・竹島園地から始まる、海と緑と祈りの観光ガイド。",
+  "lang": "ja",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3efe5",
+  "theme_color": "#173b57",
+  "icons": [
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="ページが見つかりません" noindex={true}>
+  <section class="not-found">
+    <img src="/images/bridge-wide.webp" alt="竹島橋と海" />
+    <div class="not-found__overlay"></div>
+    <div class="container-site not-found__content">
+      <p>404 · LOST BY THE SEA</p>
+      <h1>この道の先に、<br />ページはありません。</h1>
+      <span>URLが変わったか、入力が違っているようです。竹島さんぽのホームから、もう一度旅を始めてください。</span>
+      <div><a class="btn-primary" href="/">ホームへ戻る</a><a class="btn-secondary" href="/courses/">モデルコースを見る</a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found { position: relative; min-height: 100svh; overflow: hidden; background: #102c40; color: white; }
+  .not-found > img,
+  .not-found__overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .not-found > img { object-fit: cover; }
+  .not-found__overlay { background: linear-gradient(90deg, rgb(7 25 38 / .86), rgb(7 25 38 / .25)), linear-gradient(0deg, rgb(7 25 38 / .52), transparent); }
+  .not-found__content { position: relative; z-index: 1; display: flex; min-height: 100svh; flex-direction: column; align-items: flex-start; justify-content: center; padding-top: var(--header-height); }
+  .not-found__content > p { margin-bottom: 1rem; color: #e7b7a9; font-size: .65rem; font-weight: 800; letter-spacing: .24em; }
+  .not-found h1 { margin-bottom: 1.5rem; font-family: var(--serif); font-size: clamp(2.8rem, 7vw, 6.5rem); font-weight: 500; line-height: 1.3; }
+  .not-found__content > span { display: block; max-width: 38rem; color: rgb(255 255 255 / .65); line-height: 1.9; }
+  .not-found__content > div { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2.2rem; }
+  .not-found .btn-primary { border-color: white; background: white; color: #173b57; }
+  .not-found .btn-secondary { border-color: rgb(255 255 255 / .35); background: rgb(16 44 64 / .2); color: white; }
+  @media (max-width: 560px) { .not-found__content > div { width: 100%; flex-direction: column; } .not-found__content a { width: 100%; } }
+</style>

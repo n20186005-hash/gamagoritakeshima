@@ -1,0 +1,204 @@
+---
+import { navigation, site } from "../data/site";
+---
+
+<footer class="site-footer">
+  <div class="footer-wave" aria-hidden="true"></div>
+  <div class="container-site footer-main">
+    <div class="footer-brand">
+      <a class="footer-logo" href="/">
+        <span class="footer-logo__ja">竹島さんぽ</span>
+        <span class="footer-logo__en">GAMAGORI TAKESHIMA</span>
+      </a>
+      <p>海と緑、祈りをめぐる<br />蒲郡の小さな旅。</p>
+    </div>
+
+    <div class="footer-nav-group">
+      <p class="footer-heading">旅の案内</p>
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </div>
+
+    <div class="footer-info">
+      <p class="footer-heading">竹島園地</p>
+      <address>{site.address}</address>
+      <p>JR蒲郡駅南口から徒歩約15分</p>
+      <a class="footer-access-link" href="/access/">
+        アクセス・駐車場を見る
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="container-site footer-bottom">
+    <p class="footer-disclaimer">本サイトは蒲郡・竹島エリアの非公式観光ガイドです。現地の案内・規則、各施設の最新情報を優先してください。</p>
+    <div class="footer-legal">
+      <a href="/privacy/">プライバシー</a>
+      <a href="/credits/">写真・情報について</a>
+      <span>© <span data-current-year>2026</span> {site.domain}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    overflow: hidden;
+    background: #102c40;
+    color: white;
+  }
+
+  .footer-wave {
+    height: 34px;
+    opacity: 0.32;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='34' viewBox='0 0 220 34'%3E%3Cpath d='M0 17c18-14 36-14 55 0s37 14 55 0 36-14 55 0 37 14 55 0' fill='none' stroke='%236fa9bf' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.2fr) 1fr 1fr;
+    gap: clamp(2.5rem, 7vw, 7rem);
+    padding-block: clamp(4.5rem, 8vw, 7rem);
+  }
+
+  .footer-logo {
+    display: grid;
+    gap: 0.25rem;
+    width: fit-content;
+  }
+
+  .footer-logo__ja {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-logo__en {
+    color: rgb(255 255 255 / 0.48);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+  }
+
+  .footer-brand p {
+    margin-top: 1.7rem;
+    margin-bottom: 0;
+    color: rgb(255 255 255 / 0.62);
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    line-height: 2;
+  }
+
+  .footer-heading {
+    margin-bottom: 1.4rem;
+    color: #9fc5d3;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem 1.4rem;
+  }
+
+  .footer-nav a,
+  .footer-legal a {
+    color: rgb(255 255 255 / 0.72);
+    font-size: 0.82rem;
+  }
+
+  .footer-nav a:hover,
+  .footer-legal a:hover {
+    color: white;
+  }
+
+  .footer-info address,
+  .footer-info > p:not(.footer-heading) {
+    margin: 0;
+    color: rgb(255 255 255 / 0.7);
+    font-size: 0.82rem;
+    font-style: normal;
+    line-height: 1.9;
+  }
+
+  .footer-access-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .footer-access-link svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    padding-block: 1.5rem 2rem;
+  }
+
+  .footer-disclaimer {
+    max-width: 46rem;
+    margin: 0;
+    color: rgb(255 255 255 / 0.42);
+    font-size: 0.7rem;
+    line-height: 1.8;
+  }
+
+  .footer-legal {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.8rem 1.4rem;
+    color: rgb(255 255 255 / 0.38);
+    font-size: 0.7rem;
+  }
+
+  .footer-legal a {
+    font-size: inherit;
+  }
+
+  @media (max-width: 900px) {
+    .footer-main {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .footer-brand {
+      grid-column: auto;
+    }
+
+    .footer-bottom {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .footer-legal {
+      justify-content: flex-start;
+    }
+  }
+</style>
