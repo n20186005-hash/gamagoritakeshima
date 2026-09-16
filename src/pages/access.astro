@@ -28,7 +28,7 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="竹島園地へのアクセス・駐車場"
+  title="竹島園地へのアクセス・行き方と駐車場"
   description="JR蒲郡駅から竹島園地までの徒歩ルート、名古屋・豊橋からの電車、自動車、竹島園地駐車場の料金目安、バリアフリー情報。"
   image="/images/bridge-seaside.webp"
   jsonLd={jsonLd}
@@ -106,6 +106,49 @@ const jsonLd = {
           <div class="train-route__line"><b>JR 豊橋駅</b><i></i><em>東海道本線<br />快速・普通など</em><i></i><b>JR 蒲郡駅</b></div>
           <p>豊橋を拠点に東三河を巡る旅とも組み合わせやすい距離です。</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space airport-section" id="airport">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="FROM THE AIRPORT"
+        title="空港から、海へ。"
+        lead="最寄りは中部国際空港（セントレア）。鉄道を乗り継いで蒲郡駅へ出て、あとは海へ向かうだけです。"
+      />
+      <div class="airport-routes">
+        <article data-reveal>
+          <div class="airport-route__head"><span>FROM CENTRAIR</span><strong>セントレア発 目安</strong></div>
+          <div class="airport-route__line">
+            <b>中部国際空港</b><i></i><em>名鉄空港線<br />特急で名鉄名古屋</em><i></i><b>JR蒲郡駅</b>
+          </div>
+          <p>名鉄空港線の特急で名鉄名古屋駅へ（約28分）、そこからJR東海道本線（快速で蒲郡駅まで約45分）。南口を出て徒歩約15分で竹島園地です。大型荷物があるなら駅からタクシーも検討を。</p>
+        </article>
+        <article data-reveal data-reveal-delay="1">
+          <div class="airport-route__head"><span>FROM KOMAKI</span><strong>名古屋空港発 目安</strong></div>
+          <div class="airport-route__line">
+            <b>名古屋空港</b><i></i><em>連絡バスで<br />名古屋駅方面</em><i></i><b>JR蒲郡駅</b>
+          </div>
+          <p>名古屋空港（小牧）からは連絡バスで名古屋駅・栄方面へ出て、JR東海道本線で蒲郡駅へ。バスと電車の待ち時間を含め、余裕を持った日程で計画してください。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space transit-section" id="bus-taxi">
+    <div class="container-site transit-grid">
+      <div class="transit-copy">
+        <p class="eyebrow" data-reveal>BUS &amp; TAXI</p>
+        <h2 class="section-title" data-reveal>駅からの、もう一歩。</h2>
+        <p class="section-lead" data-reveal>
+          蒲郡駅から園地までは平坦な道のりですが、荷物や雨、夜の帰りにはバスやタクシーが心強い味方になります。
+        </p>
+      </div>
+      <div class="transit-cards" data-reveal>
+        <article><span>路線バス</span><h3>名鉄バス「竹島遊園」</h3><p>蒲郡駅前から竹島遊園停留所まで約5分。運行本数と運賃は時期で変わるため、現地の案内を確認してください。</p></article>
+        <article><span>タクシー</span><h3>蒲郡駅から約3分</h3><p>駅前のタクシー乗り場、または配車アプリで利用可。荷物や雨の日、夜の帰りに便利です。目安運賃は短距離のため現地でご確認を。</p></article>
+        <article><span>レンタサイクル</span><h3>海辺をゆっくり</h3><p>自転車で海沿いを巡るのも一興です。貸出場所と返却条件は市街地の案内を確認してください。</p></article>
       </div>
     </div>
   </section>
@@ -339,5 +382,35 @@ const jsonLd = {
     .barrier-image { height: 460px; }
     .barrier-list div { grid-template-columns: 1fr; gap: .2rem; }
     .updated-note { text-align: left; }
+  }
+  .airport-section { background: #faf8f2; }
+  .airport-routes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: clamp(3rem, 6vw, 5rem); }
+  .airport-routes article { border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.4rem; background: #f3efe5; padding: clamp(1.5rem, 3vw, 2.5rem); }
+  .airport-route__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .airport-route__head span { color: #b74632; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.17em; }
+  .airport-route__head strong { color: #173b57; font-family: var(--serif); font-size: 0.9rem; }
+  .airport-route__line { display: grid; grid-template-columns: auto 1fr auto 1fr auto; gap: 0.7rem; align-items: center; margin: 2rem 0; }
+  .airport-route__line b { color: #173b57; font-family: var(--serif); font-size: 0.88rem; white-space: nowrap; }
+  .airport-route__line i { height: 2px; background: #6fa9bf; position: relative; }
+  .airport-route__line i::after { position: absolute; right: -1px; top: 50%; width: 7px; height: 7px; border-top: 2px solid #6fa9bf; border-right: 2px solid #6fa9bf; content: ""; transform: translateY(-50%) rotate(45deg); }
+  .airport-route__line em { color: rgb(34 38 34 / 0.48); font-size: 0.6rem; font-style: normal; line-height: 1.5; text-align: center; }
+  .airport-routes article > p { margin: 0; color: rgb(34 38 34 / 0.58); font-size: 0.72rem; line-height: 1.8; }
+
+  .transit-section { background: #dfecef; }
+  .transit-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: clamp(3rem, 9vw, 8rem); align-items: center; }
+  .transit-cards { display: grid; gap: 1rem; }
+  .transit-cards article { border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.3rem; background: #faf8f2; padding: 1.4rem 1.6rem; }
+  .transit-cards span { color: #b74632; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em; }
+  .transit-cards h3 { margin: 0.4rem 0 0.4rem; color: #173b57; font-family: var(--serif); font-size: 1.1rem; font-weight: 500; }
+  .transit-cards p { margin: 0; color: rgb(34 38 34 / 0.6); font-size: 0.74rem; line-height: 1.85; }
+
+  @media (max-width: 920px) {
+    .airport-routes { grid-template-columns: 1fr; }
+    .transit-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .airport-route__line { grid-template-columns: 1fr; text-align: center; }
+    .airport-route__line i { width: 2px; height: 35px; margin-inline: auto; }
+    .airport-route__line i::after { right: 50%; top: auto; bottom: 0; transform: translateX(50%) rotate(135deg); }
   }
 </style>

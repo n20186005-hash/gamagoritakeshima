@@ -1,0 +1,111 @@
+---
+import { audienceRoutes, durationRoutes } from "../data/site";
+---
+
+<section class="section-space itineraries-section" id="itineraries" aria-labelledby="itineraries-title">
+  <div class="container-site">
+    <div class="facilities-head">
+      <p class="eyebrow" data-reveal>PLANS BY TRAVELER</p>
+      <h2 id="itineraries-title" class="section-title" data-reveal>旅のスタイルで、選ぶ。</h2>
+      <p class="section-lead" data-reveal>
+        誰と、どんなペースで回るか。竹島園地を拠点に、無理のない動線を三つのタイプと二つの滞在時間から選べます。
+      </p>
+    </div>
+
+    <div class="audience-grid">
+      {audienceRoutes.map((route, index) => (
+        <article class="audience-card" data-reveal data-reveal-delay={String(index)}>
+          <div class="audience-card__image image-frame">
+            <img src={route.image} alt={route.alt} loading="lazy" />
+            <span class="audience-card__badge"><small>{route.label}</small><strong>{route.duration}</strong></span>
+          </div>
+          <div class="audience-card__body">
+            <h3>{route.title}</h3>
+            <p class="audience-card__summary">{route.summary}</p>
+            <ol class="audience-steps">
+              {route.steps.map((step) => (
+                <li><span>{step.time}</span><div><b>{step.place}</b><p>{step.detail}</p></div></li>
+              ))}
+            </ol>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="duration-row" data-reveal>
+      <h3 class="duration-row__title">滞在時間から選ぶ</h3>
+      <div class="duration-grid">
+        {durationRoutes.map((route) => (
+          <article class="duration-card">
+            <div class="duration-card__head"><span>{route.label}</span><strong>{route.duration}</strong></div>
+            <p>{route.title}</p>
+            <p class="duration-card__summary">{route.summary}</p>
+            <ul class="duration-points">
+              {route.points.map((point) => <li>{point}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .itineraries-section { background: #faf8f2; }
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.3rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .audience-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.5rem;
+    background: #f3efe5;
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .audience-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-paper); }
+  .audience-card__image { height: 220px; border-radius: 0; }
+  .audience-card__badge {
+    position: absolute;
+    z-index: 1;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    border-radius: 1rem;
+    background: rgb(250 248 242 / 0.92);
+    padding: 0.6rem 0.9rem;
+    backdrop-filter: blur(8px);
+  }
+  .audience-card__badge small { color: #b74632; font-size: 0.56rem; font-weight: 800; letter-spacing: 0.12em; }
+  .audience-card__badge strong { color: #173b57; font-family: var(--serif); font-size: 0.9rem; font-weight: 600; }
+  .audience-card__body { padding: 1.4rem 1.5rem 1.7rem; }
+  .audience-card__body h3 { margin: 0 0 0.5rem; color: #173b57; font-family: var(--serif); font-size: 1.25rem; font-weight: 500; }
+  .audience-card__summary { margin: 0 0 1rem; color: rgb(34 38 34 / 0.6); font-size: 0.76rem; }
+  .audience-steps { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgb(23 59 87 / 0.12); }
+  .audience-steps li { display: grid; grid-template-columns: 3.4rem 1fr; gap: 0.8rem; border-bottom: 1px solid rgb(23 59 87 / 0.1); padding: 0.65rem 0; }
+  .audience-steps li:last-child { border-bottom: 0; }
+  .audience-steps span { color: #9d3627; font-family: var(--serif); font-size: 0.78rem; }
+  .audience-steps b { color: #173b57; font-size: 0.86rem; }
+  .audience-steps p { margin: 0.1rem 0 0; color: rgb(34 38 34 / 0.58); font-size: 0.7rem; line-height: 1.7; }
+
+  .duration-row { margin-top: clamp(3rem, 6vw, 5rem); border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.5rem; background: #f3efe5; padding: clamp(1.6rem, 4vw, 2.8rem); }
+  .duration-row__title { margin: 0 0 1.4rem; color: #173b57; font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+  .duration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .duration-card { border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.3rem; background: #faf8f2; padding: 1.5rem; }
+  .duration-card__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .duration-card__head span { color: #b74632; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; }
+  .duration-card__head strong { color: #173b57; font-family: var(--serif); font-size: 0.95rem; }
+  .duration-card > p { margin: 0.6rem 0 0; color: #173b57; font-family: var(--serif); font-size: 1.05rem; }
+  .duration-card__summary { color: rgb(34 38 34 / 0.6) !important; font-family: var(--sans) !important; font-size: 0.74rem !important; line-height: 1.8; }
+  .duration-points { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .duration-points li { border: 1px solid rgb(23 59 87 / 0.14); border-radius: 999px; padding: 0.3rem 0.7rem; color: rgb(23 59 87 / 0.7); font-size: 0.68rem; }
+
+  @media (max-width: 900px) {
+    .audience-grid { grid-template-columns: 1fr; }
+    .duration-grid { grid-template-columns: 1fr; }
+  }
+</style>

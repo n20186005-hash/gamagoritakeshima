@@ -14,7 +14,7 @@ const pages = [
 ];
 
 export const GET: APIRoute = () => {
-  const lastmod = "2026-07-30";
+  const lastmod = "2026-09-16";
   const entries = pages
     .map((path) => `  <url>\n    <loc>${site.url}/${path}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${path === "" ? "weekly" : "monthly"}</changefreq>\n    <priority>${path === "" ? "1.0" : path === "privacy/" || path === "credits/" ? "0.3" : "0.8"}</priority>\n  </url>`)
     .join("\n");

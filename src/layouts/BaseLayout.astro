@@ -43,6 +43,8 @@ const socialImage = new URL(image, Astro.site ?? site.url).toString();
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/images/icon-512.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
@@ -206,6 +208,14 @@ const socialImage = new URL(image, Astro.site ?? site.url).toString();
           });
         });
       })();
+    </script>
+
+    <script is:inline>
+      if (import.meta.env.PROD && "serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js").catch(() => {});
+        });
+      }
     </script>
   </body>
 </html>

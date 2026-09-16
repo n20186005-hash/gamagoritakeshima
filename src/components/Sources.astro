@@ -1,0 +1,95 @@
+---
+import { site } from "../data/site";
+
+const { reviews, maps, official } = site;
+const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.coordinates.latitude}%2C${site.coordinates.longitude}&destination_place_id=ChIJcWqk7SHHBGAQ69vhWpAZGrI`;
+---
+
+<section class="section-space sources-section" id="location" aria-labelledby="sources-title">
+  <div class="container-site">
+    <div class="facilities-head">
+      <p class="eyebrow" data-reveal>LOCATION &amp; SOURCES</p>
+      <h2 id="sources-title" class="section-title" data-reveal>場所と、情報の出どころ。</h2>
+      <p class="section-lead" data-reveal>
+        竹島園地の位置と、このページが参照した情報源をまとめました。変動する情報は、現地の案内と当日の状況を優先してください。
+      </p>
+    </div>
+
+    <div class="sources-layout">
+      <div class="sources-map" data-reveal>
+        <iframe
+          class="sources-map__frame"
+          src={maps.embedUrl}
+          width="600"
+          height="450"
+          style="border:0;"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="竹島園地のGoogleマップ"
+        ></iframe>
+        <div class="sources-map__actions">
+          <button class="btn-secondary" type="button" data-copy-value={site.address}>住所をコピー</button>
+          <a class="btn-primary" href={mapUrl} target="_blank" rel="noopener noreferrer">地図アプリで経路を開く</a>
+        </div>
+      </div>
+
+      <div class="sources-list" data-reveal data-reveal-delay="1">
+        <article class="source-item">
+          <h3>評価・口コミ</h3>
+          <p>
+            {reviews.source} のユーザー投稿（同期 {reviews.syncedLabel}・評価 {reviews.rating.toFixed(1)}／{reviews.count.toLocaleString("ja-JP")} 件）。著作権は原作者および {reviews.source} に帰属します。
+          </p>
+          <a class="source-link" href={reviews.url} target="_blank" rel="noopener noreferrer">
+            {reviews.source}で全ての口コミを見る ↗
+          </a>
+        </article>
+        <article class="source-item">
+          <h3>公式・自治体の情報</h3>
+          <p>気象、交通規制、祭事、施設の運用は、自治体と管理者の最新案内を優先してください。</p>
+          <ul class="source-links">
+            <li><a href={official.cityUrl} target="_blank" rel="noopener noreferrer">{official.cityName} ↗</a></li>
+            <li><a href={official.prefTourismUrl} target="_blank" rel="noopener noreferrer">{official.prefTourismName} ↗</a></li>
+          </ul>
+        </article>
+        <article class="source-item source-item--note">
+          <h3>当サイトの方針</h3>
+          <p>
+            本サイトは蒲郡・竹島エリアの非公式観光ガイドです。内容は公開時点の確認をもとにしていますが、天候や営業、規制は予告なく変わります。現地の表示と係員の案内を最優先してください。
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sources-section { background: #eef0e8; }
+  .sources-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .sources-map { border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.5rem; background: #faf8f2; overflow: hidden; }
+  .sources-map__frame { display: block; width: 100%; height: clamp(340px, 46vw, 480px); }
+  .sources-map__actions { display: flex; flex-wrap: wrap; gap: 0.7rem; padding: 1.1rem 1.3rem; border-top: 1px solid rgb(23 59 87 / 0.1); }
+  .sources-map__actions > * { flex: 1 1 auto; }
+
+  .sources-list { display: grid; gap: 1.1rem; }
+  .source-item { border: 1px solid rgb(23 59 87 / 0.1); border-radius: 1.3rem; background: rgb(250 248 242 / 0.85); padding: 1.5rem; }
+  .source-item h3 { margin: 0 0 0.6rem; color: #173b57; font-family: var(--serif); font-size: 1.1rem; }
+  .source-item p { margin: 0; color: rgb(34 38 34 / 0.66); font-size: 0.76rem; line-height: 1.9; }
+  .source-link { display: inline-block; margin-top: 0.8rem; color: #9d3627; font-size: 0.78rem; font-weight: 800; }
+  .source-links { display: grid; gap: 0.5rem; margin: 0.8rem 0 0; padding: 0; list-style: none; }
+  .source-links a { color: #9d3627; font-size: 0.78rem; font-weight: 800; }
+  .source-item--note { background: rgb(49 88 72 / 0.08); border-color: rgb(49 88 72 / 0.18); }
+  .source-item--note p { color: rgb(34 38 34 / 0.6); }
+
+  @media (max-width: 900px) {
+    .sources-layout { grid-template-columns: 1fr; }
+    .sources-map__actions { flex-direction: column; }
+    .sources-map__actions > * { width: 100%; }
+  }
+</style>

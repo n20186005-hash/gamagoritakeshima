@@ -1,0 +1,140 @@
+---
+import { site } from "../data/site";
+
+const { rating, count, source, syncedLabel, url } = site.reviews;
+const ratingPercent = Math.max(0, Math.min(100, (rating / 5) * 100));
+const countLabel = count.toLocaleString("ja-JP");
+---
+
+<section class="section-space-sm reviews-section" id="reviews" aria-labelledby="reviews-title">
+  <div class="container-site reviews-card paper-card" data-reveal>
+    <div class="reviews-head">
+      <div class="reviews-source">
+        <svg class="reviews-g" viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+          <path fill="#4285F4" d="M22.5 12.1c0-.7-.06-1.36-.18-2H12v3.8h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-2 3.2-4.9 3.2-7.8Z"></path>
+          <path fill="#34A853" d="M12 23c2.9 0 5.4-1 7.2-2.6l-3.6-2.7c-1 .7-2.3 1.1-3.6 1.1-2.8 0-5.1-1.9-6-4.4H2.3v2.8A10.7 10.7 0 0 0 12 23Z"></path>
+          <path fill="#FBBC05" d="M6 14.4a6.4 6.4 0 0 1 0-4l-3.7-2.8A10.7 10.7 0 0 0 1.3 12c0 1.7.4 3.3 1 4.8L6 14.4Z"></path>
+          <path fill="#EA4335" d="M12 5.6c1.6 0 3 .5 4.1 1.6l3.1-3.1A10.7 10.7 0 0 0 1.3 12l3.7-2.8C6.9 7.5 9.2 5.6 12 5.6Z"></path>
+        </svg>
+        <span>Google マップの評価</span>
+      </div>
+      <h2 id="reviews-title" class="reviews-title">旅人の声を、参考までに。</h2>
+    </div>
+
+    <div class="reviews-body">
+      <div class="reviews-score">
+        <strong class="reviews-score__num">{rating.toFixed(1)}</strong>
+        <div class="reviews-score__stars" role="img" aria-label={`評価 ${rating.toFixed(1)} ／ 5`}>
+          <span class="reviews-score__stars-bg" aria-hidden="true">★★★★★</span>
+          <span class="reviews-score__stars-fg" style={`width:${ratingPercent}%`} aria-hidden="true">★★★★★</span>
+        </div>
+        <span class="reviews-score__count">{countLabel} 件の口コミ</span>
+      </div>
+      <p class="reviews-note">
+        評価と口コミ数は {source} のユーザー投稿をもとに同期しています（{syncedLabel}）。{source} で全ての口コミを見る ↗
+      </p>
+    </div>
+
+    <div class="reviews-foot">
+      <p class="reviews-cite">
+        本評価・口コミは {source} のユーザー投稿をもとに同期（{syncedLabel}）。著作権は原作者および {source} に帰属します。
+      </p>
+      <a class="btn-primary reviews-button" href={url} target="_blank" rel="noopener noreferrer">
+        {source}で全ての口コミを見る
+        <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section { background: #f6f2ea; }
+  .reviews-card { padding: clamp(1.8rem, 4.5vw, 3.4rem); }
+
+  .reviews-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgb(34 38 34 / 0.6);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+  .reviews-source .reviews-g { width: 1.25rem; height: 1.25rem; }
+
+  .reviews-title {
+    margin: 0.9rem 0 0;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .reviews-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    margin-top: clamp(1.8rem, 4vw, 3rem);
+    padding-top: clamp(1.5rem, 3vw, 2.2rem);
+    border-top: 1px solid rgb(23 59 87 / 0.12);
+  }
+
+  .reviews-score { display: grid; gap: 0.35rem; }
+  .reviews-score__num {
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6vw, 4.6rem);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .reviews-score__stars {
+    position: relative;
+    display: inline-block;
+    font-size: 1.3rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+  .reviews-score__stars-bg { color: rgb(23 59 87 / 0.16); }
+  .reviews-score__stars-fg {
+    position: absolute;
+    inset: 0 auto 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #e0a93b;
+  }
+  .reviews-score__count { color: rgb(34 38 34 / 0.55); font-size: 0.78rem; font-weight: 700; }
+
+  .reviews-note {
+    max-width: 34rem;
+    margin: 0;
+    color: rgb(34 38 34 / 0.66);
+    font-size: 0.82rem;
+    line-height: 1.95;
+  }
+
+  .reviews-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin-top: clamp(1.5rem, 3vw, 2.2rem);
+    padding-top: clamp(1.5rem, 3vw, 2.2rem);
+    border-top: 1px solid rgb(23 59 87 / 0.12);
+  }
+  .reviews-cite {
+    max-width: 46rem;
+    margin: 0;
+    color: rgb(34 38 34 / 0.5);
+    font-size: 0.68rem;
+    line-height: 1.85;
+  }
+  .reviews-button { flex: 0 0 auto; }
+
+  @media (max-width: 640px) {
+    .reviews-foot { flex-direction: column; align-items: stretch; }
+    .reviews-button { width: 100%; }
+  }
+</style>

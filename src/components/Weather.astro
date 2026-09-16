@@ -1,0 +1,339 @@
+---
+import { site } from "../data/site";
+import {
+  forecastUrl,
+  warningsUrl,
+  normalizeWarnings,
+  marineUrl,
+  normalizeMarine,
+  tideUrl,
+  normalizeTide,
+  jmaTideStationFor,
+  fetchJmaTide,
+  buildWeatherAdvice,
+  adviceToHtml,
+} from "../lib/weatherAdvice";
+
+const lat = site.coordinates.latitude;
+const lon = site.coordinates.longitude;
+
+const tidePoint = "蒲郡";
+
+let initial: unknown = null;
+try {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  const headers = { "User-Agent": "gamagoritakeshima/1.0 (+https://gamagoritakeshima.com)" };
+  const [fres, wres, mres, tres] = await Promise.all([
+    fetch(forecastUrl(lat, lon), { signal: controller.signal, headers }),
+    fetch(warningsUrl(lat, lon), { signal: controller.signal, headers }).catch(() => null),
+    fetch(marineUrl(lat, lon), { signal: controller.signal, headers }).catch(() => null),
+    fetch(tideUrl(tidePoint), { signal: controller.signal, headers }).catch(() => null),
+  ]);
+  clearTimeout(timer);
+  if (fres.ok) {
+    const fj = await fres.json();
+    let warnings: { event: string }[] = [];
+    if (wres && wres.ok) {
+      try {
+        warnings = normalizeWarnings(await wres.json());
+      } catch {
+        /* 警告データなし（日本国内は提供外の場合あり） */
+      }
+    }
+    let marine: unknown = null;
+    if (mres && mres.ok) {
+      try {
+        marine = await mres.json();
+      } catch {
+        /* 海況データなし */
+      }
+    }
+    let tide: unknown = null;
+    if (tres && tres.ok) {
+      try {
+        tide = normalizeTide(await tres.json());
+      } catch {
+        /* 潮見データなし */
+      }
+    }
+    // ビルド時フォールバック：Shiome が使えない場合は気象庁潮位表（名古屋港・参考値）を使用
+    if (!tide) {
+      try {
+        const jc = new AbortController();
+        const jt = setTimeout(() => jc.abort(), 6000);
+        const nowJst = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+        const jma = await fetchJmaTide(
+          jmaTideStationFor(tidePoint),
+          { y: nowJst.getFullYear(), m: nowJst.getMonth() + 1, d: nowJst.getDate() },
+          { signal: jc.signal },
+        );
+        clearTimeout(jt);
+        if (jma) tide = jma;
+      } catch {
+        /* 気象庁取得失敗時は潮見なしで継続 */
+      }
+    }
+    initial = { ...fj, warnings, marine, tide };
+  }
+} catch {
+  initial = null;
+}
+
+const adviceHtml = initial ? adviceToHtml(buildWeatherAdvice(initial)) : "";
+---
+
+<section class="section-space-sm weather-section" id="weather" aria-labelledby="weather-title">
+  <div class="container-site weather-card paper-card" data-reveal>
+    <div class="weather-head">
+      <div>
+        <p class="eyebrow">TODAY &amp; THIS WEEK</p>
+        <h2 id="weather-title" class="weather-title">竹島の空と海の、今。</h2>
+      </div>
+      <p class="weather-updated" data-weather-updated aria-live="polite"></p>
+    </div>
+
+    <div class="weather-body" data-weather data-lat={lat} data-lon={lon}>
+      {initial ? <Fragment set:html={adviceHtml} /> : <p class="weather-loading">天気を確認しています…</p>}
+    </div>
+
+    <script type="application/json" id="weather-tide-ssr" set:html={JSON.stringify((initial as any)?.tide ?? null)}></script>
+
+    <p class="weather-note">
+      竹島園地（緯度 {lat}／経度 {lon}）の地点データ。渡島の目安に、風と雨、気温の変化をご確認ください。
+    </p>
+  </div>
+</section>
+
+<script>
+  import {
+    forecastUrl,
+    warningsUrl,
+    normalizeWarnings,
+    marineUrl,
+    normalizeMarine,
+    tideUrl,
+    normalizeTide,
+    buildWeatherAdvice,
+    adviceToHtml,
+  } from "../lib/weatherAdvice";
+
+  const CACHE_KEY = "takeshima-weather-v1";
+  const TTL = 30 * 60 * 1000;
+
+  // ビルド時に取得した潮位（気象庁フォールバック等）を、クライアント側で Shiome が取れない場合の兜底として保持
+  const ssrTideEl = document.getElementById("weather-tide-ssr");
+  let ssrTide: unknown = null;
+  if (ssrTideEl) {
+    try {
+      ssrTide = JSON.parse(ssrTideEl.textContent || "null");
+    } catch {
+      /* SSR 潮位の解析失敗は無視 */
+    }
+  }
+
+  const renderRaw = (raw: any) => {
+    const body = document.querySelector("[data-weather]") as HTMLElement | null;
+    if (!body) return;
+    body.innerHTML = adviceToHtml(buildWeatherAdvice(raw));
+    const updated = document.querySelector("[data-weather-updated]");
+    if (updated) {
+      const n = new Date();
+      updated.textContent = `更新：${n.getMonth() + 1}月${n.getDate()}日 ${String(n.getHours()).padStart(2, "0")}:${String(n.getMinutes()).padStart(2, "0")}`;
+    }
+  };
+
+  const load = async () => {
+    const body = document.querySelector("[data-weather]") as HTMLElement | null;
+    if (!body) return;
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const p = JSON.parse(cached);
+        if (Date.now() - p.t < TTL) {
+          renderRaw(p.data);
+          return;
+        }
+      }
+    } catch {
+      /* キャッシュ読み込みエラーは無視 */
+    }
+
+    const lat = body.dataset.lat;
+    const lon = body.dataset.lon;
+    if (!lat || !lon) return;
+
+    try {
+      const tidePoint = "蒲郡";
+      const [fres, wres, mres, tres] = await Promise.all([
+        fetch(forecastUrl(lat, lon)),
+        fetch(warningsUrl(lat, lon)).catch(() => null),
+        fetch(marineUrl(lat, lon)).catch(() => null),
+        fetch(tideUrl(tidePoint)).catch(() => null),
+      ]);
+      if (!fres.ok) return; // サーバー側の描画を維持
+      const fj = await fres.json();
+      let warnings: { event: string }[] = [];
+      if (wres && wres.ok) {
+        try {
+          warnings = normalizeWarnings(await wres.json());
+        } catch {
+          /* 警告なし */
+        }
+      }
+      let marine: unknown = null;
+      if (mres && mres.ok) {
+        try {
+          marine = await mres.json();
+        } catch {
+          /* 海況なし */
+        }
+      }
+      let tide: unknown = null;
+      if (tres && tres.ok) {
+        try {
+          tide = normalizeTide(await tres.json());
+        } catch {
+          /* 潮見なし */
+        }
+      }
+      const data = { ...fj, warnings, marine, tide: (tide as unknown) ?? ssrTide };
+      renderRaw(data);
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data }));
+      } catch {
+        /* 容量超過等は無視 */
+      }
+    } catch {
+      /* 通信失敗時はサーバー側の描画を維持 */
+    }
+  };
+
+  load();
+</script>
+
+<style>
+  .weather-section { background: #e9eef2; }
+  .weather-card { padding: clamp(1.8rem, 4.5vw, 3.4rem); }
+
+  .weather-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .weather-title {
+    margin: 0.8rem 0 0;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .weather-updated { margin: 0; color: rgb(34 38 34 / 0.45); font-size: 0.66rem; }
+
+  .weather-body {
+    margin-top: clamp(1.8rem, 4vw, 3rem);
+    padding-top: clamp(1.5rem, 3vw, 2.2rem);
+    border-top: 1px solid rgb(23 59 87 / 0.12);
+  }
+
+  .weather-loading { margin: 0; color: rgb(34 38 34 / 0.55); font-size: 0.82rem; }
+
+  .w-summary {
+    margin: 0 0 1.2rem;
+    color: #173b57;
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-weight: 600;
+  }
+
+  .w-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+  .w-card {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid rgb(23 59 87 / 0.12);
+    border-radius: 0.9rem;
+    background: rgb(250 248 242 / 0.7);
+  }
+  .w-card__label { color: rgb(34 38 34 / 0.5); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; }
+  .w-card__value { color: #173b57; font-family: var(--serif); font-size: 1.15rem; font-weight: 600; }
+  .w-card__sub { color: rgb(34 38 34 / 0.55); font-size: 0.74rem; }
+
+  .w-risk {
+    margin-bottom: 1.3rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid #b4452f;
+    border-radius: 1rem;
+    background: rgb(180 69 47 / 0.08);
+  }
+  .w-risk__title { margin: 0 0 0.5rem; color: #b4452f; font-size: 0.85rem; font-weight: 800; }
+  .w-risk__list { margin: 0; padding-left: 1.1rem; color: #7a2e1c; font-size: 0.82rem; line-height: 1.7; }
+
+  .w-block { margin-bottom: 1.1rem; }
+  .w-block__title { margin: 0 0 0.5rem; color: #173b57; font-size: 0.9rem; font-weight: 800; }
+  .w-block__list { margin: 0; padding-left: 1.1rem; color: rgb(34 38 34 / 0.78); font-size: 0.84rem; line-height: 1.75; }
+
+  .w-forecast {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgb(23 59 87 / 0.1);
+  }
+  .w-day {
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+    padding: 0.9rem 0.3rem;
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1rem;
+    background: rgb(250 248 242 / 0.7);
+    text-align: center;
+  }
+  .w-day.is-today { border-color: #315848; background: rgb(201 214 204 / 0.35); }
+  .w-day__date { color: #173b57; font-size: 0.72rem; font-weight: 800; }
+  .w-day__date small { margin-left: 0.25rem; color: rgb(34 38 34 / 0.5); font-size: 0.6rem; }
+  .w-day__emoji { font-size: 1.5rem; line-height: 1; }
+  .w-day__temp { display: flex; gap: 0.35rem; align-items: baseline; color: #173b57; font-size: 0.78rem; }
+  .w-day__temp b { font-family: var(--serif); font-weight: 600; }
+  .w-day__temp span { color: rgb(34 38 34 / 0.5); }
+  .w-day__rain { color: #315f78; font-size: 0.6rem; font-weight: 700; }
+
+  .w-seaside {
+    margin: 1.4rem 0 1.5rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid rgb(49 95 120 / 0.25);
+    border-radius: 1rem;
+    background: rgb(214 226 233 / 0.45);
+  }
+  .w-seaside__title { margin: 0 0 0.7rem; color: #173b57; font-size: 0.9rem; font-weight: 800; }
+  .w-cards--seaside { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 0.9rem; }
+  .w-tide { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .w-tide__col { display: grid; gap: 0.25rem; }
+  .w-tide__label { color: rgb(34 38 34 / 0.55); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; }
+  .w-tide__row { color: #173b57; font-size: 0.82rem; }
+  .w-tide__row b { font-family: var(--serif); font-weight: 600; margin-left: 0.3rem; }
+  .w-tide__note { margin: 0; color: rgb(34 38 34 / 0.5); font-size: 0.72rem; line-height: 1.7; }
+  .w-tide__src { margin: 0.6rem 0 0; color: rgb(34 38 34 / 0.45); font-size: 0.64rem; line-height: 1.6; }
+
+  .weather-note {
+    margin: 1.4rem 0 0;
+    color: rgb(34 38 34 / 0.5);
+    font-size: 0.68rem;
+    line-height: 1.85;
+  }
+
+  @media (max-width: 560px) {
+    .w-forecast { grid-template-columns: repeat(4, 1fr); }
+    .w-tide { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import { site } from "../data/site";
+---
+
+<section class="section-space responsibility-section" id="about-island" aria-labelledby="about-title">
+  <div class="container-site">
+    <div class="facilities-head">
+      <p class="eyebrow" data-reveal>KNOW &amp; PROTECT</p>
+      <h2 id="about-title" class="section-title" data-reveal>竹島を知り、ともに守る。</h2>
+      <p class="section-lead" data-reveal>
+        小さな島には、地質から信仰、文学までつながる背景があります。成り立ちを知ると、散歩の見え方が変わります。
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-story" data-reveal>
+        <figure class="about-figure image-frame">
+          <img src="/images/shrine-forest.webp" alt="八百富神社の社叢（国の天然記念物）" loading="lazy" />
+        </figure>
+        <h3>島を包む、暖地性の社叢</h3>
+        <p>
+          竹島は三河湾に浮かぶ周囲約680mの小島です。島中央の{site.nearbyLandmarks[0]}を中心に、クスやタブノキといった暖地性植物が育つ社叢（しゃそう）が残り、1930年に「{site.nearbyLandmarks[0]}社叢」として国の天然記念物に指定されています。海辺の岩礁と森が近接する景観が、竹島の特徴です。
+        </p>
+        <h3>歌人と、縁を結ぶ橋の物語</h3>
+        <p>
+          園地の{''}俊成苑には、平安末期の歌人・藤原俊成の像と和歌が残ります。俊成が三河と縁を持ったとする伝承は、蒲郡の歴史をたどる小さな文学の旅へとつながります。387mの竹島橋は、地元で「縁結びの橋」とも呼ばれ、初日の出や満月、夜の灯りが季節の風景に加わります。
+        </p>
+      </div>
+
+      <aside class="about-duty" data-reveal data-reveal-delay="1">
+        <h3>訪問者の責任</h3>
+        <ul class="duty-list">
+          <li><b>ごみは持ち帰る</b><span>島と園地にごみ箱は限られています。持ち込んだものは必ず持ち帰り、周辺をきれいに保ちましょう。</span></li>
+          <li><b>立入り禁止を守る</b><span>岩礁や植物の生い茂る区域の立入り制限、表示がある場所は守ってください。天然記念物の森を守るためです。</span></li>
+          <li><b>生物を観察だけに</b><span>岩礁の生物や野鳥は採取・捕獲せず、観察だけにとどめます。エサやりも控えてください。</span></li>
+          <li><b>写真のマナー</b><span>「ガマニ塩湖」のような撮影スポットでは、長時間の占有や他者の通行を妨げないよう譲り合いましょう。</span></li>
+          <li><b>祈りの場を尊ぶ</b><span>{site.nearbyLandmarks[0]}の境内は静穏な場です。参拝の作法と表示を守り、他者の祈りを妨げません。</span></li>
+        </ul>
+        <p class="about-duty__note">
+          本サイトは蒲郡・竹島エリアの非公式観光ガイドです。気象や施設、祭事による規制は、現地の案内と当日の情報を優先してください。
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .responsibility-section { background: #e4ebe4; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    gap: clamp(2.5rem, 7vw, 6rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .about-figure { height: clamp(360px, 42vw, 520px); margin: 0 0 1.6rem; }
+  .about-story h3 { margin: 1.4rem 0 0.6rem; color: #173b57; font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+  .about-story h3:first-of-type { margin-top: 0; }
+  .about-story p { margin: 0; color: rgb(34 38 34 / 0.72); font-size: 0.84rem; line-height: 2.05; }
+
+  .about-duty {
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.5rem;
+    background: rgb(250 248 242 / 0.9);
+    padding: clamp(1.5rem, 3vw, 2.2rem);
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+  }
+  .about-duty h3 { margin: 0 0 1.1rem; color: #29493d; font-family: var(--serif); font-size: 1.25rem; }
+  .duty-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+  .duty-list li { border-top: 1px solid rgb(23 59 87 / 0.12); padding: 0.9rem 0; }
+  .duty-list li:first-child { border-top: 0; padding-top: 0; }
+  .duty-list b { display: block; color: #9d3627; font-size: 0.82rem; }
+  .duty-list span { color: rgb(34 38 34 / 0.66); font-size: 0.74rem; line-height: 1.85; }
+  .about-duty__note { margin: 1.3rem 0 0; border-top: 1px solid rgb(23 59 87 / 0.12); padding-top: 1rem; color: rgb(34 38 34 / 0.5); font-size: 0.68rem; line-height: 1.85; }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-duty { position: static; }
+  }
+</style>

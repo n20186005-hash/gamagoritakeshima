@@ -2,7 +2,14 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import LocalMap from "../components/LocalMap.astro";
-import { courses, highlights, quickFacts, restaurants, site } from "../data/site";
+import Reviews from "../components/Reviews.astro";
+import Weather from "../components/Weather.astro";
+import Facilities from "../components/Facilities.astro";
+import Seasonal from "../components/Seasonal.astro";
+import Itineraries from "../components/Itineraries.astro";
+import Responsibility from "../components/Responsibility.astro";
+import Sources from "../components/Sources.astro";
+import { courses, highlights, quickFacts, restaurants, site, homeFaq } from "../data/site";
 
 const jsonLd = [
   {
@@ -17,38 +24,62 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": ["TouristAttraction", "Park"],
+    "@id": `${site.url}/#attraction`,
     name: "竹島園地",
-    alternateName: "Takeshima Garden",
-    description: "愛知県蒲郡市、竹島と竹島橋を望む海辺の園地。",
-    image: `${site.url}/images/og-image.jpg`,
+    alternateName: ["Takeshima Garden", "Takeshima", "Gamagori Takeshima"],
+    description: "愛知県蒲郡市、竹島と竹島橋を望む海辺の園地。八百富神社と竹島水族館を含む蒲郡の観光エリアの入口。",
+    image: [`${site.url}/images/og-image.jpg`],
     url: site.url,
     isAccessibleForFree: true,
     publicAccess: true,
     address: {
       "@type": "PostalAddress",
-      postalCode: "443-0031",
+      postalCode: site.attraction.postalCode,
       addressRegion: "愛知県",
       addressLocality: "蒲郡市",
-      streetAddress: "竹島町31",
-      addressCountry: "JP"
+      streetAddress: site.streetAddress,
+      addressCountry: site.attraction.countryCode
     },
     geo: {
       "@type": "GeoCoordinates",
       latitude: site.coordinates.latitude,
       longitude: site.coordinates.longitude
-    }
+    },
+    hasMap: site.maps.shareUrl,
+    sameAs: [
+      site.maps.placeUrl,
+      site.official.cityUrl,
+      site.official.prefTourismUrl
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: homeFaq.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer
+      }
+    }))
   }
 ];
 ---
 
-<BaseLayout jsonLd={jsonLd}>
+<BaseLayout
+  jsonLd={jsonLd}
+  title="竹島園地の観光ガイド（竹島橋・八百富神社）"
+  description="蒲郡・竹島園地と竹島を歩く観光ガイド。竹島橋、八百富神社、ガマニ塩湖、竹島水族館の見どころ、Google マップの評価、天気・潮汐、アクセス、駐車場、周辺施設、モデルコースを紹介します。"
+>
+  <h1 class="sr-only">竹島園地（蒲郡）｜観光ガイド・アクセス・天気・口コミ</h1>
   <section class="home-hero" aria-labelledby="hero-title">
     <img class="home-hero__image" src="/images/hero-aerial.webp" alt="高台から見た竹島と竹島橋、三河湾" fetchpriority="high" />
     <div class="home-hero__shade"></div>
     <div class="container-site home-hero__inner">
       <div class="home-hero__copy">
         <p class="hero-kicker">GAMAGORI · MIKAWA BAY</p>
-        <h1 id="hero-title">海を渡って、<br /><span>島の時間へ。</span></h1>
+        <p id="hero-title" class="hero-title">海を渡って、<br /><span>島の時間へ。</span></p>
         <p class="hero-lead">竹島園地から始まる、<br class="hidden sm:block" />海と緑と祈りの小さな旅。</p>
         <div class="hero-actions">
           <a class="btn-primary hero-primary" href="/highlights/">
@@ -297,6 +328,40 @@ const jsonLd = [
     </div>
   </section>
 
+  <Reviews />
+  <Weather />
+  <Facilities />
+  <Seasonal />
+  <Itineraries />
+  <Responsibility />
+
+  <section class="section-space home-faq-section" id="faq" aria-labelledby="home-faq-title">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="FAQ"
+        title="出発前によくある質問。"
+        lead="料金、アクセス、天候、歩きやすさ。現地の案内と当日の状況を優先しつつ、事前に知っておきたいことをまとめました。"
+      />
+      <div class="home-faq-list container-narrow">
+        {homeFaq.map((item, index) => (
+          <details data-reveal>
+            <summary>
+              <span>Q{String(index + 1).padStart(2, "0")}</span>
+              <strong>{item.question}</strong>
+              <i aria-hidden="true"></i>
+            </summary>
+            <div class="home-faq-answer"><span>A</span><p>{item.answer}</p></div>
+          </details>
+        ))}
+        <p class="home-faq-more">
+          <a class="btn-secondary" href="/faq/">すべてのよくある質問を見る</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Sources />
+
   <section class="final-cta">
     <img src="/images/bridge-wide.webp" alt="海にまっすぐ伸びる竹島橋" loading="lazy" />
     <div class="final-cta__overlay"></div>
@@ -365,7 +430,8 @@ const jsonLd = [
     letter-spacing: 0.28em;
   }
 
-  .home-hero h1 {
+  .home-hero h1,
+  .home-hero .hero-title {
     margin-bottom: 0;
     font-family: var(--serif);
     font-size: clamp(3.4rem, 8.4vw, 8.5rem);
@@ -375,7 +441,8 @@ const jsonLd = [
     text-shadow: 0 5px 35px rgb(0 0 0 / 0.18);
   }
 
-  .home-hero h1 span {
+  .home-hero h1 span,
+  .home-hero .hero-title span {
     display: inline-block;
     padding-left: clamp(1rem, 6vw, 5.5rem);
   }
@@ -1369,11 +1436,13 @@ const jsonLd = [
       padding-top: 7rem;
     }
 
-    .home-hero h1 {
+    .home-hero h1,
+    .home-hero .hero-title {
       font-size: clamp(3.1rem, 15vw, 5.3rem);
     }
 
-    .home-hero h1 span {
+    .home-hero h1 span,
+    .home-hero .hero-title span {
       padding-left: 0.55rem;
     }
 
@@ -1525,5 +1594,37 @@ const jsonLd = [
     .final-cta__content a {
       width: 100%;
     }
+  }
+  .home-faq-section { background: #f3efe5; }
+  .home-faq-list { display: grid; margin-top: clamp(3rem, 6vw, 5rem); }
+  .home-faq-list details { border-top: 1px solid rgb(23 59 87 / 0.14); }
+  .home-faq-list details:last-of-type { border-bottom: 1px solid rgb(23 59 87 / 0.14); }
+  .home-faq-list summary {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr 2rem;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.5rem 0;
+    color: #173b57;
+    cursor: pointer;
+    list-style: none;
+  }
+  .home-faq-list summary::-webkit-details-marker { display: none; }
+  .home-faq-list summary > span { color: #b74632; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em; }
+  .home-faq-list summary strong { font-family: var(--serif); font-size: clamp(0.98rem, 2vw, 1.2rem); font-weight: 600; }
+  .home-faq-list summary i { position: relative; width: 1.6rem; height: 1.6rem; border: 1px solid rgb(23 59 87 / 0.18); border-radius: 50%; }
+  .home-faq-list summary i::before,
+  .home-faq-list summary i::after { position: absolute; top: 50%; left: 50%; width: 0.65rem; height: 1px; background: #173b57; content: ""; transform: translate(-50%, -50%); transition: transform 180ms ease; }
+  .home-faq-list summary i::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .home-faq-list details[open] summary i::after { transform: translate(-50%, -50%) rotate(0); }
+  .home-faq-answer { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1rem; padding: 0 3rem 1.7rem 0; }
+  .home-faq-answer > span { color: #315848; font-family: var(--serif); font-size: 1rem; }
+  .home-faq-answer p { margin: 0; color: rgb(34 38 34 / 0.66); line-height: 2; }
+  .home-faq-more { margin-top: 2rem; text-align: center; }
+  .home-faq-more a { width: auto; }
+
+  @media (max-width: 560px) {
+    .home-faq-list summary { grid-template-columns: 2.4rem 1fr 1.6rem; gap: 0.6rem; }
+    .home-faq-answer { grid-template-columns: 2.4rem 1fr; gap: 0.6rem; padding-right: 0; }
   }
 </style>

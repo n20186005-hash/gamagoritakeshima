@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="オフラインです" description="ネットワークに接続できません。">
+  <section class="section-space" style="min-height: 70vh; display: grid; place-items: center;">
+    <div class="container-narrow" style="text-align: center;">
+      <p class="eyebrow">OFFLINE</p>
+      <h1 class="section-title" style="margin-top: 1rem;">いまはつながらないようです</h1>
+      <p class="section-lead">
+        通信環境が戻ったら、竹島園地の観光ガイドをまたご覧いただけます。ページを再読み込みするか、後ほどお試しください。
+      </p>
+      <p style="margin-top: 2rem;">
+        <a class="btn-primary" href="/">トップへ戻る</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

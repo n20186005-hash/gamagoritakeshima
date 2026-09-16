@@ -81,7 +81,9 @@ const imageCount = readdirSync(join(root, "public/images"), { withFileTypes: tru
 const externalAnchors = [...sourceText.entries()].flatMap(([file, text]) =>
   [...text.matchAll(/<a\b[^>]*href=[{"']https?:\/\//g)].map(() => relative(root, file))
 );
-const unexpectedExternalFiles = [...new Set(externalAnchors)].filter((file) => !["src/pages/access.astro", "src/pages/credits.astro"].includes(file));
+const normalizePath = (p) => p.replace(/\\/g, "/");
+const allowedExternalFiles = ["src/pages/access.astro", "src/pages/credits.astro"].map(normalizePath);
+const unexpectedExternalFiles = [...new Set(externalAnchors.map(normalizePath))].filter((file) => !allowedExternalFiles.includes(file));
 if (unexpectedExternalFiles.length) {
   errors.push(`想定外の外部リンクがあります: ${unexpectedExternalFiles.join(", ")}`);
 }

@@ -1,0 +1,74 @@
+---
+import { facilities } from "../data/site";
+
+const ICONS: Record<string, string> = {
+  wc: "M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm0 3v3h10V5H7Zm0 5v4h4v-4H7Zm6 0v4h4v-4h-4ZM7 16v4h4v-4H7Zm6 0v4h4v-4h-4Z",
+  parking: "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm3 4v10h5a3.5 3.5 0 0 0 0-7H9V7H8Z",
+  dining: "M7 2v8a2 2 0 0 0 4 0V2h-1.2v6.5a.8.8 0 0 1-1.6 0V2H7Zm9.5-1a3 3 0 0 1 3 3v3.2a2 2 0 0 1-1 1.8V21h-1.4v-9.7a2 2 0 0 1-1-1.8V4a3 3 0 0 1 1.4-3ZM3 3v7h1.4V3H3Zm0 9v9h1.4v-9H3Z",
+  lodging: "M3 21V8l5-4 5 4v13h-3v-7H9v7H6v-7H5v7H3Zm13 0v-9h5v9h-1.6v-7h-1.8v7h-1.6Z",
+  shopping: "M6 2 3 6v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6Zm0 4h12v3H6V6Zm-1 5h14v8H5v-8Zm3 2v4h3v-4H8Z",
+  fuel: "M3 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16H3Zm10-1V5h-6v15h6Zm4-9 3 3v7h-3v-7l-1.5-1.5V9H17Z"
+};
+---
+
+<section class="section-space facilities-section" id="facilities" aria-labelledby="facilities-title">
+  <div class="container-site">
+    <div class="facilities-head">
+      <p class="eyebrow" data-reveal>VISITOR SERVICES</p>
+      <h2 id="facilities-title" class="section-title" data-reveal>周辺の施設、タイプで確認。</h2>
+      <p class="section-lead" data-reveal>
+        特定の店名は控え、旅の构成に必要な施設の「タイプ」を中立的にまとめました。営業日や料金は変わりやすいため、現地の案内を優先してください。
+      </p>
+    </div>
+
+    <div class="facilities-grid">
+      {facilities.map((item, index) => (
+        <article class="facility-card" data-reveal data-reveal-delay={String(index % 3)}>
+          <span class="facility-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d={ICONS[item.icon]} fill="currentColor"></path></svg>
+          </span>
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .facilities-section { background: #f3efe5; }
+  .facilities-head { max-width: 720px; }
+  .facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.1rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .facility-card {
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.4rem;
+    background: rgb(250 248 242 / 0.85);
+    padding: clamp(1.4rem, 3vw, 2.2rem);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .facility-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-paper); }
+  .facility-card__icon {
+    display: inline-grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border-radius: 1rem;
+    background: rgb(49 88 72 / 0.12);
+    color: #29493d;
+  }
+  .facility-card__icon svg { width: 1.6rem; height: 1.6rem; }
+  .facility-card h3 { margin: 1rem 0 0.6rem; color: #173b57; font-family: var(--serif); font-size: 1.2rem; font-weight: 600; }
+  .facility-card p { margin: 0; color: rgb(34 38 34 / 0.66); font-size: 0.78rem; line-height: 1.95; }
+
+  @media (max-width: 900px) {
+    .facilities-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .facilities-grid { grid-template-columns: 1fr; }
+  }
+</style>

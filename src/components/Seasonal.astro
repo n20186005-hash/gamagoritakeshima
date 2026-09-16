@@ -1,0 +1,83 @@
+---
+import { seasonalGuide } from "../data/site";
+---
+
+<section class="section-space seasonal-section" id="seasons" aria-labelledby="seasons-title">
+  <div class="container-site">
+    <div class="facilities-head">
+      <p class="eyebrow" data-reveal>SEASONAL STRATEGY</p>
+      <h2 id="seasons-title" class="section-title" data-reveal>季節で変わる、過ごし方。</h2>
+      <p class="section-lead" data-reveal>
+        気象庁の平年値や長期の気候傾向をもとに、竹島園地を訪れる季節ごとの目安をまとめました。潮の干満や海況、生物の姿も季節で変わります。
+      </p>
+    </div>
+
+    <div class="seasonal-table-wrap" data-reveal>
+      <table class="seasonal-table">
+        <thead>
+          <tr><th>季節</th><th>気候の傾向</th><th>おすすめの過ごし方</th><th>確認したい注意点</th></tr>
+        </thead>
+        <tbody>
+          {seasonalGuide.map((row) => (
+            <tr>
+              <th>{row.season}</th>
+              <td>{row.climate}</td>
+              <td>{row.recommend}</td>
+              <td>{row.caution}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="seasonal-notes" data-reveal>
+      <article>
+        <h3>海と潮のリズム</h3>
+        <p>三河湾の潮の干満は日にちで大きく変わります。竹島周辺の散策や「ガマニ塩湖」のような写真タイミングを狙うなら、渡島前にその日の潮位と天候を確認してください。</p>
+      </article>
+      <article>
+        <h3>生物と自然</h3>
+        <p>島の社叢（国の天然記念物「八百富神社社叢」）は暖地性の植物が育つ貴重な森です。岩礁の生物や野鳥にも出会えますが、採取や迷惑となる行動は避け、観察だけにとどめてください。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .seasonal-section { background: #eef0e8; }
+  .seasonal-table-wrap {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    overflow-x: auto;
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.4rem;
+    background: #faf8f2;
+  }
+  .seasonal-table { width: 100%; min-width: 780px; border-collapse: collapse; font-size: 0.78rem; }
+  .seasonal-table th,
+  .seasonal-table td { padding: 1rem 1.1rem; border-right: 1px solid rgb(23 59 87 / 0.08); border-bottom: 1px solid rgb(23 59 87 / 0.08); text-align: left; vertical-align: top; }
+  .seasonal-table thead th { background: #173b57; color: white; font-size: 0.64rem; letter-spacing: 0.08em; }
+  .seasonal-table tbody th { color: #173b57; font-family: var(--serif); font-size: 0.9rem; white-space: nowrap; }
+  .seasonal-table tbody tr:last-child th,
+  .seasonal-table tbody tr:last-child td { border-bottom: 0; }
+  .seasonal-table th:last-child,
+  .seasonal-table td:last-child { border-right: 0; }
+
+  .seasonal-notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+  }
+  .seasonal-notes article {
+    border: 1px solid rgb(23 59 87 / 0.1);
+    border-radius: 1.3rem;
+    background: rgb(250 248 242 / 0.7);
+    padding: 1.5rem;
+  }
+  .seasonal-notes h3 { margin: 0 0 0.6rem; color: #29493d; font-family: var(--serif); font-size: 1.1rem; }
+  .seasonal-notes p { margin: 0; color: rgb(34 38 34 / 0.66); font-size: 0.77rem; line-height: 1.95; }
+
+  @media (max-width: 640px) {
+    .seasonal-notes { grid-template-columns: 1fr; }
+  }
+</style>
