@@ -22,8 +22,8 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="竹島周辺のランチ・グルメ"
-  description="竹島園地周辺で食べたい、ガマゴリうどん、海鮮、ホテルランチ、眺望のよい喫茶などを旅行者向けに紹介。"
+  title="竹島周辺のランチ5選｜蒲郡の海鮮・うどん・ホテルランチ"
+  description="竹島園地周辺のランチ5選。ガマゴリうどん、三河湾の海鮮、景色のよいホテルランチなどを、予算・距離・料理タイプ・おすすめ層で比較。"
   image="/images/classic-hotel.webp"
   jsonLd={jsonLd}
 >
@@ -48,6 +48,34 @@ const jsonLd = {
         <div><span>VIEW</span><strong>景色を楽しむ</strong><p>ホテルランチ、喫茶</p></div>
         <div><span>CASUAL</span><strong>気軽に入る</strong><p>うどん、魚料理</p></div>
         <div><span>SPECIAL</span><strong>記念日に</strong><p>会席、フレンチ、鉄板焼</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space-sm food-compare">
+    <div class="container-site">
+      <SectionHeading
+        eyebrow="COMPARE AT A GLANCE"
+        title="五つの候補を、さっと比較。"
+        lead="予算、園地からの距離、料理タイプ、おすすめの場面で並べました。気分と旅程に合わせて、迷わず選べます。"
+      />
+      <div class="compare-wrap" data-reveal>
+        <table class="compare-table">
+          <thead>
+            <tr><th>店名</th><th>料理タイプ</th><th>予算目安</th><th>園地から</th><th>おすすめ</th></tr>
+          </thead>
+          <tbody>
+            {restaurants.map((restaurant) => (
+              <tr>
+                <th scope="row">{restaurant.name}</th>
+                <td>{restaurant.cuisine}</td>
+                <td>{restaurant.budget}</td>
+                <td>{restaurant.distance}</td>
+                <td>{restaurant.suitable}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -147,6 +175,17 @@ const jsonLd = {
 
 <style>
   .food-intro { background: #faf8f2; }
+  .food-compare { background: #eef0e8; }
+  .compare-wrap { overflow-x: auto; border: 1px solid rgb(23 59 87 / .1); border-radius: 1.3rem; background: #faf8f2; }
+  .compare-table { width: 100%; min-width: 720px; border-collapse: collapse; font-size: .75rem; }
+  .compare-table th,
+  .compare-table td { padding: .9rem 1rem; border-right: 1px solid rgb(23 59 87 / .08); border-bottom: 1px solid rgb(23 59 87 / .08); text-align: left; vertical-align: top; }
+  .compare-table thead th { background: #173b57; color: white; font-size: .62rem; letter-spacing: .08em; }
+  .compare-table tbody th { color: #173b57; font-family: var(--serif); font-size: .86rem; white-space: nowrap; }
+  .compare-table tbody tr:nth-child(even) { background: rgb(243 239 229 / .6); }
+  .compare-table tr:last-child > * { border-bottom: 0; }
+  .compare-table tr > *:last-child { border-right: 0; }
+  .compare-table td { color: rgb(34 38 34 / .66); line-height: 1.7; }
   .intro-grid { display: grid; grid-template-columns: 1fr .85fr; gap: clamp(3rem, 9vw, 8rem); align-items: end; }
   .choice-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgb(23 59 87 / .1); border-radius: 1.3rem; background: #f3efe5; }
   .choice-grid div { padding: 1.2rem; border-right: 1px solid rgb(23 59 87 / .1); border-bottom: 1px solid rgb(23 59 87 / .1); }

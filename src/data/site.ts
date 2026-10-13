@@ -25,9 +25,9 @@ export const site = {
   // Google マップの評価・口コミ（ページ掲載のみ・JSON-LD には含めない）
   reviews: {
     rating: 4.2,
-    count: 2208,
+    count: 2211,
     source: "Google マップ（Google Maps）",
-    syncedLabel: "2026年9月",
+    syncedLabel: "2026年10月",
     url: "https://maps.app.goo.gl/vDvcDKSwNmu96Qkx5"
   },
   // 外部地図・公式参考リンク
@@ -47,7 +47,7 @@ export const site = {
   },
   // 周辺の中核ランドマーク（セマンティック・クラスタ用）
   nearbyLandmarks: ["八百富神社", "竹島水族館"] as const,
-  updatedAt: "2026年9月"
+  updatedAt: "2026年10月"
 } as const;
 
 // 訪問者タイプ別の提案ルート（既存のモデルコースを補完）
@@ -196,7 +196,7 @@ export const homeFaq = [
   {
     question: "竹島園地の Google マップの評価は？",
     answer:
-      "Google マップのユーザー投稿による評価は 4.2（約2,208件の口コミ）です。評価と口コミ数は2026年9月時点の同期値で、著作権は原作者および Google マップに帰属します。"
+      "Google マップのユーザー投稿による評価は 4.2（約2,211件の口コミ）です。評価と口コミ数は2026年10月時点の同期値で、著作権は原作者および Google マップに帰属します。"
   },
   {
     question: "雨の日でも楽しめますか？",
@@ -333,6 +333,9 @@ export const restaurants = [
     closed: "月曜、第2・第4火曜",
     budget: "1,000〜2,000円目安",
     address: "愛知県蒲郡市竹島町7-12",
+    cuisine: "うどん・あさり",
+    distance: "園地から徒歩約5分",
+    suitable: "あさりの一杯を手軽に",
     tags: ["うどん", "あさり", "家族向け"]
   },
   {
@@ -345,6 +348,9 @@ export const restaurants = [
     closed: "不定休あり",
     budget: "ランチ 2,000円台〜目安",
     address: "愛知県蒲郡市竹島町1-6 ホテル竹島",
+    cuisine: "洋食・眺望",
+    distance: "園地からすぐ",
+    suitable: "景色と落ち着きを",
     tags: ["洋食", "眺望", "記念日"]
   },
   {
@@ -357,6 +363,9 @@ export const restaurants = [
     closed: "不定休あり",
     budget: "内容により異なる",
     address: "愛知県蒲郡市竹島町1-6 ホテル竹島",
+    cuisine: "和食・会席",
+    distance: "園地からすぐ",
+    suitable: "記念日・会食に",
     tags: ["和食", "海鮮", "会食"]
   },
   {
@@ -369,6 +378,9 @@ export const restaurants = [
     closed: "営業日を事前確認",
     budget: "喫茶〜コース料理",
     address: "愛知県蒲郡市竹島町15-1",
+    cuisine: "フレンチ・喫茶",
+    distance: "園地から徒歩約10分（高台）",
+    suitable: "歴史建物・夕景を望む",
     tags: ["眺望", "喫茶", "フレンチ"]
   },
   {
@@ -381,6 +393,9 @@ export const restaurants = [
     closed: "水曜",
     budget: "メニューにより異なる",
     address: "愛知県蒲郡市竹島町28-14 周辺",
+    cuisine: "魚料理・深海魚",
+    distance: "園地から徒歩約3分",
+    suitable: "気軽な地魚ランチに",
     tags: ["魚料理", "深海魚", "カジュアル"]
   }
 ] as const;

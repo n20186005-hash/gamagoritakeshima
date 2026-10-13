@@ -53,6 +53,11 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    if (url.hostname.startsWith("www.")) {
+      url.hostname = url.hostname.slice(4);
+      return Response.redirect(url.toString(), 301);
+    }
+
     const assetResponse = await env.ASSETS.fetch(request);
     const headers = new Headers(assetResponse.headers);
     const contentType = headers.get("Content-Type") ?? "";
